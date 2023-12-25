@@ -21,7 +21,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('superadmin.data-master.products.create');
+        return view('superadmin.data-master.products.index');
     }
 
     /**

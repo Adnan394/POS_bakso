@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
@@ -12,8 +13,8 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $data = User::all();
-        return view('superadmin.data-master.products.index', ['data' => $data]);
+        $data = User::where('role_id', 2)->get();
+        return view('superadmin.data-master.accounts.index', ['data' => $data]);
     }
 
     /**
@@ -29,7 +30,15 @@ class AccountController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        User::create([
+            'name' => $request->name,
+            'role_id' => '2',
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('accounts.index')->with('success', 'Akun Cabang berhasil ditambahkan.');
+        
     }
 
     /**
@@ -37,15 +46,17 @@ class AccountController extends Controller
      */
     public function show(string $id)
     {
-        //
+      
     }
+    
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        $data = User::where('id', $id)->first();
+        return view('superadmin.data-master.accounts.index',['data' => $data]);
     }
 
     /**
@@ -53,7 +64,15 @@ class AccountController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ];
+
+        User::where('id', $id)->update($data);
+
+        return redirect()->route('accounts.index')->with('success', 'Akun Cabang berhasil diperbarui.');
     }
 
     /**
