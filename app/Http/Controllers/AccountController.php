@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Location;
 use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
@@ -13,8 +14,9 @@ class AccountController extends Controller
      */
     public function index()
     {
+        $locations = Location::all();
         $data = User::where('role_id', 2)->get();
-        return view('superadmin.data-master.accounts.index', ['data' => $data]);
+        return view('superadmin.data-master.accounts.index', ['data' => $data , 'locations' => $locations]);
     }
 
     /**
@@ -33,6 +35,7 @@ class AccountController extends Controller
         User::create([
             'name' => $request->name,
             'role_id' => '2',
+            'location_id' => $request->location_id,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
@@ -66,6 +69,7 @@ class AccountController extends Controller
     {
         $data = [
             'name' => $request->name,
+            'location_id' => $request->location_id,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ];
