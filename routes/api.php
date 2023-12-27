@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\TransactionController;
 use App\Models\Payment;
 use App\Models\Produk;
 use App\Models\Table;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +50,9 @@ Route::prefix('auth')->group(function() {
 });
 
 Route::middleware('auth:sanctum')->group(function() {
+    // Transaction 
+    Route::post('transaction', [TransactionController::class, 'store']);
+
     //get product 
     Route::get('products', function() {
         return response()->json([
