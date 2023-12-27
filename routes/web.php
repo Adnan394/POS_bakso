@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\LoginController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AccountController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,6 +21,8 @@ Route::prefix('/superadmin')->middleware('auth')->group(function() {
     Route::get('/', function () {
         return view('superadmin.dashboard');
     });
+    Route::resource('/products', ProductController::class);
+    Route::resource('/accounts', AccountController::class);
 
 });
 

@@ -1974,6 +1974,21 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
+    <script>  
+    $(document).ready(function () {
+            $(".edit").hide();
+            $('#zero_config').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': true,
+                "pageLength": 50,
+                "responsive": true,
+                "buttons": ["excel", "print", "pdf"],
+            }).buttons().container().appendTo('#datatable_wrapper .col-md-6:eq(0)');
+        });</script>
     <script src="assets/libs/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>

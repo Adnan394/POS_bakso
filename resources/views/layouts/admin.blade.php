@@ -9,14 +9,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon.png') }}">
     <title>Admin Bakso Liktono</title>
     <!-- Custom CSS -->
     <link href="{{ asset('assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
+
     <!-- Custom CSS -->
-    <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet"> 
+    <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -52,12 +54,12 @@
                     <!-- ============================================================== -->
                     <div class="navbar-brand">
                         <!-- Logo icon -->
-                        <a href="index.html">
+                        <a href="/admin>
                             <b class="logo-icon">
-                                <!-- Dark Logo icon -->
-                                <img src="assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
-                                <!-- Light Logo icon -->
-                                <img src="assets/images/logo-icon.png" alt="homepage" class="light-logo" />
+                            <!-- Dark Logo icon -->
+                            <img src="{{ asset('assets/images/logo-icon.png') }}" alt="homepage" class="dark-logo" />
+                            <!-- Light Logo icon -->
+                            <img src="{{ asset('assets/images/logo-icon.png') }}" alt="homepage" class="light-logo" />
                             </b>
                             <!--End Logo icon -->
                             <!-- Logo text -->
@@ -217,11 +219,11 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
-                                    width="40">
+                                <img src="{{ asset('assets/images/users/profile-pic.jpg') }}" alt="user"
+                                    class="rounded-circle" width="40">
                                 <span class="ml-2 d-none d-lg-inline-block"><span>Hello,</span> <span
-                                        class="text-dark">{{ Auth::user()->name }}</span> <i data-feather="chevron-down"
-                                        class="svg-icon"></i></span>
+                                        class="text-dark">{{ Auth::user()->name }}</span> <i
+                                        data-feather="chevron-down" class="svg-icon"></i></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                                 <a class="dropdown-item" href="javascript:void(0)"><i data-feather="user"
@@ -265,30 +267,30 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="index.html"
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="/superadmin"
                                 aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
                                     class="hide-menu">Dashboard</span></a></li>
                         <li class="list-divider"></li>
                         <li class="nav-small-cap"><span class="hide-menu">Data Master</span></li>
 
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow" href="javascript:void(0)"
-                            aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span
-                                class="hide-menu">Data Master </span></a>
-                        <ul aria-expanded="false" class="collapse  first-level base-level-line">
-                            <li class="sidebar-item"><a href="form-inputs.html" class="sidebar-link"><span
-                                        class="hide-menu"> User
-                                    </span></a>
-                            </li>
-                            <li class="sidebar-item"><a href="form-input-grid.html" class="sidebar-link"><span
-                                        class="hide-menu"> Product
-                                    </span></a>
-                            </li>
-                            <li class="sidebar-item"><a href="form-checkbox-radio.html" class="sidebar-link"><span
-                                        class="hide-menu"> Bahan Mentah
-                                    </span></a>
-                            </li>
-                        </ul>
-                    </li>
+                                aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span
+                                    class="hide-menu">Data Master </span></a>
+                            <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                                <li class="sidebar-item"><a href="{{ route('accounts.index') }}" class="sidebar-link"><span
+                                            class="hide-menu"> User
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="{{ route('products.index') }}"
+                                        class="sidebar-link"><span class="hide-menu"> Produk
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="form-checkbox-radio.html"
+                                        class="sidebar-link"><span class="hide-menu"> Bahan Mentah
+                                        </span></a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="app-chat.html"
                                 aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span
                                     class="hide-menu">Chat</span></a></li>
@@ -310,8 +312,8 @@
                                             class="hide-menu"> Form Grids
                                         </span></a>
                                 </li>
-                                <li class="sidebar-item"><a href="form-checkbox-radio.html" class="sidebar-link"><span
-                                            class="hide-menu"> Checkboxes &
+                                <li class="sidebar-item"><a href="form-checkbox-radio.html"
+                                        class="sidebar-link"><span class="hide-menu"> Checkboxes &
                                             Radios
                                         </span></a>
                                 </li>
@@ -334,14 +336,14 @@
                                             Sizing Table
                                         </span></a>
                                 </li>
-                                <li class="sidebar-item"><a href="table-layout-coloured.html" class="sidebar-link"><span
-                                            class="hide-menu">
+                                <li class="sidebar-item"><a href="table-layout-coloured.html"
+                                        class="sidebar-link"><span class="hide-menu">
                                             Coloured
                                             Table Layout
                                         </span></a>
                                 </li>
-                                <li class="sidebar-item"><a href="table-datatable-basic.html" class="sidebar-link"><span
-                                            class="hide-menu">
+                                <li class="sidebar-item"><a href="table-datatable-basic.html"
+                                        class="sidebar-link"><span class="hide-menu">
                                             Basic
                                             Datatables
                                             Layout
@@ -422,9 +424,9 @@
                         <li class="list-divider"></li>
                         <li class="nav-small-cap"><span class="hide-menu">Authentication</span></li>
 
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="authentication-login1.html"
-                                aria-expanded="false"><i data-feather="lock" class="feather-icon"></i><span
-                                    class="hide-menu">Login
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
+                                href="authentication-login1.html" aria-expanded="false"><i data-feather="lock"
+                                    class="feather-icon"></i><span class="hide-menu">Login
                                 </span></a>
                         </li>
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
@@ -441,8 +443,9 @@
                                 <li class="sidebar-item"><a href="icon-fontawesome.html" class="sidebar-link"><span
                                             class="hide-menu"> Fontawesome Icons </span></a></li>
 
-                                <li class="sidebar-item"><a href="icon-simple-lineicon.html" class="sidebar-link"><span
-                                            class="hide-menu"> Simple Line Icons </span></a></li>
+                                <li class="sidebar-item"><a href="icon-simple-lineicon.html"
+                                        class="sidebar-link"><span class="hide-menu"> Simple Line Icons </span></a>
+                                </li>
                             </ul>
                         </li>
 
@@ -461,17 +464,17 @@
                                 <li class="sidebar-item"> <a class="has-arrow sidebar-link" href="javascript:void(0)"
                                         aria-expanded="false"><span class="hide-menu">Menu 1.3</span></a>
                                     <ul aria-expanded="false" class="collapse second-level base-level-line">
-                                        <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><span
-                                                    class="hide-menu"> item
+                                        <li class="sidebar-item"><a href="javascript:void(0)"
+                                                class="sidebar-link"><span class="hide-menu"> item
                                                     1.3.1</span></a></li>
-                                        <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><span
-                                                    class="hide-menu"> item
+                                        <li class="sidebar-item"><a href="javascript:void(0)"
+                                                class="sidebar-link"><span class="hide-menu"> item
                                                     1.3.2</span></a></li>
-                                        <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><span
-                                                    class="hide-menu"> item
+                                        <li class="sidebar-item"><a href="javascript:void(0)"
+                                                class="sidebar-link"><span class="hide-menu"> item
                                                     1.3.3</span></a></li>
-                                        <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><span
-                                                    class="hide-menu"> item
+                                        <li class="sidebar-item"><a href="javascript:void(0)"
+                                                class="sidebar-link"><span class="hide-menu"> item
                                                     1.3.4</span></a></li>
                                     </ul>
                                 </li>
@@ -485,9 +488,9 @@
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="docs/docs.html"
                                 aria-expanded="false"><i data-feather="edit-3" class="feather-icon"></i><span
                                     class="hide-menu">Documentation</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="authentication-login1.html"
-                                aria-expanded="false"><i data-feather="log-out" class="feather-icon"></i><span
-                                    class="hide-menu">Logout</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
+                                href="authentication-login1.html" aria-expanded="false"><i data-feather="log-out"
+                                    class="feather-icon"></i><span class="hide-menu">Logout</span></a></li>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -505,13 +508,10 @@
         <!-- End Page wrapper  -->
         <!-- ============================================================== -->
     </div>
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
-    <!-- All Jquery -->
-    <!-- ============================================================== -->
+
+    <script>
+
+    </script>
     <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/libs/popper.js/dist/umd/popper.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
@@ -531,6 +531,9 @@
     <script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js') }}"></script>
     <script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js') }}"></script>
     <script src="{{ asset('dist/js/pages/dashboards/dashboard1.min.js') }}"></script>
+
+    <script src="{{ asset('assets/extra-libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('dist/js/pages/datatable/datatable-basic.init.js') }}"></script>
 </body>
 
 </html>
