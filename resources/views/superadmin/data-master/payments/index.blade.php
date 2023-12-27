@@ -8,7 +8,7 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-7 align-self-center">
-                    <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">Data Akun Cabang</h4>
+                    <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">Data Metode Pembayaran</h4>
                     <div class="d-flex align-items-center">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb m-0 p-0">
@@ -22,7 +22,7 @@
                 <div class="col-5 align-self-center">
                     <div class="customize-input float-right">
                         <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#modal-tambah">Tambah Akun Cabang</button>
+                            data-target="#modal-tambah">Tambah Metode Pembayaran</button>
                     </div>
                 </div>
             </div>
@@ -47,25 +47,20 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">List Of Accounts</h4>
+                            <h4 class="card-title">List Of Payment Methods</h4>
                             <div class="table-responsive">
                                 <table id="zero_config" class="table table-striped table-bordered no-wrap">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Lokasi</th>
-                                            <th>Action</th>
+                                            <th>Nama Metode Pembayaran</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($data as $item)
+                                        @foreach ($payments as $item)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $item->name }}</td>
-                                                <td>{{ $item->location->locations }}</td>
-                                                <td>{{ $item->email }}</td>
                                                 <td>
                                                     <a href="" data-toggle="modal"
                                                         data-target="#modal-edit{{ $item->id }}" style="width: 50px" 
@@ -98,41 +93,15 @@
                                                                     <div class="card-body">
                                                                         <h4 class="card-title">Edit Product</h4>
                                                                         <form method="POST"
-                                                                            action="{{ route('accounts.update', $item->id) }}"
+                                                                            action="{{ route('payments.update', $item->id) }}"
                                                                             enctype="multipart/form-data" class="mt-4">
                                                                             @method('PUT')
                                                                             @csrf
                                                                             <div class="form-group">
-                                                                                <label for="name">Nama</label>
+                                                                                <label for="name">Nama Metode Pembayaran</label>
                                                                                 <input type="text" name="name"
                                                                                     class="form-control border-primary"
                                                                                     value="{{ $item->name }}" required>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="location_id">Lokasi Cabang</label>
-                                                                                <select name="location_id" id="location_id">
-                                                                                    <option value="{{ $item->location_id }}" disabled selected>{{ $item->location->locations }}</option>
-                                                                                    @foreach ($locations as $location)
-                                                                                        <option value="{{ $location->id }}">
-                                                                                            {{ $location->locations }}
-                                                                                        </option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                                <input type="text" name="name"
-                                                                                    class="form-control border-primary"
-                                                                                    value="{{ $item->name }}" required>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="email">Email</label>
-                                                                                <input type="email" name="email"
-                                                                                    class="form-control border-primary"
-                                                                                    value="{{ $item->email }}" required>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="password">Password</label>
-                                                                                <input type="password" name="password"
-                                                                                    class="form-control border-primary"
-                                                                                    value="{{ $item->password }}" required>
                                                                             </div>
                                                                             <div class="modal-footer">
                                                                                 <button type="submiy"
@@ -173,34 +142,12 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Tambahkan Akun Cabang</h4>
-                                    <form method="POST" action="{{ route('accounts.store') }}"
+                                    <form method="POST" action="{{ route('payments.store') }}"
                                         enctype="multipart/form-data" class="mt-4">
                                         @csrf
                                         <div class="form-group">
-                                            <label for="name">Nama</label>
+                                            <label for="name">Nama Metode Pembayaran</label>
                                             <input type="text" name="name" class="form-control border-primary"
-                                                required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="location_id">Lokasi Cabang</label>
-                                            <select name="location_id" id="location_id">
-                                                <option disabled selected>Pilih Lokasi Cabang</option>
-                                                @foreach ($locations as $location)
-                                                    <option value="{{ $location->id }}">
-                                                        {{ $location->locations }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="price">Email</label>
-                                            <input type="email" name="email" class="form-control border-primary"
-                                                required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="price">Password</label>
-                                            <input type="password" name="password" class="form-control border-primary"
                                                 required>
                                         </div>
                                         <div class="modal-footer">

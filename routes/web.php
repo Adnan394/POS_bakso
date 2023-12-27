@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,6 +25,8 @@ Route::prefix('/superadmin')->middleware('auth')->group(function() {
     });
     Route::resource('/products', ProductController::class);
     Route::resource('/accounts', AccountController::class);
+    Route::resource('/locations', LocationController::class);
+    Route::resource('/payments', PaymentController::class);
 
 });
 
