@@ -16,15 +16,11 @@ class TransactionController extends Controller
         });
         $pay_amount = $price_amount - $request->discount;
 
-        // return [
-        //     'price_amount' => $price_amount,
-        //     'pay_amount' => $pay_amount
-        // ];
         try {
-            // $file = $request->payment_image;
-            // $path = 'assets/images/transactions/';
-            // $filename = $path . $file->getClientOriginalName();
-            // $file->move($path, $filename);
+            $file = $request->file('payment_image');
+            $path = 'assets/images/transactions/';
+            $filename = $path . $file->getClientOriginalName();
+            $file->move($path, $filename);
 
             $transaction = Transaction::create([
                 'payment_id' => ($request->payment_id) ? $request->payment_id : null,
@@ -42,7 +38,8 @@ class TransactionController extends Controller
                     'transaction_id' => $transaction->id,
                     'product_id' => $product['id'],
                     'price' => $product['price'],
-                    'qty' => $product['qty']
+                    'qty' => $product['qty'],
+                    'status' => "Diproses"
                 ]);
             }
             
