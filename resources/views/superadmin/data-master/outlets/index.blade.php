@@ -8,7 +8,7 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-7 align-self-center">
-                    <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">Data Akun Cabang</h4>
+                    <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">Data Dapur/Outlet</h4>
                     <div class="d-flex align-items-center">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb m-0 p-0">
@@ -22,7 +22,7 @@
                 <div class="col-5 align-self-center">
                     <div class="customize-input float-right">
                         <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#modal-tambah">Tambah Akun Cabang</button>
+                            data-target="#modal-tambah">Tambah Dapur/Outlet</button>
                     </div>
                 </div>
             </div>
@@ -47,14 +47,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">List Of Accounts</h4>
+                            <h4 class="card-title">List Of Outlet</h4>
                             <div class="table-responsive">
                                 <table id="zero_config" class="table table-striped table-bordered no-wrap">
                                     <thead>
                                         <tr>
                                             <th>No</th>
                                             <th>Name</th>
-                                            <th>Email</th>
                                             <th>Lokasi</th>
                                             <th>Action</th>
                                         </tr>
@@ -71,7 +70,7 @@
                                                         data-target="#modal-edit{{ $item->id }}" style="width: 50px" 
                                                         class="btn btn-warning"><i class="bi bi-pencil"><span
                                                               class="fas fa-edit"></span></i></a>
-                                                    <form action="{{ route('accounts.destroy', $item->id) }}"
+                                                    <form action="{{ route('outlets.destroy', $item->id) }}"
                                                         method="POST">
                                                         @method('DELETE')
                                                         @csrf
@@ -86,7 +85,7 @@
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header modal-colored-header bg-primary">
-                                                            <h4 class="modal-title" id="modal-editLabel">Form Tambah Produl
+                                                            <h4 class="modal-title" id="modal-editLabel">Form Tambah Outlet
                                                             </h4>
                                                             <button type="reset" class="close" data-dismiss="modal"
                                                                 aria-hidden="true">×</button>
@@ -98,7 +97,7 @@
                                                                     <div class="card-body">
                                                                         <h4 class="card-title">Edit Product</h4>
                                                                         <form method="POST"
-                                                                            action="{{ route('accounts.update', $item->id) }}"
+                                                                            action="{{ route('outlets.update', $item->id) }}"
                                                                             enctype="multipart/form-data" class="mt-4">
                                                                             @method('PUT')
                                                                             @csrf
@@ -121,18 +120,6 @@
                                                                                 <input type="text" name="name"
                                                                                     class="form-control border-primary"
                                                                                     value="{{ $item->name }}" required>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="email">Email</label>
-                                                                                <input type="email" name="email"
-                                                                                    class="form-control border-primary"
-                                                                                    value="{{ $item->email }}" required>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="password">Password</label>
-                                                                                <input type="password" name="password"
-                                                                                    class="form-control border-primary"
-                                                                                    value="{{ $item->password }}" required>
                                                                             </div>
                                                                             <div class="modal-footer">
                                                                                 <button type="submiy"
@@ -173,7 +160,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Tambahkan Akun Cabang</h4>
-                                    <form method="POST" action="{{ route('accounts.store') }}"
+                                    <form method="POST" action="{{ route('outlets.store') }}"
                                         enctype="multipart/form-data" class="mt-4">
                                         @csrf
                                         <div class="form-group">
@@ -191,17 +178,6 @@
                                                     </option>
                                                 @endforeach
                                             </select>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="price">Email</label>
-                                            <input type="email" name="email" class="form-control border-primary"
-                                                required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="price">Password</label>
-                                            <input type="password" name="password" class="form-control border-primary"
-                                                required>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="reset" class="btn btn-light">Kosongkan</button>

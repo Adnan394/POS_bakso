@@ -158,6 +158,10 @@
                                         class="sidebar-link"><span class="hide-menu"> Lokasi 
                                         </span></a>
                                 </li>
+                                <li class="sidebar-item"><a href="{{ route('outlets.index') }}"
+                                        class="sidebar-link"><span class="hide-menu"> Outlet
+                                        </span></a>
+                                </li>
                                 <li class="sidebar-item"><a href="{{ route('payments.index') }}"
                                         class="sidebar-link"><span class="hide-menu"> Payment Method 
                                         </span></a>

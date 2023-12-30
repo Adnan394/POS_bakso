@@ -6,6 +6,8 @@ namespace Database\Seeders;
 use App\Models\Location;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Outlet;
+use App\Models\Payment;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -28,12 +30,32 @@ class DatabaseSeeder extends Seeder
             'locations' => 'Purwokerto',
         ]);
 
+        Outlet::create([
+            'name' => 'Dapur Minuman',
+            'location_id' => '1',
+        ]);
+
+        Outlet::create([
+            'name' => 'Dapur Makanan',
+            'location_id' => '1',
+        ]);
+
         User::create([
             'name' => 'Admin Pusat',
             'email' => 'superadmin@gmail.com',
             'role_id' => '1',
             'password' => Hash::make('superadmin'),
             'location_id' => '1',
+        ]);
+
+        Payment::create([
+            'name' => 'Cash',
+        ]);
+        Payment::create([
+            'name' => 'QRIS',
+        ]);
+        Payment::create([
+            'name' => 'Transfer Bank',
         ]);
 
     }

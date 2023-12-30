@@ -66,7 +66,7 @@
                                                         data-target="#modal-edit{{ $item->id }}" style="width: 50px" 
                                                         class="btn btn-warning"><i class="bi bi-pencil"><span
                                                               class="fas fa-edit"></span></i></a>
-                                                    <form action="{{ route('products.destroy', $item->id) }}"
+                                                    <form action="{{ route('locations.destroy', $item->id) }}"
                                                         method="POST">
                                                         @method('DELETE')
                                                         @csrf

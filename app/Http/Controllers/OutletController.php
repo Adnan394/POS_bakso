@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Outlet;
 use App\Models\Location;
 use Illuminate\Support\Facades\Hash;
 
-class AccountController extends Controller
+class OutletController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class AccountController extends Controller
     public function index()
     {
         $locations = Location::all();
-        $data = User::where('role_id', 2)->get();
-        return view('superadmin.data-master.accounts.index', ['data' => $data , 'locations' => $locations]);
+        $data = Outlet::all();
+        return view('superadmin.data-master.outlets.index', ['data' => $data , 'locations' => $locations]);
     }
 
     /**
@@ -32,15 +32,12 @@ class AccountController extends Controller
      */
     public function store(Request $request)
     {
-        User::create([
+        Outlet::create([
             'name' => $request->name,
-            'role_id' => '2',
             'location_id' => $request->location_id,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('accounts.index')->with('success', 'Akun Cabang berhasil ditambahkan.');
+        return redirect()->route('outlets.index')->with('success', 'Outlet berhasil ditambahkan.');
         
     }
 
@@ -58,8 +55,8 @@ class AccountController extends Controller
      */
     public function edit(string $id)
     {
-        $data = User::where('id', $id)->first();
-        return view('superadmin.data-master.accounts.index',['data' => $data]);
+        $data = Outlet::where('id', $id)->first();
+        return view('superadmin.data-master.outlets.index',['data' => $data]);
     }
 
     /**
@@ -70,13 +67,11 @@ class AccountController extends Controller
         $data = [
             'name' => $request->name,
             'location_id' => $request->location_id,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
         ];
 
-        User::where('id', $id)->update($data);
+        Outlet::where('id', $id)->update($data);
 
-        return redirect()->route('accounts.index')->with('success', 'Akun Cabang berhasil diperbarui.');
+        return redirect()->route('outlet.index')->with('success', 'Outlet berhasil diperbarui.');
     }
 
     /**
@@ -84,7 +79,7 @@ class AccountController extends Controller
      */
     public function destroy(string $id)
     {
-        User::where('id', $id)->delete();
-        return redirect()->route('accounts.index')->with('success', 'Data Payment berhasil dihapus.');
+        Outlet::where('id', $id)->delete();
+        return redirect()->route('outlets.index')->with('success', 'Outlet berhasil dihapus.');
     }
 }

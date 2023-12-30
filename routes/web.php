@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\OutletController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +28,8 @@ Route::prefix('/superadmin')->middleware('auth')->group(function() {
     Route::resource('/accounts', AccountController::class);
     Route::resource('/locations', LocationController::class);
     Route::resource('/payments', PaymentController::class);
+    Route::resource('/outlets', OutletController::class);
+
 
 });
 
