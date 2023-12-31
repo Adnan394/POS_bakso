@@ -57,6 +57,7 @@
                                             <th>Harga Produk</th>
                                             <th>Status Stock</th>
                                             <th>Gambar</th>
+                                            <th>Outlet</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -68,12 +69,14 @@
                                                 <td>{{ $item->price }}</td>
                                                 <td>{{ $item->status_stock }}</td>
                                                 <td><img src="{{ asset($item->image) }}" alt="Image"
-                                                        style="max-width: 100px; max-height: 100px;"></td>
+                                                        style="max-width: 100px; max-height: 100px;">
+                                                </td>
+                                                <td>{{ $item->outlet->name }}</td>
                                                 <td>
                                                     <a href="" data-toggle="modal"
-                                                        data-target="#modal-edit{{ $item->id }}" style="width: 50px" 
+                                                        data-target="#modal-edit{{ $item->id }}" style="width: 50px"
                                                         class="btn btn-warning"><i class="bi bi-pencil"><span
-                                                              class="fas fa-edit"></span></i></a>
+                                                                class="fas fa-edit"></span></i></a>
                                                     <form action="{{ route('products.destroy', $item->id) }}"
                                                         method="POST">
                                                         @method('DELETE')
@@ -138,6 +141,26 @@
                                                                                     class="form-control-file"
                                                                                     id="exampleInputFile" required>
                                                                             </fieldset>
+                                                                            <div class="form-group">
+                                                                                <label for="outlet_id">Lokasi
+                                                                                    Cabang</label>
+                                                                                <select name="outlet_id"
+                                                                                    id="outlet_id">
+                                                                                    <option value="{{ $item->outlet_id }}"
+                                                                                        disabled selected>
+                                                                                        {{ $item->outlet->name }}
+                                                                                    </option>
+                                                                                    @foreach ($outlets as $outlet)
+                                                                                        <option
+                                                                                            value="{{ $outlet->id }}">
+                                                                                            {{ $outlet->name }}
+                                                                                        </option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                                <input type="text" name="name"
+                                                                                    class="form-control border-primary"
+                                                                                    value="{{ $item->name }}" required>
+                                                                            </div>
                                                                             <div class="modal-footer">
                                                                                 <button type="submiy"
                                                                                     class="btn btn-primary">Tambahkan</button>
@@ -203,6 +226,22 @@
                                             <input type="file" name="image" accept=".jpg , .jpeg , .png"
                                                 class="form-control-file" id="exampleInputFile" required>
                                         </fieldset>
+                                        <div class="form-group">
+                                            <label for="outlet_id">Lokasi
+                                                Cabang</label>
+                                            <select name="outlet_id"
+                                                id="outlet_id">
+                                                <option value=""
+                                                    disabled selected>
+                                                    pilih outlet/dapur
+                                                </option>
+                                                @foreach ($outlets as $outlet)
+                                                    <option
+                                                        value="{{ $outlet->id }}">
+                                                        {{ $outlet->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         <div class="modal-footer">
                                             <button type="reset" class="btn btn-light">Kosongkan</button>
                                             <button type="submiy" class="btn btn-primary">Tambahkan</button>
