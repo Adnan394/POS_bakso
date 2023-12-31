@@ -157,9 +157,6 @@
                                                                                         </option>
                                                                                     @endforeach
                                                                                 </select>
-                                                                                <input type="text" name="name"
-                                                                                    class="form-control border-primary"
-                                                                                    value="{{ $item->name }}" required>
                                                                             </div>
                                                                             <div class="modal-footer">
                                                                                 <button type="submiy"
