@@ -29,8 +29,24 @@ Route::prefix('/superadmin')->middleware('auth')->group(function() {
     Route::resource('/locations', LocationController::class);
     Route::resource('/payments', PaymentController::class);
     Route::resource('/outlets', OutletController::class);
+});
 
+Route::prefix('/admin')->middleware('auth')->group(function() {
+    Route::get('/', function () {
+        return view('admin.dashboard');
+    });
+    Route::resource('/products', ProductController::class);
+    Route::resource('/payments', PaymentController::class);
+    Route::resource('/outlets', OutletController::class);
+});
 
+Route::prefix('/kasir')->middleware('auth')->group(function() {
+    Route::get('/', function () {
+        return view('kasir.dashboard');
+    });
+    Route::resource('/products', ProductController::class);
+    Route::resource('/payments', PaymentController::class);
+    Route::resource('/outlets', OutletController::class);
 });
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');

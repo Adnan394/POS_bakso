@@ -29,6 +29,9 @@ class LoginController extends Controller
             if (Auth::user()->role_id == '2') {
                 return redirect('/admin');
             }
+            if (Auth::user()->role_id == '3') {
+                return redirect('/kasir');
+            }
         }
 
         return redirect()->route('login')->with('login', 'Email atau password salah.');
