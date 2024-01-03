@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('price_amount');
             $table->string('payment_image')->nullable();
             $table->integer('discount')->nullable();
-            $table->integer('pay_amount');
+            $table->integer('pay_amount')->nullable();
             $table->foreignId('user_id')->constrained('users');
             $table->string('name_customer');
             $table->timestamps();
