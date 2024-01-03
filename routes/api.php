@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\ApiTransactionController;
 use App\Models\Payment;
 use App\Models\Produk;
 use App\Models\Table;
@@ -51,7 +51,7 @@ Route::prefix('auth')->group(function() {
 
 Route::middleware('auth:sanctum')->group(function() {
     // Transaction 
-    Route::post('transaction', [TransactionController::class, 'store']);
+    Route::post('transaction', [ApiTransactionController::class, 'store']);
 
     //get product 
     Route::get('products', function() {

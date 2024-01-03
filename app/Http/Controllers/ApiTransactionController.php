@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Stmt\TryCatch;
 
-class TransactionController extends Controller
+class ApiTransactionController extends Controller
 {
     public function store(Request $request) {
         $price_amount = collect($request->products)->sum(function($item) {
