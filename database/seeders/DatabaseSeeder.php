@@ -32,6 +32,9 @@ class DatabaseSeeder extends Seeder
         Location::create([
             'locations' => 'Purwokerto',
         ]);
+        Location::create([
+            'locations' => 'Purbalingga',
+        ]);
 
         Outlet::create([
             'name' => 'Dapur Minuman',
@@ -51,11 +54,18 @@ class DatabaseSeeder extends Seeder
             'location_id' => '1',
         ]);
         User::create([
-            'name' => 'Admin',
-            'email' => 'admin@gmail.com',
+            'name' => 'Admin Purwokerto',
+            'email' => 'adminpwt@gmail.com',
             'role_id' => '2',
             'password' => Hash::make('admin123'),
             'location_id' => '1',
+        ]);
+        User::create([
+            'name' => 'Admin Purbalingga',
+            'email' => 'adminpbg@gmail.com',
+            'role_id' => '2',
+            'password' => Hash::make('admin123'),
+            'location_id' => '2',
         ]);
         User::create([
             'name' => 'Kasir Pusat',

@@ -17,7 +17,8 @@ return new class extends Migration
             $table->integer('price');
             $table->string('image');
             $table->string('status_stock');
-            $table->foreignId('outlet_id')->constrained();
+            $table->foreignId('location_id')->constrained('locations');
+            $table->foreignId('outlet_id')->constrained('outlets');
             $table->timestamps();
         });
     }

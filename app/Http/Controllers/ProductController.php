@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Produk;
 use App\Models\Outlet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -13,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = Produk::all();
+        $data = Produk::where('location_id', Auth::user()->location->id)->get();
         $outlets = Outlet::all();
         return view('superadmin.data-master.products.index', ['data' => $data, 'outlets' => $outlets]);
     }
@@ -44,7 +45,8 @@ class ProductController extends Controller
             'price' => $request->price,
             'status_stock' => $request->status_stock,
             'image' => $path . '/' . $fileName,
-            'outlet_id' => $request->outlet_id
+            'outlet_id' => $request->outlet_id,
+            'location_id' => Auth::user()->location->id
         ]);
 
         return redirect()->route('products.index')->with('success', 'Data Product berhasil ditambahkan.');

@@ -5,6 +5,8 @@
         <div class="row mt-5">
             <div class="col-8 mt-3">
                 <div data-spy="scroll" style="position: relative; height: 570px; overflow: auto;">
+                    <form method="POST" action="{{ route('transaksi.store') }}" enctype="multipart/form-data" class="mt-4 mr-5">
+                        @csrf
                     <table class="table table-striped mt-4">
                         <thead>
                             <tr>
@@ -21,8 +23,11 @@
                                     <th scope="row">{{ $key + 1 }}</th>
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->price }}</td>
-                                    <td><input type="number" name="product[]" onchange="updateSubtotal(this)"
-                                            data-price="{{ $product->price }}"></td>
+                                    <td>
+                                        <input type="hidden" name="produk[]" value="{{ $product->id }}">
+                                            <input type="number" name="qty[]" onchange="updateSubtotal(this)"
+                                                data-price="{{ $product->price }}">
+                                    </td>
                                     <td class="subtotal">Rp. 0</td>
                                 </tr>
                             @endforeach
@@ -31,8 +36,7 @@
                 </div>
             </div>
             <div class="col-4 mt-1">
-                <form method="POST" action="" enctype="multipart/form-data" class="mt-4 mr-5">
-                    @csrf
+                
                     <div class="form-group">
                         <label for="name">Nama Customer</label>
                         <input type="text" name="name_customer" class="form-control border-primary" required>
@@ -47,7 +51,7 @@
                     </div>
                     <div class="row py-2">
                         <div class="col-8 text-center">
-                            <button type="button" class="btn btn-lg btn-success btn-block" data-toggle="modal"
+                            <button type="submit" class="btn btn-lg btn-success btn-block" data-toggle="modal"
                                 data-target="#confirmOrderCenter">
                                 Create Order
                             </button>
@@ -84,7 +88,7 @@
 
             // Menemukan elemen input Total Price dan mengupdate nilainya
             var totalPriceInput = document.getElementsByName('price_amount')[0];
-            totalPriceInput.value = totalPrice.toLocaleString(); // Menambah format angka dengan toLocaleString()
+            totalPriceInput.value = totalPrice; // Menambah format angka dengan toLocaleString()
         }
     </script>
 @endsection

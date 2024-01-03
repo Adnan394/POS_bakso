@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Produk;
 use App\Models\Transaction;
-use App\Models\Transaction_detail;
 use Illuminate\Http\Request;
+use App\Models\Transaction_detail;
+use GuzzleHttp\Handler\Proxy;
 use Illuminate\Support\Facades\Auth;
 
 class TransaksiController extends Controller
@@ -44,16 +46,11 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
         // $price_amount = collect($request->products)->sum(function($item) {
         //     return $item['price'] * $item['qty'];
         // });
         // $pay_amount = $price_amount - $request->discount;
-
-        try {
-            $file = $request->file('payment_image');
-            $path = 'transactions/';
-            $filename = $path . $file->getClientOriginalName();
-            $file->move($path, $filename);
 
             $transaction = Transaction::create([
                 'payment_id' => ($request->payment_id) ? $request->payment_id : null,
@@ -61,23 +58,22 @@ class TransaksiController extends Controller
                 'price_amount' => $request->price_amount,
                 'payment_image' => ($request->payment_image) ? $request->payment_image : null,
                 'discount' => ($request->discount) ? $request->discount : null,
-                'pay_amount' => $request->pay_amount,
+                'pay_amount' => 100,
                 'user_id' => Auth::user()->id,
                 'name_customer' => $request->name_customer
             ]);
 
-            foreach($request->products as $product) {
-                Transaction_detail::create([
-                    'transaction_id' => $transaction->id,
-                    'product_id' => $product['id'],
-                    'price' => $product['price'],
-                    'qty' => $product['qty'],
-                    'status' => "Diproses"
-                ]);
+            foreach($request->produk as $product) {
+                foreach($request->qty as $qty) {
+                    Transaction_detail::create([
+                        'transaction_id' => $transaction->id,
+                        'product_id' => $product,
+                        'price' => Produk::where('id', $product)->first()->price,
+                        'qty' => $qty,
+                        'status' => "Diproses"
+                    ]);
+                }
             }
-        }catch(\Throwable $th) {
-            
-        }
     }
 
     /**
