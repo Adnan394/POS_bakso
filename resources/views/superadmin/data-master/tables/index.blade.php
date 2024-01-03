@@ -8,7 +8,7 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-7 align-self-center">
-                    <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">Data Lokasi Akun Cabang</h4>
+                    <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">Data Master Meja</h4>
                     <div class="d-flex align-items-center">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb m-0 p-0">
@@ -22,7 +22,7 @@
                 <div class="col-5 align-self-center">
                     <div class="customize-input float-right">
                         <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#modal-tambah">Tambah Lokasi Akun Cabang</button>
+                            data-target="#modal-tambah">Tambah Meja</button>
                     </div>
                 </div>
             </div>
@@ -47,21 +47,21 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">List Of Locations</h4>
+                            <h4 class="card-title">List Of Tables</h4>
                             <div class="table-responsive">
                                 <table id="zero_config" class="table table-striped table-bordered no-wrap">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Lokasi</th>
+                                            <th>Nomor Meja</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($locations as $item)
+                                        @foreach ($tables as $item)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $item->locations }}</td>
+                                                <td>{{ $item->number }}</td>
                                                 <td>
                                                     <a href="" data-toggle="modal"
                                                         data-target="#modal-edit{{ $item->id }}" style="width: 50px" 
@@ -100,9 +100,9 @@
                                                                             @csrf
                                                                             <div class="form-group">
                                                                                 <label for="locations">Nama</label>
-                                                                                <input type="text" name="locations"
+                                                                                <input type="number" name="number"
                                                                                     class="form-control border-primary"
-                                                                                    value="{{ $item->locations }}" required>
+                                                                                    value="{{ $item->number }}" required>
                                                                             </div>
                                                                             <div class="modal-footer">
                                                                                 <button type="submiy"
@@ -142,13 +142,13 @@
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Tambahkan Akun Cabang</h4>
+                                    <h4 class="card-title">Tambahkan Meja</h4>
                                     <form method="POST" action="{{ route('locations.store') }}"
                                         enctype="multipart/form-data" class="mt-4">
                                         @csrf
                                         <div class="form-group">
                                             <label for="name">Lokasi</label>
-                                            <input type="text" name="locations" class="form-control border-primary"
+                                            <input type="number" name="number" class="form-control border-primary"
                                                 required>
                                         </div>
                                         <div class="modal-footer">

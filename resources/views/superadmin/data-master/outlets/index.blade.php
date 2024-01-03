@@ -67,11 +67,10 @@
                                                 <td>{{ $item->email }}</td>
                                                 <td>
                                                     <a href="" data-toggle="modal"
-                                                        data-target="#modal-edit{{ $item->id }}" style="width: 50px" 
+                                                        data-target="#modal-edit{{ $item->id }}" style="width: 50px"
                                                         class="btn btn-warning"><i class="bi bi-pencil"><span
-                                                              class="fas fa-edit"></span></i></a>
-                                                    <form action="{{ route('outlets.destroy', $item->id) }}"
-                                                        method="POST">
+                                                                class="fas fa-edit"></span></i></a>
+                                                    <form action="{{ route('outlets.destroy', $item->id) }}" method="POST">
                                                         @method('DELETE')
                                                         @csrf
                                                         <button type="submit" style="width: 50px" class="btn btn-danger"><i
@@ -108,18 +107,21 @@
                                                                                     value="{{ $item->name }}" required>
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="location_id">Lokasi Cabang</label>
+                                                                                <label for="location_id">Lokasi
+                                                                                    Cabang</label>
                                                                                 <select name="location_id" id="location_id">
-                                                                                    <option value="{{ $item->location_id }}" disabled selected>{{ $item->location->locations }}</option>
+                                                                                    <option
+                                                                                        value="{{ $item->location_id }}"
+                                                                                        disabled selected>
+                                                                                        {{ $item->location->locations }}
+                                                                                    </option>
                                                                                     @foreach ($locations as $location)
-                                                                                        <option value="{{ $location->id }}">
+                                                                                        <option
+                                                                                            value="{{ $location->id }}">
                                                                                             {{ $location->locations }}
                                                                                         </option>
                                                                                     @endforeach
                                                                                 </select>
-                                                                                <input type="text" name="name"
-                                                                                    class="form-control border-primary"
-                                                                                    value="{{ $item->name }}" required>
                                                                             </div>
                                                                             <div class="modal-footer">
                                                                                 <button type="submiy"

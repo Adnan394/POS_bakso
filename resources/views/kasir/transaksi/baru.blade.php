@@ -43,7 +43,14 @@
                     </div>
                     <div class="form-group">
                         <label for="name">Nomor Meja</label>
-                        <input type="text" name="table_id" class="form-control border-primary" required>
+                        <select name="table_id" id="table_id">
+                            <option value="" disabled selected>Pilih Nomor Meja</option>
+                            @foreach ($tables as $table)
+                                <option value="{{ $table->id }}">
+                                    {{ $table->number }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="total_price">Total Price</label>

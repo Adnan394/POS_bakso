@@ -8,6 +8,8 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Outlet;
 use App\Models\Payment;
+use App\Models\Produk;
+use App\Models\Table;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -83,6 +85,39 @@ class DatabaseSeeder extends Seeder
         ]);
         Payment::create([
             'name' => 'Transfer Bank',
+        ]);
+
+        Produk::create([
+            'name' => 'Es Jeruk',
+            'price' => 4000,
+            'image' => 'gambar_stock/bakso.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => '1',
+            'location_id' => '1',
+        ]);
+        Produk::create([
+            'name' => 'Bakso',
+            'price' => 10000,
+            'image' => 'gambar_stock/Removal-244-removebg-preview.png',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => '2',
+            'location_id' => '1',
+        ]);
+
+        Table::create([
+            'number' => 1,
+        ]);
+        Table::create([
+            'number' => 2,
+        ]);
+        Table::create([
+            'number' => 3,
+        ]);
+        Table::create([
+            'number' => 4,
+        ]);
+        Table::create([
+            'number' => 5,
         ]);
 
     }

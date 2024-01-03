@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Table;
 
-class TransaksiDetailController extends Controller
+class TabelController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('kasir.transaksi.detail');
+        $tables = table::all();
+        return view('superadmin.data-master.tables.index', ['tables' => $tables]);
     }
 
     /**
@@ -19,7 +21,7 @@ class TransaksiDetailController extends Controller
      */
     public function create()
     {
-        //
+        return view('superadmin.data-master.tables.index');
     }
 
     /**
@@ -27,7 +29,11 @@ class TransaksiDetailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        table::create([
+            'number' => $request->number,
+        ]);
+
+        return redirect()->route('tables.index')->with('success', 'Data Lokasi berhasil ditambahkan.');
     }
 
     /**
@@ -43,7 +49,8 @@ class TransaksiDetailController extends Controller
      */
     public function edit(string $id)
     {
-        //
+       
+        
     }
 
     /**
@@ -51,7 +58,13 @@ class TransaksiDetailController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = [
+            'number' => $request->number,
+        ];
+
+        table::where('id', $id)->update($data);
+        return redirect()->route('table.index')->with('success', 'Data Lokasi berhasil diperbarui.');
+
     }
 
     /**
@@ -59,6 +72,7 @@ class TransaksiDetailController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        table::where('id',$id)->delete();
+        return redirect()->route('tables.index')->with('success', 'Data Lokasi berhasil dihapus.');
     }
 }

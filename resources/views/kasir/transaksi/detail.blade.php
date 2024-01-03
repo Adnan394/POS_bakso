@@ -17,14 +17,16 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($products as $key => $product)
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Bakso</td>
-                        <td>Rp. 10.000</td>
-                        <td>6</td>
-                        <td>Rp. 60.000</td>
-                        <td><a href="#">Delete</a></td>
+                        <th scope="row">{{ $key + 1 }}</th>
+                        <td>{{ $product->name }}</td>
+                        <td>{{ $product->price }}</td>
+                        <td><input type="number" name="product[]" onchange="updateSubtotal(this)"
+                                data-price="{{ $product->price }}"></td>
+                        <td class="subtotal">Rp. 0</td>
                     </tr>
+                @endforeach
                 </tbody>
             </table>
             </div>

@@ -8,6 +8,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\OutletController;
+use App\Http\Controllers\TabelController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\TransaksiDetailController;
 
@@ -30,6 +31,7 @@ Route::prefix('/superadmin')->middleware('auth')->group(function() {
     Route::resource('/products', ProductController::class);
     Route::resource('/accounts', AccountController::class);
     Route::resource('/locations', LocationController::class);
+    Route::resource('/tables', TableController::class);
     Route::resource('/payments', PaymentController::class);
     Route::resource('/outlets', OutletController::class);
 });
@@ -41,6 +43,8 @@ Route::prefix('/admin')->middleware('auth')->group(function() {
     Route::resource('/products', ProductController::class);
     Route::resource('/payments', PaymentController::class);
     Route::resource('/outlets', OutletController::class);
+    Route::resource('/tables', TabelController::class);
+
 });
 
 Route::prefix('/kasir')->middleware('auth')->group(function() {
@@ -48,7 +52,7 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
         return view('kasir.dashboard');
     });
     Route::resource('/transaksi', TransaksiController::class);
-    Route::resource('/detail', TransaksiDetailController::class);
+    Route::get('/berjalan', [TransaksiController::class, 'berjalan'])->name('transaksi.berjalan');
 });
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');

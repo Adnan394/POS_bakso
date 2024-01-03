@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produk;
+use App\Models\Table;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\Transaction_detail;
@@ -20,26 +21,25 @@ class TransaksiController extends Controller
         return view('kasir.dashboard');
     }
 
+    public function berjalan()
+    {
+        $transaksi = Transaction::where('payment_id', null)->get();
+        return view('kasir.transaksi.berjalan', ['transaksi' => $transaksi]);
+
+    }
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
+        $tables = Table::all();
         $products = Produk::all();
-        return view('kasir.transaksi.baru', ['products' => $products]);
+        return view('kasir.transaksi.baru', ['products' => $products, 'tables' => $tables]);
     }
     
-    public function selesai()
-    {
-        return view('kasir.transaksi.selesai');
 
-    }
-    public function detail()
-    {
-        return view('kasir.transaksi.detail');
-
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -74,6 +74,8 @@ class TransaksiController extends Controller
                     ]);
                 }
             }
+            return redirect->route('transaksi.berjalan')->with('success', 'Data Transaksi berhasil ditambahkan.');
+
     }
 
     /**

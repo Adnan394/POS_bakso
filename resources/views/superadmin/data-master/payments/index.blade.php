@@ -54,6 +54,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Metode Pembayaran</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>

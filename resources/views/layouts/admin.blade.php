@@ -109,12 +109,6 @@
                                 <a class="dropdown-item" href="{{ route('logout') }}"><i data-feather="power"
                                         class="svg-icon mr-2 ml-1"></i>
                                     Logout</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="credit-card"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    My Balance</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="mail"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    Inbox</a>
                             </div>
                         </li>
                         <!-- ============================================================== -->
@@ -160,6 +154,10 @@
                                             class="sidebar-link"><span class="hide-menu"> Payment Method
                                             </span></a>
                                     </li>
+                                    <li class="sidebar-item"><a href="{{ route('tables.index') }}"
+                                        class="sidebar-link"><span class="hide-menu"> Data Meja
+                                        </span></a>
+                                </li>
                                 </ul>
                             </li>
                             <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('accounts.index') }}"
@@ -218,6 +216,10 @@
                                         class="sidebar-link"><span class="hide-menu"> Payment Method
                                         </span></a>
                                 </li>
+                                <li class="sidebar-item"><a href="{{ route('tables.index') }}"
+                                        class="sidebar-link"><span class="hide-menu"> Data Meja
+                                        </span></a>
+                                </li>
                             </ul>
                         </li>
                         <li class="list-divider"></li>
@@ -261,16 +263,8 @@
                                             class="sidebar-link"><span class="hide-menu"> Transaksi Baru
                                             </span></a>
                                     </li>
-                                    <li class="sidebar-item"><a href="{{ route('detail.index') }}"
-                                            class="sidebar-link"><span class="hide-menu"> Detail Transaksi
-                                            </span></a>
-                                    </li>
-                                    <li class="sidebar-item"><a href=""
+                                    <li class="sidebar-item"><a href="{{ route('transaksi.berjalan') }}"
                                             class="sidebar-link"><span class="hide-menu"> Transaksi Berjalan
-                                            </span></a>
-                                    </li>
-                                    <li class="sidebar-item"><a href=""
-                                            class="sidebar-link"><span class="hide-menu"> Transaksi Selesai
                                             </span></a>
                                     </li>
                                 </ul>
