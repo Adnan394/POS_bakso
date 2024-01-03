@@ -8,6 +8,9 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\OutletController;
+use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\TransaksiDetailController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,9 +47,8 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
     Route::get('/', function () {
         return view('kasir.dashboard');
     });
-    Route::resource('/products', ProductController::class);
-    Route::resource('/payments', PaymentController::class);
-    Route::resource('/outlets', OutletController::class);
+    Route::resource('/transaksi', TransaksiController::class);
+    Route::resource('/detail', TransaksiDetailController::class);
 });
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');

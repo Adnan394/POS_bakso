@@ -196,7 +196,7 @@
                 @elseif (Auth::user()->role_id == 2)
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link active" href="/superadmin"
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link active" href="/admin"
                                 aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
                                     class="hide-menu">Dashboard</span></a></li>
                         <li class="list-divider"></li>
@@ -247,21 +247,29 @@
                 @elseif (Auth::user()->role_id == 3)
                     <nav class="sidebar-nav">
                         <ul id="sidebarnav">
-                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="/superadmin"
+                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link active" href="/kasir"
                                     aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
                                         class="hide-menu">Dashboard</span></a></li>
                             <li class="list-divider"></li>
                             <li class="nav-small-cap"><span class="hide-menu">Pemesanan</span></li>
 
-                            <li class="sidebar-item"> <a class="sidebar-link has-arrow" href="javascript:void(0)"
+                            <li class="sidebar-item"> <a class="sidebar-link has-arrow active" href="javascript:void(0)"
                                     aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span
                                         class="hide-menu">Transaksi </span></a>
-                                <ul aria-expanded="false" class="collapse  first-level base-level-line">
-                                    <li class="sidebar-item"><a href="{{ route('products.index') }}"
+                                <ul aria-expanded="false" class="collapse  first-level base-level-line in">
+                                    <li class="sidebar-item"><a href="{{ route('transaksi.create') }}"
+                                            class="sidebar-link"><span class="hide-menu"> Transaksi Baru
+                                            </span></a>
+                                    </li>
+                                    <li class="sidebar-item"><a href="{{ route('detail.index') }}"
+                                            class="sidebar-link"><span class="hide-menu"> Detail Transaksi
+                                            </span></a>
+                                    </li>
+                                    <li class="sidebar-item"><a href=""
                                             class="sidebar-link"><span class="hide-menu"> Transaksi Berjalan
                                             </span></a>
                                     </li>
-                                    <li class="sidebar-item"><a href="{{ route('outlets.index') }}"
+                                    <li class="sidebar-item"><a href=""
                                             class="sidebar-link"><span class="hide-menu"> Transaksi Selesai
                                             </span></a>
                                     </li>
