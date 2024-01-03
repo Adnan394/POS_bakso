@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Transaction;
+use App\Models\Produk;
 
 class TransaksiController extends Controller
 {
@@ -21,7 +23,8 @@ class TransaksiController extends Controller
      */
     public function create()
     {
-        return view('kasir.transaksi.baru');
+        $products = Produk::all();
+        return view('kasir.transaksi.baru', ['products' => $products]);
     }
 
     public function selesai()

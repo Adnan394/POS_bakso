@@ -20,12 +20,10 @@
                                 <tr>
                                     <th scope="row">{{ $key + 1 }}</th>
                                     <td>{{ $product->name }}</td>
-                                    <td>Rp. {{ number_format($product->price, 0, ',', '.') }}</td>
-                                    <td>
-                                        <input type="number" name="product[]" oninput="updateSubtotal({{ $key }})"
-                                            class="qty-input">
-                                    </td>
-                                    <td id="subtotal_{{ $key }}">Rp. 0</td>
+                                    <td>{{ $product->price }}</td>
+                                    <td><input type="number" name="product[]" onchange="updateSubtotal(this)"
+                                            data-price="{{ $product->price }}"></td>
+                                    <td class="subtotal">Rp. 0</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -37,23 +35,15 @@
                     @csrf
                     <div class="form-group">
                         <label for="name">Nama Customer</label>
-                        <input type="text" name="name" class="form-control border-primary" required>
+                        <input type="text" name="name_customer" class="form-control border-primary" required>
                     </div>
                     <div class="form-group">
                         <label for="name">Nomor Meja</label>
-                        <input type="text" name="name" class="form-control border-primary" required>
+                        <input type="text" name="table_id" class="form-control border-primary" required>
                     </div>
                     <div class="form-group">
-                        <label for="name">Diskon</label>
-                        <input type="text" name="name" class="form-control border-primary" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="price">Total Item</label>
-                        <input type="text" name="email" class="form-control border-primary" value="6" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="price">Total Price</label>
-                        <input type="text" name="email" class="form-control border-primary" value="60000" readonly>
+                        <label for="total_price">Total Price</label>
+                        <input type="text" name="price_amount" class="form-control border-primary" value="0" readonly>
                     </div>
                     <div class="row py-2">
                         <div class="col-8 text-center">
@@ -67,22 +57,34 @@
             </div>
         </div>
     </div>
-
     <script>
-        function updateSubtotal(index) {
-            // Mendapatkan nilai qty yang dimasukkan
-            var qtyInput = document.getElementsByClassName('qty-input')[index];
-            var qty = qtyInput.value;
+        function updateSubtotal(input) {
+            var price = parseFloat(input.getAttribute('data-price'));
+            var quantity = parseInt(input.value);
+            var subtotal = price * quantity;
 
-            // Mendapatkan harga produk dari kolom Price
-            var priceColumn = document.getElementsByTagName('td')[index * 5 + 2]; // Setiap baris memiliki 5 kolom
-            var price = parseFloat(priceColumn.innerText.replace('Rp. ', '').replace('.', ''));
-            console.log(price);
+            // Menemukan elemen td.subtotal terkait dan mengupdate nilainya
+            var subtotalElement = input.parentNode.nextElementSibling;
+            subtotalElement.innerHTML = 'Rp. ' + subtotal.toLocaleString(); // Menambah format angka dengan toLocaleString()
 
-            // Menghitung subtotal dan memperbarui tampilan
-            var subtotal = qty * price;
-            var subtotalColumn = document.getElementById('subtotal_' + index);
-            subtotalColumn.innerText = 'Rp. ' + subtotal.toLocaleString('id-ID');
+            // Mengupdate nilai Total Price
+            updateTotalPrice();
+        }
+
+        function updateTotalPrice() {
+            var subtotalElements = document.getElementsByClassName('subtotal');
+            var totalPrice = 0;
+
+            for (var i = 0; i < subtotalElements.length; i++) {
+                var subtotalText = subtotalElements[i].innerText;
+                var subtotalValue = parseFloat(subtotalText.replace('Rp. ', '').replace(',', ''));
+
+                totalPrice += subtotalValue;
+            }
+
+            // Menemukan elemen input Total Price dan mengupdate nilainya
+            var totalPriceInput = document.getElementsByName('price_amount')[0];
+            totalPriceInput.value = totalPrice.toLocaleString(); // Menambah format angka dengan toLocaleString()
         }
     </script>
 @endsection
