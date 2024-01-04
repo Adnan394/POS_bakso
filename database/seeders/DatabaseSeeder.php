@@ -30,6 +30,9 @@ class DatabaseSeeder extends Seeder
         Role::create([
             'name' => 'Kasir',
         ]);
+        Role::create([
+            'name' => 'Outlet',
+        ]);
 
         Location::create([
             'locations' => 'Purwokerto',
@@ -74,6 +77,13 @@ class DatabaseSeeder extends Seeder
             'email' => 'kasir1@gmail.com',
             'role_id' => '3',
             'password' => Hash::make('kasir123'),
+            'location_id' => '1',
+        ]);
+        User::create([
+            'name' => 'Outlet Pusat',
+            'email' => 'outlet1@gmail.com',
+            'role_id' => '4',
+            'password' => Hash::make('outlet123'),
             'location_id' => '1',
         ]);
 

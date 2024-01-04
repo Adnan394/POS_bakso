@@ -21,11 +21,11 @@
                             <tbody>
                                 @foreach ($products as $key => $product)
                                     <tr>
-                                        <th scope="row">{{ $key + 1 }}</th>
+                                        <th scope="row">{{ $loop->iteration }}</th>
                                         <td>{{ $product->name }}</td>
                                         <td>{{ $product->price }}</td>
                                         <td>
-                                            <input type="hidden" name="produk[]" value="{{ $product->id }}">
+                                            <input type="hidden" name="produk[]">
                                             <input type="number" name="qty[]" onchange="updateSubtotal(this)"
                                                 data-price="{{ $product->price }}">
                                         </td>
@@ -40,12 +40,13 @@
                 <div class="mr-5">
                     <div class="form-group">
                         <label for="name">Nama Customer</label>
-                        <input type="text" name="name_customer" class="form-control border-primary" required>
+                        <input type="text" name="name_customer" value="{{ $data->name_customer }}"
+                            class="form-control border-primary" required>
                     </div>
                     <div class="form-group">
                         <label for="name">Nomor Meja</label>
                         <select name="table_id" id="table_id">
-                            <option value="" disabled selected>Pilih Nomor Meja</option>
+                            <option value="{{ $data->table_id }}" disabled selected>{{ $data->table->number }}</option>
                             @foreach ($tables as $table)
                                 <option value="{{ $table->id }}">
                                     {{ $table->number }}
@@ -62,12 +63,11 @@
                         <div class="col-8 text-center">
                             <button type="submit" class="btn btn-lg btn-success btn-block" data-toggle="modal"
                                 data-target="#confirmOrderCenter">
-                                Create Order
+                                Continue Order
                             </button>
                         </div>
                     </div>
                 </div>
-
                 </form>
             </div>
         </div>

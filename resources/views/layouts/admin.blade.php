@@ -275,6 +275,35 @@
                                         class="feather-icon"></i><span class="hide-menu">Logout</span></a></li>
                         </ul>
                     </nav>
+                @elseif (Auth::user()->role_id == 4)
+                    <nav class="sidebar-nav">
+                        <ul id="sidebarnav">
+                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link active" href="/kasir"
+                                    aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
+                                        class="hide-menu">Dashboard</span></a></li>
+                            <li class="list-divider"></li>
+                            <li class="nav-small-cap"><span class="hide-menu">Pesanan</span></li>
+
+                            <li class="sidebar-item"> <a class="sidebar-link has-arrow active" href="javascript:void(0)"
+                                    aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span
+                                        class="hide-menu">Transaksi </span></a>
+                                <ul aria-expanded="false" class="collapse  first-level base-level-line in">
+                                    <li class="sidebar-item"><a href="{{ route('minuman.index') }}"
+                                            class="sidebar-link"><span class="hide-menu"> Pesanan Minuman
+                                            </span></a>
+                                    </li>
+                                    <li class="sidebar-item"><a href="{{ route('makanan.index') }}"
+                                            class="sidebar-link"><span class="hide-menu"> Pesanan Makanan
+                                            </span></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-divider"></li>
+                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
+                                    href="{{ route('logout') }}" aria-expanded="false"><i data-feather="log-out"
+                                        class="feather-icon"></i><span class="hide-menu">Logout</span></a></li>
+                        </ul>
+                    </nav>
                 @endif
                 <!-- End Sidebar navigation -->
             </div>

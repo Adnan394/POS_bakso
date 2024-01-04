@@ -25,7 +25,6 @@ class TransaksiController extends Controller
     {
         $transaksi = Transaction::where('payment_id', null)->get();
         return view('kasir.transaksi.berjalan', ['transaksi' => $transaksi]);
-
     }
 
 
@@ -63,17 +62,18 @@ class TransaksiController extends Controller
                 'name_customer' => $request->name_customer
             ]);
 
-            foreach($request->produk as $product) {
-                foreach($request->qty as $qty) {
-                    Transaction_detail::create([
-                        'transaction_id' => $transaction->id,
-                        'product_id' => $product,
-                        'price' => Produk::where('id', $product)->first()->price,
-                        'qty' => $qty,
-                        'status' => "Diproses"
-                    ]);
-                }
+            foreach($request->produk as $index => $product) {
+                $qty = $request->qty[$index];
+            
+                Transaction_detail::create([
+                    'transaction_id' => $transaction->id,
+                    'product_id' => $product,
+                    'price' => Produk::where('id', $product)->first()->price,
+                    'qty' => $qty,
+                    'status' => "Diproses"
+                ]);
             }
+            
             return redirect()->route('transaksi.berjalan')->with('success', 'Data Transaksi berhasil ditambahkan.');
 
     }
@@ -83,9 +83,13 @@ class TransaksiController extends Controller
      */
     public function show(string $id)
     {
-        $data = Transaction::where('id', $id)->first();
+        
+        $data = Transaction::where('transactions.id', $id)
+            ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
+            ->select(['transactions.*', 'transaction_details.*'])
+            ->get();
 
-        return view('kasir.transaksi.detail', ['products' => Produk::all()]);
+        return view('kasir.transaksi.detail', ['products' => $data, 'data' => Transaction::where('id', $id)->first()]);
     }
 
    
@@ -95,7 +99,9 @@ class TransaksiController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $tables = Table::all();
+        $products = Produk::all();
+        return view('kasir.transaksi.edit', ['data' => Transaction::where('id', $id)->first(), 'products' => $products, 'tables' => $tables]);
     }
 
     /**

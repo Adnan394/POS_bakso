@@ -9,6 +9,8 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\OutletController;
 use App\Http\Controllers\TabelController;
+use App\Http\Controllers\MakananController;
+use App\Http\Controllers\MinumanController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\TransaksiDetailController;
 
@@ -53,6 +55,13 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
     });
     Route::resource('/transaksi', TransaksiController::class);
     Route::get('/berjalan', [TransaksiController::class, 'berjalan'])->name('transaksi.berjalan');
+});
+Route::prefix('/outlet')->middleware('auth')->group(function() {
+    Route::get('/', function () {
+        return view('outlet.dashboard');
+    });
+    Route::resource('/makanan', MakananController::class);
+    Route::resource('/minuman', MinumanController::class);
 });
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');

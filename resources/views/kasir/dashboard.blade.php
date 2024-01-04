@@ -30,11 +30,12 @@
         </div>
 
         <div class="container-fluid">
-          <div class="col-5 align-self-center mb-3">
-            <div class="customize-input">
-               <a href="{{ route('transaksi.create') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Tambah Transaksi</a>
+            <div class="col-5 align-self-center mb-3">
+                <div class="customize-input">
+                    <a href="{{ route('transaksi.create') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i>
+                        Tambah Transaksi</a>
+                </div>
             </div>
-        </div>
             <div class="card-group">
                 <div class="card border-right">
                     <div class="card-body">
