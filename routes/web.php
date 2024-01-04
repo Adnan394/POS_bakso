@@ -31,7 +31,7 @@ Route::prefix('/superadmin')->middleware('auth')->group(function() {
     Route::resource('/products', ProductController::class);
     Route::resource('/accounts', AccountController::class);
     Route::resource('/locations', LocationController::class);
-    Route::resource('/tables', TableController::class);
+    Route::resource('/tables', TabelController::class);
     Route::resource('/payments', PaymentController::class);
     Route::resource('/outlets', OutletController::class);
 });

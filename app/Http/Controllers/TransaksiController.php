@@ -74,7 +74,7 @@ class TransaksiController extends Controller
                     ]);
                 }
             }
-            return redirect->route('transaksi.berjalan')->with('success', 'Data Transaksi berhasil ditambahkan.');
+            return redirect()->route('transaksi.berjalan')->with('success', 'Data Transaksi berhasil ditambahkan.');
 
     }
 
@@ -83,6 +83,9 @@ class TransaksiController extends Controller
      */
     public function show(string $id)
     {
+        $data = Transaction::where('id', $id)->first();
+
+        return view('kasir.transaksi.detail', ['products' => Produk::all()]);
     }
 
    
