@@ -21,9 +21,26 @@ class TransaksiController extends Controller
         return view('kasir.dashboard');
     }
 
-    public function berjalan()
+    public function berjalan(Request $request)
     {
-        $transaksi = Transaction::where('payment_id', null)->get();
+        $keyword = $request->input('keyword');
+    
+        // Query dasar untuk mendapatkan transaksi yang belum memiliki payment_id
+        $query = Transaction::where('payment_id', null);
+    
+        // Jika ada keyword, tambahkan kondisi pencarian
+        if ($keyword) {
+            $query->where(function ($subQuery) use ($keyword) {
+                $subQuery->where('name_customer', 'like', "%$keyword%")
+                    ->orWhereHas('table', function ($tableQuery) use ($keyword) {
+                        $tableQuery->where('number', 'like', "%$keyword%");
+                    });
+            });
+        }
+    
+        // Ambil hasil query dan kirimkan ke view
+        $transaksi = $query->get();
+        
         return view('kasir.transaksi.berjalan', ['transaksi' => $transaksi]);
     }
 

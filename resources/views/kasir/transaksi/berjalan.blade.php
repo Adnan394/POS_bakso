@@ -10,6 +10,12 @@
                             Tambah Transaksi</a>
                     </div>
                 </div>
+                <form class="form searchartikel align-items-center" method="get" action="berjalan">
+                    <div class="form-group ">
+                        <input type="text" name="keyword" class="form-control w-75 d-inline" id="search" placeholder="Masukkan keyword">
+                        <button type="submit" class="btn btn-primary mb-1">Cari</button>
+                    </div>
+                </form> 
                 <div class="col-12">
                     <h6 class="">Transaksi Berjalan (4)</h6>
                 </div>
@@ -17,7 +23,7 @@
                 <div class="col-lg-4 col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title"><a href="#">{{ $item->id }}</a></h5>
+                            <h5 class="card-title"><a href="#">{{ $item->name_customer }}</a></h5>
                             <small>{{ $item->created_at }}</small>
                             <p class="card-text">For {{ $item->transaction_detail->sum('qty') }} Items</p>
                         </div>

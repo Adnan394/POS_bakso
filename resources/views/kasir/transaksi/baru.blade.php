@@ -8,7 +8,7 @@
                     <form method="POST" action="{{ route('transaksi.store') }}" enctype="multipart/form-data"
                         class="mt-4 mr-5">
                         @csrf
-                        <table class="table table-striped mt-4">
+                        <table id="zero_config" class="table table-striped table-bordered no-wrap">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="form-group">
                         <label for="name">Nomor Meja</label>
-                        <select name="table_id" id="table_id">
+                        <select name="table_id" id="table_id" required>
                             <option value="" disabled selected>Pilih Nomor Meja</option>
                             @foreach ($tables as $table)
                                 <option value="{{ $table->id }}">
