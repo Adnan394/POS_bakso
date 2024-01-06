@@ -3,7 +3,7 @@
 @section('content')
     <div class="page-wrapper">
         <div class="row mt-5">
-            <div class="col-8 mt-3">
+            <div class="col-12 col-lg-8 mt-3"> <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
                 <div data-spy="scroll" style="position: relative; height: 570px; overflow: auto;">
                     <div class="col-5 align-self-center mb-3">
                         <div class="customize-input">
@@ -36,8 +36,9 @@
                     </table>
                 </div>
             </div>
-            <div class="col-4 mt-1">
-                <form method="POST" action="" enctype="multipart/form-data" class="mt-4 mr-5">
+            <div class="col-12 col-lg-4 mt-1 px-lg-5"> <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
+                <div class="">
+                <form method="POST" action="" enctype="multipart/form-data" class="mt-4">
                     @csrf
                     <div class="form-group">
                         <label for="name">Nama Customer</label>
@@ -84,6 +85,7 @@
                         </div>
                     </div>
                 </form>
+                </div>
             </div>
         </div>
     </div>
