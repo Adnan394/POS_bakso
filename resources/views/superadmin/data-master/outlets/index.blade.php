@@ -55,6 +55,7 @@
                                             <th>No</th>
                                             <th>Name</th>
                                             <th>Lokasi</th>
+                                            <th>Outlet</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -64,7 +65,7 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->location->locations }}</td>
-                                                <td>{{ $item->email }}</td>
+                                                <td>{{ $item->outlet->name }}</td>
                                                 <td>
                                                     <a href="" data-toggle="modal"
                                                         data-target="#modal-edit{{ $item->id }}" style="width: 50px"
@@ -123,6 +124,22 @@
                                                                                     @endforeach
                                                                                 </select>
                                                                             </div>
+                                                                            <div class="form-group">
+                                                                                <label for="outlet_id">Jenis Outlet</label>
+                                                                                <select name="outlet_id" id="outlet_id">
+                                                                                    <option
+                                                                                        value="{{ $item->outlet->id }}"
+                                                                                        disabled selected>
+                                                                                        {{ $item->outlet->name }}
+                                                                                    </option>
+                                                                                    @foreach ($outlet as $o)
+                                                                                        <option
+                                                                                            value="{{ $o->id }}">
+                                                                                            {{ $o->name }}
+                                                                                        </option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
                                                                             <div class="modal-footer">
                                                                                 <button type="submiy"
                                                                                     class="btn btn-primary">Tambahkan</button>
@@ -177,6 +194,17 @@
                                                 @foreach ($locations as $location)
                                                     <option value="{{ $location->id }}">
                                                         {{ $location->locations }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="outlet_id">Jenis Outlet</label>
+                                            <select name="outlet_id" id="location_id">
+                                                <option disabled selected>Pilih Jenis Outlet</option>
+                                                @foreach ($outlet as $o)
+                                                    <option value="{{ $o->id }}">
+                                                        {{ $o->name }}
                                                     </option>
                                                 @endforeach
                                             </select>

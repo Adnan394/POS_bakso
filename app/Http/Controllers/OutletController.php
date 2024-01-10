@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Outlet;
 use App\Models\Location;
+use App\Models\Outlet_detail;
 use Illuminate\Support\Facades\Hash;
 
 class OutletController extends Controller
@@ -15,8 +16,12 @@ class OutletController extends Controller
     public function index()
     {
         $locations = Location::all();
-        $data = Outlet::all();
-        return view('superadmin.data-master.outlets.index', ['data' => $data , 'locations' => $locations]);
+        $data = Outlet_detail::all();
+        return view('superadmin.data-master.outlets.index', [
+            'data' => $data , 
+            'locations' => $locations,
+            'outlet' => Outlet::all()
+        ]);
     }
 
     /**
@@ -32,9 +37,10 @@ class OutletController extends Controller
      */
     public function store(Request $request)
     {
-        Outlet::create([
+        Outlet_detail::create([
             'name' => $request->name,
             'location_id' => $request->location_id,
+            'outlet_id' => $request->outlet_id,
         ]);
 
         return redirect()->route('outlets.index')->with('success', 'Outlet berhasil ditambahkan.');
@@ -67,11 +73,12 @@ class OutletController extends Controller
         $data = [
             'name' => $request->name,
             'location_id' => $request->location_id,
+            'outlet_id' => $request->outlet_id
         ];
 
-        Outlet::where('id', $id)->update($data);
+        Outlet_detail::where('id', $id)->update($data);
 
-        return redirect()->route('outlet.index')->with('success', 'Outlet berhasil diperbarui.');
+        return redirect()->back()->with('success', 'Outlet berhasil diperbarui.');
     }
 
     /**
@@ -79,7 +86,7 @@ class OutletController extends Controller
      */
     public function destroy(string $id)
     {
-        Outlet::where('id', $id)->delete();
-        return redirect()->route('outlets.index')->with('success', 'Outlet berhasil dihapus.');
+        Outlet_detail::where('id', $id)->delete();
+        return redirect()->back()->with('success', 'Outlet berhasil dihapus.');
     }
 }

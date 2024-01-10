@@ -38,10 +38,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Location::create([
-            'locations' => 'Purwokerto',
+            'locations' => 'Purbalingga',
         ]);
         Location::create([
-            'locations' => 'Purbalingga',
+            'locations' => 'Purwokerto',
         ]);
 
         Outlet::create([
@@ -66,14 +66,14 @@ class DatabaseSeeder extends Seeder
             'email' => 'adminpwt@gmail.com',
             'role_id' => '2',
             'password' => Hash::make('admin123'),
-            'location_id' => '1',
+            'location_id' => '2',
         ]);
         User::create([
             'name' => 'Admin Purbalingga',
             'email' => 'adminpbg@gmail.com',
             'role_id' => '2',
             'password' => Hash::make('admin123'),
-            'location_id' => '2',
+            'location_id' => '1',
         ]);
         User::create([
             'name' => 'Kasir Pusat',
@@ -121,7 +121,7 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Bakso Polos Isi 5 + Basreng',
             'price' => 14000,
-            'image' => 'gambar_stock/bakso_polos_isi_5_basreng.jpg',
+            'image' => 'gambar_stock/bakso.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -304,20 +304,20 @@ class DatabaseSeeder extends Seeder
             'location_id' => 1,
         ]);
 
-        Table::create([
-            'number' => 1,
-        ]);
-        Table::create([
-            'number' => 2,
-        ]);
-        Table::create([
-            'number' => 3,
-        ]);
-        Table::create([
-            'number' => 4,
-        ]);
-        Table::create([
-            'number' => 5,
-        ]);
+        // Table::create([
+        //     'number' => 1,
+        // ]);
+        // Table::create([
+        //     'number' => 2,
+        // ]);
+        // Table::create([
+        //     'number' => 3,
+        // ]);
+        // Table::create([
+        //     'number' => 4,
+        // ]);
+        // Table::create([
+        //     'number' => 5,
+        // ]);
     }
 }

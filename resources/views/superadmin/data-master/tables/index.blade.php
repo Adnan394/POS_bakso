@@ -54,6 +54,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nomor Meja</th>
+                                            <th>Outlet</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -62,12 +63,13 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $item->number }}</td>
+                                                <td>{{ $item->outlet_detail->name }}</td>
                                                 <td>
                                                     <a href="" data-toggle="modal"
                                                         data-target="#modal-edit{{ $item->id }}" style="width: 50px" 
                                                         class="btn btn-warning"><i class="bi bi-pencil"><span
                                                               class="fas fa-edit"></span></i></a>
-                                                    <form action="{{ route('locations.destroy', $item->id) }}"
+                                                    <form action="{{ route('tables.destroy', $item->id) }}"
                                                         method="POST">
                                                         @method('DELETE')
                                                         @csrf
@@ -94,15 +96,26 @@
                                                                     <div class="card-body">
                                                                         <h4 class="card-title">Edit Product</h4>
                                                                         <form method="POST"
-                                                                            action="{{ route('locations.update', $item->id) }}"
+                                                                            action="{{ route('tables.update', $item->id) }}"
                                                                             enctype="multipart/form-data" class="mt-4">
                                                                             @method('PUT')
                                                                             @csrf
                                                                             <div class="form-group">
                                                                                 <label for="locations">Nama</label>
-                                                                                <input type="number" name="number"
+                                                                                <input type="text" name="number"
                                                                                     class="form-control border-primary"
                                                                                     value="{{ $item->number }}" required>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="outlet_id">Outlet</label>
+                                                                                <select name="outlet_detail_id" id="outlet_detail_id">
+                                                                                    <option value="{{ $item->outlet_detail->id }}" selected>{{ $item->outlet_detail->name }}</option>
+                                                                                    @foreach ($outlet_detail as $o)
+                                                                                        <option value="{{ $o->id }}">
+                                                                                            {{ $o->name }}
+                                                                                        </option>
+                                                                                    @endforeach
+                                                                                </select>
                                                                             </div>
                                                                             <div class="modal-footer">
                                                                                 <button type="submiy"
@@ -143,13 +156,24 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Tambahkan Meja</h4>
-                                    <form method="POST" action="{{ route('locations.store') }}"
+                                    <form method="POST" action="{{ route('tables.store') }}"
                                         enctype="multipart/form-data" class="mt-4">
                                         @csrf
                                         <div class="form-group">
-                                            <label for="name">Lokasi</label>
-                                            <input type="number" name="number" class="form-control border-primary"
+                                            <label for="name">Nomor Meja</label>
+                                            <input type="text" name="number" class="form-control border-primary"
                                                 required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="outlet_id">Outlet</label>
+                                            <select name="outlet_detail_id" id="outlet_detail_id">
+                                                <option disabled selected>Pilih Outlet</option>
+                                                @foreach ($outlet_detail as $o)
+                                                    <option value="{{ $o->id }}">
+                                                        {{ $o->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="reset" class="btn btn-light">Kosongkan</button>
