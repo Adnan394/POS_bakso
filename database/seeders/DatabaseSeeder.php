@@ -33,6 +33,9 @@ class DatabaseSeeder extends Seeder
         Role::create([
             'name' => 'Outlet',
         ]);
+        Role::create([
+            'name' => 'Waiters',
+        ]);
 
         Location::create([
             'locations' => 'Purwokerto',
@@ -42,12 +45,12 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Outlet::create([
-            'name' => 'Dapur Minuman',
+            'name' => 'Utama',
             'location_id' => '1',
         ]);
 
         Outlet::create([
-            'name' => 'Dapur Makanan',
+            'name' => 'Tenant',
             'location_id' => '1',
         ]);
 
@@ -316,6 +319,5 @@ class DatabaseSeeder extends Seeder
         Table::create([
             'number' => 5,
         ]);
-
     }
 }
