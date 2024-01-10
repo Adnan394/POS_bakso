@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Outlet_detail;
 use Illuminate\Http\Request;
 use App\Models\Table;
 
@@ -13,7 +14,10 @@ class TabelController extends Controller
     public function index()
     {
         $tables = table::all();
-        return view('superadmin.data-master.tables.index', ['tables' => $tables]);
+        return view('superadmin.data-master.tables.index', [
+            'tables' => $tables,
+            'outlet_detail' => Outlet_detail::all()
+        ]);
     }
 
     /**
@@ -31,9 +35,10 @@ class TabelController extends Controller
     {
         table::create([
             'number' => $request->number,
+            'outlet_detail_id' => $request->outlet_detail_id
         ]);
 
-        return redirect()->route('tables.index')->with('success', 'Data Lokasi berhasil ditambahkan.');
+        return redirect()->back()->with('success', 'Data Lokasi berhasil ditambahkan.');
     }
 
     /**
@@ -60,10 +65,11 @@ class TabelController extends Controller
     {
         $data = [
             'number' => $request->number,
+            'outlet_detail_id' => $request->outlet_detail_id
         ];
 
         table::where('id', $id)->update($data);
-        return redirect()->route('table.index')->with('success', 'Data Lokasi berhasil diperbarui.');
+        return redirect()->back()->with('success', 'Data Lokasi berhasil diperbarui.');
 
     }
 
@@ -73,6 +79,6 @@ class TabelController extends Controller
     public function destroy(string $id)
     {
         table::where('id',$id)->delete();
-        return redirect()->route('tables.index')->with('success', 'Data Lokasi berhasil dihapus.');
+        return redirect()->back()->with('success', 'Data Lokasi berhasil dihapus.');
     }
 }

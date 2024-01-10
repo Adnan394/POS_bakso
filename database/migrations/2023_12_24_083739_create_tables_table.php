@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tables', function (Blueprint $table) {
             $table->id();
             $table->string('number');
+            $table->foreignId('outlet_detail_id')->constrained('outlet_details');
             $table->timestamps();
         });
     }
