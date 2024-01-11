@@ -60,6 +60,7 @@ class DatabaseSeeder extends Seeder
             'role_id' => '1',
             'password' => Hash::make('superadmin'),
             'location_id' => '1',
+            'outlet_id' => '1'
         ]);
         User::create([
             'name' => 'Admin Purwokerto',
@@ -67,6 +68,7 @@ class DatabaseSeeder extends Seeder
             'role_id' => '2',
             'password' => Hash::make('admin123'),
             'location_id' => '2',
+            'outlet_id' => '1'
         ]);
         User::create([
             'name' => 'Admin Purbalingga',
@@ -74,6 +76,7 @@ class DatabaseSeeder extends Seeder
             'role_id' => '2',
             'password' => Hash::make('admin123'),
             'location_id' => '1',
+            'outlet_id' => '1'
         ]);
         User::create([
             'name' => 'Kasir Pusat',
@@ -81,6 +84,7 @@ class DatabaseSeeder extends Seeder
             'role_id' => '3',
             'password' => Hash::make('kasir123'),
             'location_id' => '1',
+            'outlet_id' => '1'
         ]);
         User::create([
             'name' => 'Outlet Pusat',
@@ -88,6 +92,7 @@ class DatabaseSeeder extends Seeder
             'role_id' => '4',
             'password' => Hash::make('outlet123'),
             'location_id' => '1',
+            'outlet_id' => '1'
         ]);
 
         Payment::create([

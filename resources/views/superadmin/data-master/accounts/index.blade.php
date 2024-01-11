@@ -54,8 +54,8 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Name</th>
-                                            <th>Email</th>
                                             <th>Lokasi</th>
+                                            <th>Posisi</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -65,7 +65,11 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->location->locations }}</td>
-                                                <td>{{ $item->email }}</td>
+                                                <td>
+                                                    <?php $outlet_detail_id = \App\Models\User_detail::where('user_id', $item->id)->pluck('outlet_detail_id'); 
+                                                    $outlet = \App\Models\Outlet_detail::where('id', reset($outlet_detail_id))->value('name')?>
+                                                    {{ $outlet }}
+                                                </td>
                                                 <td>
                                                     <a href="" data-toggle="modal"
                                                         data-target="#modal-edit{{ $item->id }}" style="width: 50px" 
@@ -111,7 +115,7 @@
                                                                             <div class="form-group">
                                                                                 <label for="location_id">Lokasi Cabang</label>
                                                                                 <select name="location_id" id="location_id">
-                                                                                    <option value="{{ $item->location_id }}" disabled selected>{{ $item->location->locations }}</option>
+                                                                                    <option value="{{ $item->location_id }}" selected>{{ $item->location->locations }}</option>
                                                                                     @foreach ($locations as $location)
                                                                                         <option value="{{ $location->id }}">
                                                                                             {{ $location->locations }}
@@ -132,7 +136,18 @@
                                                                                 <label for="password">Password</label>
                                                                                 <input type="password" name="password"
                                                                                     class="form-control border-primary"
-                                                                                    value="{{ $item->password }}" required>
+                                                                                    placeholder="Type Password" required>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="outlet_detail_id">Posisi Outlet</label>
+                                                                                <select name="outlet_detail_id" id="outlet_detail_id">
+                                                                                    <option disabled selected>Pilih Posisi Outlet</option>
+                                                                                    @foreach ($outlet_detail as $outlet)
+                                                                                    <option value="{{ $outlet->id }}">
+                                                                                        {{ $outlet->name }}
+                                                                                    </option>
+                                                                                    @endforeach
+                                                                                </select>
                                                                             </div>
                                                                             <div class="modal-footer">
                                                                                 <button type="submiy"

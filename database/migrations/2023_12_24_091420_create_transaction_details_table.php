@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('price');
             $table->string('qty');
             $table->string('status');
+            $table->string('order_sequence');
             $table->timestamps();
         });
     }
