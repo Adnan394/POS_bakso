@@ -62,12 +62,7 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request;
-        // $price_amount = collect($request->products)->sum(function($item) {
-        //     return $item['price'] * $item['qty'];
-        // });
-        // $pay_amount = $price_amount - $request->discount;
-
+        // return $request->all();
             $transaction = Transaction::create([
                 'payment_id' => ($request->payment_id) ? $request->payment_id : null,
                 'table_id' => $request->table_id,
@@ -81,18 +76,20 @@ class TransaksiController extends Controller
 
             foreach($request->produk as $index => $product) {
                 $qty = $request->qty[$index];
-            
-                Transaction_detail::create([
-                    'transaction_id' => $transaction->id,
-                    'product_id' => $product,
-                    'price' => Produk::where('id', $product)->first()->price,
-                    'qty' => $qty,
-                    'status' => "Diproses"
-                ]);
+                
+                if ($qty != null) {
+                    Transaction_detail::create([
+                        'transaction_id' => $transaction->id,
+                        'product_id' => $product,
+                        'price' => Produk::where('id', $product)->first()->price,
+                        'qty' => $qty,
+                        'status' => "Diproses",
+                        'order_sequence' => 1
+                    ]);
+                }
             }
             
             return redirect()->route('transaksi.berjalan')->with('success', 'Data Transaksi berhasil ditambahkan.');
-
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\User_detail;
 use App\Models\Location;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -52,4 +53,5 @@ class User extends Authenticatable
     public function location() {
         return $this->belongsTo(Location::class);
     }
+
 }

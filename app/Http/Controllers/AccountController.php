@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Location;
+use App\Models\Outlet_detail;
+use App\Models\User_detail;
 use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
@@ -15,8 +17,8 @@ class AccountController extends Controller
     public function index()
     {
         $locations = Location::all();
-        $data = User::where('role_id', 2)->get();
-        return view('superadmin.data-master.accounts.index', ['data' => $data , 'locations' => $locations]);
+        $data = User::all();
+        return view('superadmin.data-master.accounts.index', ['data' => $data , 'locations' => $locations, 'outlet_detail' => Outlet_detail::all()]);
     }
 
     /**
@@ -59,7 +61,10 @@ class AccountController extends Controller
     public function edit(string $id)
     {
         $data = User::where('id', $id)->first();
-        return view('superadmin.data-master.accounts.index',['data' => $data]);
+        return view('superadmin.data-master.accounts.index',[
+            'data' => $data,
+            'outlet_detail' => Outlet_detail::all()
+        ]);
     }
 
     /**
@@ -71,11 +76,22 @@ class AccountController extends Controller
             'name' => $request->name,
             'location_id' => $request->location_id,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make($request->password)
         ];
 
-        User::where('id', $id)->update($data);
-
+        try {
+            User::where('id', $id)->update($data);
+            if(User_detail::where('user_id', $id)->first()) {
+                User_detail::where('user_id', $id)->update(['outlet_detail_id' => $request->outlet_detail_id]);
+            }else {
+                User_detail::create([
+                    'user_id' => $id, 
+                    'outlet_detail_id' => $request->outlet_detail_id
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return redirect()->route('accounts.index')->with('success', 'Gagal Update data!');
+        }
         return redirect()->route('accounts.index')->with('success', 'Akun Cabang berhasil diperbarui.');
     }
 
