@@ -115,9 +115,15 @@ class TransaksiController extends Controller
      */
     public function edit(string $id)
     {
+        
         $payment = Payment::all();
         $products = Produk::all();
-        return view('kasir.transaksi.edit', ['data' => Transaction::where('id', $id)->first(), 'products' => $products, 'payment' => $payment]);
+        $tables = Table::all();        
+        $data = Transaction::where('transactions.id', $id)
+            ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
+            ->select(['transactions.*', 'transaction_details.*'])
+            ->get();
+        return view('kasir.transaksi.edit', ['data' => Transaction::where('id', $id)->first(),'product' => $data, 'products' => $products, 'payment' => $payment]);
     }
 
     /**
