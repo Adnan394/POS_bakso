@@ -126,12 +126,28 @@ class TransaksiController extends Controller
         return view('kasir.transaksi.edit', ['data' => Transaction::where('id', $id)->first(),'product' => $data, 'products' => $products, 'payment' => $payment]);
     }
 
+    public function selesai() {
+        return view('kasir.transaksi.selesai');
+    }
+
+    public function selesaikan_pesanan(Request $request) {
+        Transaction::where('id', $request->transaction_id)->update([
+            'payment_id' => $request->payment_id
+        ]);
+
+        foreach (Transaction_detail::where('transaction_id', $request->transaction_id)->get() as $td) {
+            Transaction_detail::where('id', $td->id)->update([
+                'status' => "Selesai"
+            ]);
+        }
+        return redirect()->back();
+    }
+
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        dd($id);
     }
 
     public function tambah_pesanan(Request $request) {

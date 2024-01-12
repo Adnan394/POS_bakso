@@ -31,6 +31,9 @@
                 </div>
             </div>
             <div class="col-4 mt-1">
+                <form action="{{ route('selesaikan_pesanan') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="transaction_id" value="{{ $data->id }}">
                 <div class="mr-5">
                     <div class="form-group">
                         <label for="name">Nama Customer</label>
@@ -59,7 +62,7 @@
                     </div>
                     <div class="form-group">
                         <label for="name">Metode Pembayaran</label>
-                        <select name="table_id" id="table_id">
+                        <select name="payment_id" id="payment_id">
                             <option value="" readonly selected>Pilih Metode Pembayaran</option>
                             @foreach ($payment as $data)
                                 <option value="{{ $data->id }}">
@@ -70,7 +73,7 @@
                     </div>
                     <div class="row py-2">
                         <div class="col-8 text-center">
-                            <button type="button" class="btn btn-lg btn-success btn-block" data-toggle="modal"
+                            <button type="submit" class="btn btn-lg btn-success btn-block" data-toggle="modal"
                                 data-target="#confirmOrderCenter">
                                 Finish Order
                             </button>
