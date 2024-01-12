@@ -5,6 +5,12 @@
         <div class="row mt-5">
             <div class="col-12 col-lg-8 mt-3"> <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
                 <div data-spy="scroll" style="position: relative; height: 570px; overflow: auto;">
+                    <div class="col-5 align-self-center mb-3">
+                        <div class="customize-input">
+                            <a href="{{ route('transaksi.edit', $data->id) }}" class="btn btn-primary">
+                                Edit Transaksi</a>
+                        </div>
+                    </div>
                     <table class="table table-striped mt-4">
                         <thead>
                             <tr>
@@ -67,27 +73,42 @@
                             value="{{ $data->name_customer }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="name">Nomor Meja</label>
-                        <select name="table_id" id="table_id" required>
-                            <option value="" disabled selected>Pilih Nomor Meja</option>
-                            @foreach ($tables as $table)
-                                <option value="{{ $table->id }}">
-                                    {{ $table->number }}
-                                </option>
-                            @endforeach
-                        </select>
+                        <label for="price">Total Item</label>
+                        <input type="number" name="total_item" class="form-control border-primary"
+                            value="{{ $data->transaction_detail->sum('qty') }}" readonly>
                     </div>
                     <div class="form-group">
                         <label for="price">Total Price</label>
                         <input type="number" name="price_amount" class="form-control border-primary" value="0"
                             readonly>
                     </div>
+                    <div class="form-group">
+                        <label for="price">Paid</label>
+                        <input type="number" name="paid" class="form-control border-primary" value="0"
+                            onchange="updateReturn()">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Return</label>
+                        <input type="number" name="return" class="form-control border-primary" value="0" readonly>
+                    </div>
+
+                    <div class="row pt-5">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-lg btn-dark btn-block">Hold</button>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn btn-lg btn-danger btn-block">Cancel</button>
+                        </div>
+                    </div>
                     <div class="row py-2">
                         <div class="col-8 text-center">
                             <button type="button" class="btn btn-lg btn-success btn-block" data-toggle="modal"
                                 data-target="#confirmOrderCenter">
-                                Tambah Order
+                                Finish Order
                             </button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-lg btn-primary btn-block">Invoice</button>
                         </div>
                     </div>
                 </form>
@@ -139,9 +160,6 @@
         inputProduk.forEach(function(input) {
             updateSubtotal(input);
         });
-
-        updateTotalPrice(); // Memanggil fungsi updateTotalPrice setelah kedua tabel selesai dimuat
-
     });
     </script>
 @endsection
