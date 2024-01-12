@@ -54,6 +54,7 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
         return view('kasir.dashboard');
     });
     Route::resource('/transaksi', TransaksiController::class);
+    Route::post('/transaksi/tambah', [TransaksiController::class, 'tambah_pesanan'])->name('tambah_pesanan');
     Route::get('/berjalan', [TransaksiController::class, 'berjalan'])->name('transaksi.berjalan');
 });
 Route::prefix('/outlet')->middleware('auth')->group(function() {

@@ -124,7 +124,28 @@ class TransaksiController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        dd($id);
+    }
+
+    public function tambah_pesanan(Request $request) {
+        $order_sequence = Transaction_detail::where('transaction_id', $request->transaksi_id)->orderBy('created_at', 'DESC')->limit(1)->first();
+        Transaction::where('id', $request->transaksi_id)->update(['price_amount' => $request->price_amount]);
+        foreach($request->produk as $index => $product) {
+            $qty = $request->qty[$index];
+            
+            if ($qty != null) {
+                Transaction_detail::create([
+                    'transaction_id' => $request->transaksi_id,
+                    'product_id' => $product,
+                    'price' => Produk::where('id', $product)->first()->price,
+                    'qty' => $qty,
+                    'status' => "Diproses",
+                    'order_sequence' => $order_sequence->order_sequence + 1
+                ]);
+            }
+        }
+
+        return redirect()->back();
     }
 
     /**
