@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Produk;
 use App\Models\Table;
+use App\Models\Payment;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\Transaction_detail;
@@ -114,9 +115,9 @@ class TransaksiController extends Controller
      */
     public function edit(string $id)
     {
-        $tables = Table::all();
+        $payment = Payment::all();
         $products = Produk::all();
-        return view('kasir.transaksi.edit', ['data' => Transaction::where('id', $id)->first(), 'products' => $products, 'tables' => $tables]);
+        return view('kasir.transaksi.edit', ['data' => Transaction::where('id', $id)->first(), 'products' => $products, 'payment' => $payment]);
     }
 
     /**

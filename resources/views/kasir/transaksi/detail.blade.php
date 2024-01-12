@@ -58,6 +58,33 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    <table id="zero_config" class="table table-striped table-bordered no-wrap">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Qty</th>
+                                <th scope="col">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($products as $key => $product)
+                                <tr>
+                                    <th scope="row">{{ $key + 1 }}</th>
+                                    <td>{{ $product->name }}</td>
+                                    <td>{{ $product->price }}</td>
+                                    <td>
+                                        <input type="hidden" name="produk[]" value="{{ $product->id }}">
+                                        <input type="number" name="qty[]" onchange="updateSubtotal(this)"
+                                            data-price="{{ $product->price }}">
+                                    </td>
+                                    <td class="subtotal">Rp. 0</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="col-12 col-lg-4 mt-1 px-lg-5"> <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->

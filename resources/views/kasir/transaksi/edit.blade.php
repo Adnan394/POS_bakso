@@ -40,28 +40,46 @@
                         <input type="text" name="name_customer" value="{{ $data->name_customer }}"
                             class="form-control border-primary" required>
                     </div>
+
                     <div class="form-group">
-                        <label for="name">Nomor Meja</label>
+                        <label for="price">Total Item</label>
+                        <input type="number" name="total_item" class="form-control border-primary"
+                            value="{{ $data->transaction_detail->sum('qty') }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Total Price</label>
+                        <input type="number" name="price_amount" class="form-control border-primary" value="0"
+                            readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Paid</label>
+                        <input type="number" name="paid" class="form-control border-primary" value="0"
+                            onchange="updateReturn()">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Return</label>
+                        <input type="number" name="return" class="form-control border-primary" value="0" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Metode Pembayaran</label>
                         <select name="table_id" id="table_id">
-                            <option value="{{ $data->table_id }}" disabled selected>{{ $data->table->number }}</option>
-                            @foreach ($tables as $table)
-                                <option value="{{ $table->id }}">
-                                    {{ $table->number }}
+                            <option value="" readonly selected>Pilih Metode Pembayaran</option>
+                            @foreach ($payment as $data)
+                                <option value="{{ $data->id }}">
+                                    {{ $data->name }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="total_price">Total Price</label>
-                        <input type="text" name="price_amount" class="form-control border-primary" value="0"
-                            readonly>
-                    </div>
                     <div class="row py-2">
                         <div class="col-8 text-center">
-                            <button type="submit" class="btn btn-lg btn-success btn-block" data-toggle="modal"
+                            <button type="button" class="btn btn-lg btn-success btn-block" data-toggle="modal"
                                 data-target="#confirmOrderCenter">
-                                Continue Order
+                                Finish Order
                             </button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-lg btn-primary btn-block">Invoice</button>
                         </div>
                     </div>
                 </div>

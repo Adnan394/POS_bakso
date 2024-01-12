@@ -17,7 +17,7 @@
                     </div>
                 </form> 
                 <div class="col-12">
-                    <h6 class="">Transaksi Berjalan (4)</h6>
+                    <h6 class="">Transaksi Berjalan ({{ $transaksi->count() }})</h6>
                 </div>
                 @foreach ($transaksi as $item)
                 <div class="col-lg-4 col-md-12">
@@ -46,7 +46,10 @@
                         </div>
                         <hr class="mb-0">
                         <div class="card-body mx-auto">
-                            <a href="{{ route('transaksi.show', $item->id) }}" class="card-link">Detail Order</a>
+                            <a href="{{ route('transaksi.show', $item->id) }}" class="card-link">Tambahkan Orderan Tambahan</a>
+                        </div>
+                        <div class="card-body mx-auto pt-0">
+                            <a href="{{ route('transaksi.edit', $item->id) }}" class="btn btn-success">Selesaikan Orderan</a>
                         </div>
                     </div>
                 </div>
