@@ -5,32 +5,29 @@
         <div class="row mt-5">
             <div class="col-8 mt-3">
                 <div data-spy="scroll" style="position: relative; height: 570px; overflow: auto;">
-                    <form method="POST" action="{{ route('transaksi.store') }}" enctype="multipart/form-data"
-                        class="mt-4 mr-5">
-                        @csrf
-                        <table class="table table-striped mt-4">
-                            <thead>
+                    <table class="table table-striped mt-4">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Qty</th>
+                                <th scope="col">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($product as $key => $product)
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Qty</th>
-                                    <th scope="col">Subtotal</th>
+                                    <th scope="row">{{ $key + 1 }}</th>
+                                    <td>{{ \App\Models\Produk::find($product->product_id)->name }}</td>
+                                    <td>{{ $product->price }}</td>
+                                    <td><input type="number" name="product[]" value="{{ $product->qty }}" onchange="updateSubtotal(this)"
+                                            data-price="{{ $product->price }}" readonly></td>
+                                    <td class="subtotal">Rp. 0</td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($products as $key => $product)
-                                    <tr>
-                                        <th scope="row">{{ $loop->iteration }}</th>
-                                        <td>{{ $product->name }}</td>
-                                        <td>{{ $product->price }}</td>
-                                        <td><input type="number" name="product[]" value="{{ $product->qty }}" onchange="updateSubtotal(this)"
-                                            data-price="{{ $product->price }}" ></td>
-                                        <td class="subtotal">Rp. 0</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="col-4 mt-1">
@@ -88,14 +85,14 @@
         </div>
     </div>
     <script>
-        function updateSubtotal(input) {
+         function updateSubtotal(input) {
             var price = parseFloat(input.getAttribute('data-price'));
             var quantity = parseInt(input.value);
             var subtotal = price * quantity;
 
             // Menemukan elemen td.subtotal terkait dan mengupdate nilainya
             var subtotalElement = input.parentNode.nextElementSibling;
-            subtotalElement.innerHTML = 'Rp. ' + subtotal.toLocaleString(); // Menambah format angka dengan toLocaleString()
+            subtotalElement.innerHTML = 'Rp. ' + subtotal.toLocaleString();
 
             // Mengupdate nilai Total Price
             updateTotalPrice();
@@ -114,7 +111,22 @@
 
             // Menemukan elemen input Total Price dan mengupdate nilainya
             var totalPriceInput = document.getElementsByName('price_amount')[0];
-            totalPriceInput.value = totalPrice; // Menambah format angka dengan toLocaleString()
+            totalPriceInput.value = totalPrice;
         }
+
+        function updateReturn() {
+            var totalPrice = parseFloat(document.getElementsByName('price_amount')[0].value);
+            var paid = parseFloat(document.getElementsByName('paid')[0].value);
+
+            var returnInput = document.getElementsByName('return')[0];
+            returnInput.value = (paid - totalPrice).toFixed(2);
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+        var inputProduk = document.querySelectorAll('input[name="product[]"]');
+        inputProduk.forEach(function(input) {
+            updateSubtotal(input);
+        });
+    });
     </script>
 @endsection
