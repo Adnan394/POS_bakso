@@ -55,6 +55,7 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
     });
     Route::resource('/transaksi', TransaksiController::class);
     Route::get('/berjalan', [TransaksiController::class, 'berjalan'])->name('transaksi.berjalan');
+    Route::get('/selesai', [TransaksiController::class, 'selesai'])->name('transaksi.selesai');
 });
 Route::prefix('/outlet')->middleware('auth')->group(function() {
     Route::get('/', function () {

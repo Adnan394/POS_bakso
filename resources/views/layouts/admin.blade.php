@@ -268,6 +268,10 @@
                                             class="sidebar-link"><span class="hide-menu"> Transaksi Berjalan
                                             </span></a>
                                     </li>
+                                    <li class="sidebar-item"><a href="{{ route('transaksi.berjalan') }}"
+                                            class="sidebar-link"><span class="hide-menu"> Transaksi Selesai
+                                            </span></a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="list-divider"></li>
