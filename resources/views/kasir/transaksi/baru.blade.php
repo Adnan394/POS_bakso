@@ -5,8 +5,7 @@
         <div class="row mt-5">
             <div class="col-12 col-lg-8 mt-3"> <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
                 <div data-spy="scroll" style="position: relative; height: 570px; overflow: auto;">
-                    <form method="POST" action="{{ route('transaksi.store') }}" enctype="multipart/form-data"
-                        class="mt-4">
+                    <form method="POST" action="{{ route('transaksi.store') }}" enctype="multipart/form-data" class="mt-4">
                         @csrf
                         <table id="zero_config" class="table table-striped table-bordered no-wrap">
                             <thead>
@@ -59,7 +58,8 @@
                             readonly>
                     </div>
                     <div class="row py-2">
-                        <div class="col-12 col-md-8 text-center"> <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
+                        <div class="col-12 col-md-8 text-center">
+                            <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
                             <button type="submit" class="btn btn-lg btn-success btn-block" data-toggle="modal"
                                 data-target="#confirmOrderCenter">
                                 Create Order
@@ -76,14 +76,24 @@
         function updateSubtotal(input) {
             var price = parseFloat(input.getAttribute('data-price'));
             var quantity = parseInt(input.value);
-            var subtotal = price * quantity;
 
-            // Menemukan elemen td.subtotal terkait dan mengupdate nilainya
-            var subtotalElement = input.parentNode.nextElementSibling;
-            subtotalElement.innerHTML = 'Rp. ' + subtotal.toLocaleString(); // Menambah format angka dengan toLocaleString()
+            // Memastikan quantity valid sebelum melakukan perhitungan
+            if (!isNaN(quantity) && quantity >= 0) {
+                var subtotal = price * quantity;
 
-            // Mengupdate nilai Total Price
-            updateTotalPrice();
+                // Menemukan elemen td.subtotal terkait dan mengupdate nilainya
+                var subtotalElement = input.parentNode.nextElementSibling;
+                subtotalElement.innerHTML = 'Rp. ' + subtotal
+            .toLocaleString(); // Menambah format angka dengan toLocaleString()
+
+                // Mengupdate nilai Total Price
+                updateTotalPrice();
+            } else {
+                // Jika quantity tidak valid, atur subtotal dan total price menjadi 0
+                var subtotalElement = input.parentNode.nextElementSibling;
+                subtotalElement.innerHTML = 'Rp. 0';
+                updateTotalPrice();
+            }
         }
 
         function updateTotalPrice() {

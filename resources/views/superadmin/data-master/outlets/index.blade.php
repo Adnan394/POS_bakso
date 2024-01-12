@@ -8,7 +8,7 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-7 align-self-center">
-                    <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">Data Dapur/Outlet</h4>
+                    <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">Data Outlet</h4>
                     <div class="d-flex align-items-center">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb m-0 p-0">
@@ -22,7 +22,7 @@
                 <div class="col-5 align-self-center">
                     <div class="customize-input float-right">
                         <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#modal-tambah">Tambah Dapur/Outlet</button>
+                            data-target="#modal-tambah">Tambah Outlet</button>
                     </div>
                 </div>
             </div>
@@ -113,7 +113,7 @@
                                                                                 <select name="location_id" id="location_id">
                                                                                     <option
                                                                                         value="{{ $item->location_id }}"
-                                                                                        disabled selected>
+                                                                                        readonly selected>
                                                                                         {{ $item->location->locations }}
                                                                                     </option>
                                                                                     @foreach ($locations as $location)
@@ -129,7 +129,7 @@
                                                                                 <select name="outlet_id" id="outlet_id">
                                                                                     <option
                                                                                         value="{{ $item->outlet->id }}"
-                                                                                        disabled selected>
+                                                                                        readonly selected>
                                                                                         {{ $item->outlet->name }}
                                                                                     </option>
                                                                                     @foreach ($outlet as $o)
@@ -169,7 +169,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header modal-colored-header bg-primary">
-                        <h4 class="modal-title" id="modal-tambahLabel">Form Tambah Produl
+                        <h4 class="modal-title" id="modal-tambahLabel">Form Tambah Outlet
                         </h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
@@ -178,7 +178,7 @@
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Tambahkan Akun Cabang</h4>
+                                    <h4 class="card-title">Tambahkan Outlet</h4>
                                     <form method="POST" action="{{ route('outlets.store') }}"
                                         enctype="multipart/form-data" class="mt-4">
                                         @csrf
@@ -189,7 +189,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="location_id">Lokasi Cabang</label>
-                                            <select name="location_id" id="location_id">
+                                            <select name="location_id" id="location_id" required>
                                                 <option disabled selected>Pilih Lokasi Cabang</option>
                                                 @foreach ($locations as $location)
                                                     <option value="{{ $location->id }}">
@@ -200,7 +200,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="outlet_id">Jenis Outlet</label>
-                                            <select name="outlet_id" id="location_id">
+                                            <select name="outlet_id" id="location_id" required>
                                                 <option disabled selected>Pilih Jenis Outlet</option>
                                                 @foreach ($outlet as $o)
                                                     <option value="{{ $o->id }}">

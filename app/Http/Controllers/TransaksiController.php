@@ -97,13 +97,14 @@ class TransaksiController extends Controller
      */
     public function show(string $id)
     {
-        
+        $products = Produk::all();
+        $tables = Table::all();        
         $data = Transaction::where('transactions.id', $id)
             ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
             ->select(['transactions.*', 'transaction_details.*'])
             ->get();
 
-        return view('kasir.transaksi.detail', ['products' => $data, 'data' => Transaction::where('id', $id)->first()]);
+        return view('kasir.transaksi.detail', ['product' => $data, 'products' => $products , 'tables' => $tables, 'data' => Transaction::where('id', $id)->first()]);
     }
 
    

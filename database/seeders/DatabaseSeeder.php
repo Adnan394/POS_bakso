@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Outlet;
 use App\Models\Payment;
 use App\Models\Produk;
+use App\Models\Outlet_detail;
 use App\Models\Table;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -52,6 +53,22 @@ class DatabaseSeeder extends Seeder
         Outlet::create([
             'name' => 'Tenant',
             'location_id' => '1',
+        ]);
+
+        Outlet_detail::create([
+            'name' => 'Depan',
+            'location_id' => '1',
+            'outlet_id' => '1'
+        ]);
+        Outlet_detail::create([
+            'name' => 'Belakang',
+            'location_id' => '1',
+            'outlet_id' => '1'
+        ]);
+        Outlet_detail::create([
+            'name' => 'Belakang',
+            'location_id' => '1',
+            'outlet_id' => '2'
         ]);
 
         User::create([

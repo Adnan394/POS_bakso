@@ -24,11 +24,8 @@
                                         <th scope="row">{{ $loop->iteration }}</th>
                                         <td>{{ $product->name }}</td>
                                         <td>{{ $product->price }}</td>
-                                        <td>
-                                            <input type="hidden" name="produk[]">
-                                            <input type="number" name="qty[]" onchange="updateSubtotal(this)"
-                                                data-price="{{ $product->price }}">
-                                        </td>
+                                        <td><input type="number" name="product[]" value="{{ $product->qty }}" onchange="updateSubtotal(this)"
+                                            data-price="{{ $product->price }}" ></td>
                                         <td class="subtotal">Rp. 0</td>
                                     </tr>
                                 @endforeach
