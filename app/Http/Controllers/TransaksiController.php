@@ -123,11 +123,30 @@ class TransaksiController extends Controller
             ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
             ->select(['transactions.*', 'transaction_details.*'])
             ->get();
-        return view('kasir.transaksi.edit', ['data' => Transaction::where('id', $id)->first(),'product' => $data, 'products' => $products, 'payment' => $payment]);
+        return view('kasir.transaksi.edit   ', ['data' => Transaction::where('id', $id)->first(),'product' => $data, 'products' => $products, 'payment' => $payment]);
     }
 
-    public function selesai() {
-        return view('kasir.transaksi.selesai');
+    public function selesai(Request $request) {
+
+        $keyword = $request->input('keyword');
+    
+        // Query dasar untuk mendapatkan transaksi yang belum memiliki payment_id
+        $query = Transaction::where('payment_id', '!=', null);
+    
+        // Jika ada keyword, tambahkan kondisi pencarian
+        if ($keyword) {
+            $query->where(function ($subQuery) use ($keyword) {
+                $subQuery->where('name_customer', 'like', "%$keyword%")
+                    ->orWhereHas('table', function ($tableQuery) use ($keyword) {
+                        $tableQuery->where('number', 'like', "%$keyword%");
+                    });
+            });
+        }
+    
+        // Ambil hasil query dan kirimkan ke view
+        $transaksi = $query->get();
+
+        return view('kasir.transaksi.selesai', ['transaksi' => $transaksi]);
     }
 
     public function selesaikan_pesanan(Request $request) {

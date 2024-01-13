@@ -250,7 +250,7 @@ class DatabaseSeeder extends Seeder
         // Es Jeruk
         Produk::create([
             'name' => 'Es Jeruk',
-            'price' => 10000,
+            'price' => 5000,
             'image' => 'gambar_stock/es_jeruk.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
@@ -259,7 +259,7 @@ class DatabaseSeeder extends Seeder
 
         Produk::create([
             'name' => 'Es Teh Manis',
-            'price' => 10000,
+            'price' => 3000,
             'image' => 'gambar_stock/es_teh_manis.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
@@ -269,7 +269,7 @@ class DatabaseSeeder extends Seeder
         // Es Jeruk
         Produk::create([
             'name' => 'Es Jeruk',
-            'price' => 10000,
+            'price' => 5000,
             'image' => 'gambar_stock/es_jeruk.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
@@ -279,7 +279,7 @@ class DatabaseSeeder extends Seeder
         // Es Kopi/Koptil
         Produk::create([
             'name' => 'Es Kopi/Koptil',
-            'price' => 10000,
+            'price' => 5000,
             'image' => 'gambar_stock/es_kopi_koptil.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
@@ -289,7 +289,7 @@ class DatabaseSeeder extends Seeder
         // Es Milo Dalgona
         Produk::create([
             'name' => 'Es Milo Dalgona',
-            'price' => 10000,
+            'price' => 8000,
             'image' => 'gambar_stock/es_milo_dalgona.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
@@ -299,7 +299,7 @@ class DatabaseSeeder extends Seeder
         // Chocolatos
         Produk::create([
             'name' => 'Chocolatos',
-            'price' => 10000,
+            'price' => 5000,
             'image' => 'gambar_stock/chocolatos.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
