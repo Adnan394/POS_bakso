@@ -75,11 +75,11 @@
                         <div class="col-8 text-center">
                             <button type="submit" class="btn btn-lg btn-success btn-block" data-toggle="modal"
                                 data-target="#confirmOrderCenter">
-                                Finish Order
+                                Selesaikan Orderan
                             </button>
                         </div>
                         <div class="col-4">
-                            <button type="button" class="btn btn-lg btn-primary btn-block">Invoice</button>
+                           <a href="{{ route('transaksi.nota', $data->id) }}"><button type="button" class="btn btn-lg btn-primary btn-block">Invoice</button></a> 
                         </div>
                     </div>
                 </div>

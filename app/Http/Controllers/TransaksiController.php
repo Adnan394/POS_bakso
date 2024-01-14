@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Produk;
 use App\Models\Table;
 use App\Models\Payment;
+use App\Models\Location;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\Transaction_detail;
@@ -107,6 +108,17 @@ class TransaksiController extends Controller
 
         return view('kasir.transaksi.detail', ['product' => $data, 'products' => $products , 'tables' => $tables, 'data' => Transaction::where('id', $id)->first()]);
     }
+    public function nota(string $id)
+    {
+        $location = Location::where('location_id', Auth::user()->location->id)->get();
+        $account = Account::where('id', Auth::user()->id)->get();
+        $data = Transaction::where('transactions.id', $id)
+            ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
+            ->select(['transactions.*', 'transaction_details.*'])
+            ->get();
+
+        return view('kasir.transaksi.detail', ['product' => $data,  'data' => Transaction::where('id', $id)->first()]);
+    }
 
    
 
@@ -159,7 +171,7 @@ class TransaksiController extends Controller
                 'status' => "Selesai"
             ]);
         }
-        return redirect()->back();
+        return redirect()->route('transaksi.selesai');
     }
 
     /**
@@ -187,7 +199,7 @@ class TransaksiController extends Controller
             }
         }
 
-        return redirect()->back();
+        return redirect()->route('transaksi.berjalan');
     }
 
     /**

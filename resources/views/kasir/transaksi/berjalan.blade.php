@@ -20,7 +20,7 @@
                     <h6 class="">Transaksi Berjalan ({{ $transaksi->count() }})</h6>
                 </div>
                 @foreach ($transaksi as $item)
-                <div class="col-lg-4 col-md-12">
+                <div class="col-xl-4 col-lg-6 col-md-12">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title"><a href="#">{{ $item->name_customer }}</a></h5>
