@@ -54,7 +54,7 @@
 
     {!! $style !!}
 </head>
-<body onload="window.print()">
+<body onload="generatePDF()">
     <button class="btn-print" style="position: absolute; right: 1rem; top: rem;" onclick="window.print()">Print</button>
     <div class="text-center">
         <h3 style="margin-bottom: 5px;">Bakso Lik Tono</h3>
@@ -124,39 +124,19 @@
         document.cookie = "innerHeight=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         document.cookie = "innerHeight="+ ((height + 50) * 0.264583);
     </script>
-     <script>
-        // Fungsi untuk mengunduh file secara otomatis
-        function downloadFile() {
-            // Ganti 'nama_file.pdf' dengan nama file yang diinginkan
-            var fileName = 'nota_bakso.pdf';
-
-            // Simpan dokumen ke dalam file dengan menggunakan Blob
-            var blob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
-
-            // Buat objek URL untuk Blob
-            var url = window.URL.createObjectURL(blob);
-
-            // Buat elemen <a> untuk menautkan ke objek URL dan simpan ke dalam file
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = fileName;
-
-            // Tambahkan elemen <a> ke dalam dokumen dan klik secara otomatis
-            document.body.appendChild(a);
-            a.click();
-
-            // Hapus elemen <a> setelah pengunduhan
-            document.body.removeChild(a);
-
-            // Hapus objek URL setelah pengunduhan
-            window.URL.revokeObjectURL(url);
-        }
-
-        // Panggil fungsi unduhFile() setelah dokumen selesai dimuat dan dicetak
-        window.onload = function() {
-            window.print();
-            downloadFile();
-        };
-    </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.js"></script>
+        <script>
+            function generatePDF() {
+                const element = document.body; // Ganti dengan elemen yang ingin Anda konversi ke PDF
+    
+                html2pdf(element, {
+                    margin: 10,
+                    filename: 'nota.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 1 },
+                    jsPDF: { unit: 'mm', format: 'a6', orientation: 'portrait' }
+                });
+            }
+        </script>
 </body>
 </html>
