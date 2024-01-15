@@ -59,17 +59,20 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $item->name_customer }}</td>
                                                 <td>{{ $item->table->number }}</td>
-                                                <?php $statusCount = 0; foreach(\App\Models\Transaction_detail::where('transaction_id', $item->id)->get() as $transactionStatus) {
-                                                    if($transactionStatus->status == "Diproses") {
+                                                <?php $statusCount = 0;
+                                                foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->get() as $transactionStatus) {
+                                                    if ($transactionStatus->status == 'Diproses') {
                                                         $statusCount += 1;
                                                     }
                                                 } ?>
-                                                <td><span class="badge text-white {{ ($statusCount == 0) ? 'bg-success' : 'bg-danger'}}">{{ ($statusCount == 0) ? 'Selesai' : 'Belum selesai' }}</span></td>
+                                                <td><span
+                                                        class="badge text-white {{ $statusCount == 0 ? 'bg-success' : 'bg-danger' }}">{{ $statusCount == 0 ? 'Selesai' : 'Belum selesai' }}</span>
+                                                </td>
                                                 <td>
-                                                    <a href="" data-bs-toggle="modal"
-                                                        data-bs-target="#modal-edit{{ $item->id }}" style="width: 50px" 
+                                                    <a href="" data-toggle="modal"
+                                                        data-target="#modal-edit{{ $item->id }}" style="width: 50px"
                                                         class="btn btn-warning"><i class="bi bi-pencil"><span
-                                                              class="fas fa-edit"></span></i></a>
+                                                                class="fas fa-edit"></span></i></a>
                                                 </td>
                                             </tr>
                                             <div id="modal-edit{{ $item->id }}" class="modal fade" tabindex="-1"
@@ -90,7 +93,8 @@
                                                                         <h4 class="card-title">Edit Product</h4>
                                                                         <form method="POST"
                                                                             action="{{ route('accounts.update', $item->id) }}"
-                                                                            enctype="multipart/form-transaction" class="mt-4">
+                                                                            enctype="multipart/form-transaction"
+                                                                            class="mt-4">
                                                                             @method('PUT')
                                                                             @csrf
                                                                             <div class="form-group">
@@ -181,5 +185,6 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+
     </div>
 @endsection
