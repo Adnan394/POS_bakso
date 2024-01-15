@@ -36,7 +36,7 @@ style="background:url(assets/images/big/auth-bg.jpg) no-repeat center center;">
                         </div>
                     </div>
                     <div class="col-lg-12 text-center">
-                        <button type="submit" class="btn btn-block btn-dark">Sign In</button>
+                        <button type="submit" class="btn btn-block btn-dark">Masuk</button>
                     </div>
                 </div>
             </form>

@@ -117,7 +117,7 @@ class TransaksiController extends Controller
             ->select(['transactions.*', 'transaction_details.*'])
             ->get();
 
-        return view('kasir.transaksi.detail', ['product' => $data,  'data' => Transaction::where('id', $id)->first()]);
+        return view('kasir.transaksi.nota', ['product' => $data,  'data' => Transaction::where('id', $id)->first()]);
     }
 
    

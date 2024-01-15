@@ -109,7 +109,7 @@
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                                 <a class="dropdown-item" href="{{ route('logout') }}"><i data-feather="power"
                                         class="svg-icon mr-2 ml-1"></i>
-                                    Logout</a>
+                                    Keluar</a>
                             </div>
                         </li>
                         <!-- ============================================================== -->
@@ -189,7 +189,7 @@
                             </li>
                             <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
                                     href="{{ route('logout') }}" aria-expanded="false"><i data-feather="log-out"
-                                        class="feather-icon"></i><span class="hide-menu">Logout</span></a></li>
+                                        class="feather-icon"></i><span class="hide-menu">Keluar</span></a></li>
                         </ul>
                     </nav>
                 @elseif (Auth::user()->role_id == 2)
@@ -244,7 +244,7 @@
                         </li>
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
                                 href="{{ route('logout') }}" aria-expanded="false"><i data-feather="log-out"
-                                    class="feather-icon"></i><span class="hide-menu">Logout</span></a></li>
+                                    class="feather-icon"></i><span class="hide-menu">Keluar</span></a></li>
                     </ul>
                 </nav>
                 @elseif (Auth::user()->role_id == 3)
@@ -277,7 +277,7 @@
                             <li class="list-divider"></li>
                             <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
                                     href="{{ route('logout') }}" aria-expanded="false"><i data-feather="log-out"
-                                        class="feather-icon"></i><span class="hide-menu">Logout</span></a></li>
+                                        class="feather-icon"></i><span class="hide-menu">Keluar</span></a></li>
                         </ul>
                     </nav>
                 @elseif (Auth::user()->role_id == 4)
@@ -306,7 +306,7 @@
                             <li class="list-divider"></li>
                             <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
                                     href="{{ route('logout') }}" aria-expanded="false"><i data-feather="log-out"
-                                        class="feather-icon"></i><span class="hide-menu">Logout</span></a></li>
+                                        class="feather-icon"></i><span class="hide-menu">Keluar</span></a></li>
                         </ul>
                     </nav>
                 @endif
