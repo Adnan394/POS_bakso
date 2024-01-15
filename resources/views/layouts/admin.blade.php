@@ -309,12 +309,8 @@
                                     href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text"
                                         class="feather-icon"></i><span class="hide-menu">Transaksi </span></a>
                                 <ul aria-expanded="false" class="collapse  first-level base-level-line in">
-                                    <li class="sidebar-item"><a href="{{ route('minuman.index') }}"
-                                            class="sidebar-link"><span class="hide-menu"> Pesanan Minuman
-                                            </span></a>
-                                    </li>
-                                    <li class="sidebar-item"><a href="{{ route('makanan.index') }}"
-                                            class="sidebar-link"><span class="hide-menu"> Pesanan Makanan
+                                    <li class="sidebar-item"><a href="{{ route('pesanan.index') }}"
+                                            class="sidebar-link"><span class="hide-menu"> Pesanan
                                             </span></a>
                                     </li>
                                 </ul>
