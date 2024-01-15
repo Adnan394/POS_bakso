@@ -80,41 +80,39 @@
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header modal-colored-header bg-primary">
-                                                            <h4 class="modal-title" id="modal-editLabel">Form Tambah Produl
+                                                            <h4 class="modal-title" id="modal-editLabel">Detail Pesanan
                                                             </h4>
                                                             <button type="reset" class="close" data-bs-dismiss="modal"
                                                                 aria-hidden="true">×</button>
                                                         </div>
                                                         <div class="modal-body">
-
                                                             <div class="col-sm-12 col-md-12 col-lg-12">
                                                                 <div class="card">
                                                                     <div class="card-body">
-                                                                        <h4 class="card-title">Edit Product</h4>
+                                                                        <h4 class="card-title">Pesanan</h4>
+                                                                        <p class="">Nama : {{ $item->name_customer }}</p>
+                                                                        <p class="">No Meja : {{ $item->table->number }}</p>
                                                                         <form method="POST"
-                                                                            action="{{ route('accounts.update', $item->id) }}"
+                                                                            action="{{ route('pesanan.update', $item->id) }}"
                                                                             enctype="multipart/form-transaction"
                                                                             class="mt-4">
                                                                             @method('PUT')
                                                                             @csrf
-                                                                            <div class="form-group">
-                                                                                <label for="name">Nama</label>
-                                                                                <input type="text" name="name"
-                                                                                    class="form-control border-primary"
-                                                                                    value="{{ $item->name }}" required>
+                                                                            @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->get() as $trans)
+                                                                            <div class="row">
+                                                                                <div class="col-10">
+                                                                                    <div class="form-check">
+                                                                                        <input {{ ($trans->status == "Jadi") ? 'checked disabled' : '' }} class="form-check-input" type="checkbox" value="{{ $trans->product_id }}" id="flexCheckDefault" name="produk[]">
+                                                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                                                          {{ \App\Models\Produk::where('id', $trans->product_id)->first()->name }}
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                    <p>x{{ $trans->qty }}</p>
+                                                                                </div>
                                                                             </div>
-                                                                            <div class="form-group">
-                                                                                <label for="email">Email</label>
-                                                                                <input type="email" name="email"
-                                                                                    class="form-control border-primary"
-                                                                                    value="{{ $item->email }}" required>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="password">Password</label>
-                                                                                <input type="password" name="password"
-                                                                                    class="form-control border-primary"
-                                                                                    value="{{ $item->password }}" required>
-                                                                            </div>
+                                                                            @endforeach
                                                                             <div class="modal-footer">
                                                                                 <button type="submiy"
                                                                                     class="btn btn-primary">Tambahkan</button>

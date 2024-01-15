@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Transaction_detail;
 use Illuminate\Support\Facades\Auth;
 
 class PesananOutletController extends Controller
@@ -24,7 +25,6 @@ class PesananOutletController extends Controller
         $transaksi = Transaction::join('users', 'transactions.user_id', 'users.id')
                                 ->join('user_details', 'users.id', 'user_details.user_id')
                                 ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
-                                ->join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
                                 ->where('outlet_details.id', $user->id)
                                 ->select(['transactions.*'])
                                 ->get();
@@ -68,7 +68,13 @@ class PesananOutletController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // return $request;
+
+        foreach($request->produk as $produk){
+            Transaction_detail::where('transaction_id', $id)->where('product_id', $produk)->update(['status' => 'Jadi']);
+        }
+
+        return redirect()->back();
     }
 
     /**
