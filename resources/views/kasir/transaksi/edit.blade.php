@@ -83,7 +83,7 @@
                             </div>
                 </form>
                 <div class="col-4">
-                    <form action="{{ route('transaksi.nota', $data->id) }}" method="GET">
+                    <form action="{{ route('transaksi.nota', $data->id) }}" method="GET" target="_blank">
                         <input type="hidden" name="paid2" value="" id="paid2">
                         <button type="submit" class="btn btn-lg btn-primary btn-block">Invoice</button>
                     </form>
