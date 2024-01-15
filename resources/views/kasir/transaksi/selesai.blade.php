@@ -10,9 +10,10 @@
                             Tambah Transaksi</a>
                     </div>
                 </div>
-                <form class="form searchartikel align-items-center" method="get" action="berjalan">
-                    <div class="form-group ">
-                        <input type="text" name="keyword" class="form-control w-75 d-inline" id="search" placeholder="Masukkan keyword">
+                <form class="form searchartikel align-items-center ml-4" method="get" action="berjalan">
+                    <div class="form-group">
+                        <a href="{{ route('transaksi.berjalan') }}" ><button class="btn btn-primary"><i class="fas fa-sync-alt"></i></button></a>
+                        <input type="text" name="keyword" class="form-control w-50 d-inline" id="search" placeholder="Masukkan kata kunci">
                         <button type="submit" class="btn btn-primary mb-1">Cari</button>
                     </div>
                 </form> 

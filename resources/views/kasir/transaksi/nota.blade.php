@@ -124,5 +124,39 @@
         document.cookie = "innerHeight=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         document.cookie = "innerHeight="+ ((height + 50) * 0.264583);
     </script>
+     <script>
+        // Fungsi untuk mengunduh file secara otomatis
+        function downloadFile() {
+            // Ganti 'nama_file.pdf' dengan nama file yang diinginkan
+            var fileName = 'nota_bakso.pdf';
+
+            // Simpan dokumen ke dalam file dengan menggunakan Blob
+            var blob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
+
+            // Buat objek URL untuk Blob
+            var url = window.URL.createObjectURL(blob);
+
+            // Buat elemen <a> untuk menautkan ke objek URL dan simpan ke dalam file
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+
+            // Tambahkan elemen <a> ke dalam dokumen dan klik secara otomatis
+            document.body.appendChild(a);
+            a.click();
+
+            // Hapus elemen <a> setelah pengunduhan
+            document.body.removeChild(a);
+
+            // Hapus objek URL setelah pengunduhan
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Panggil fungsi unduhFile() setelah dokumen selesai dimuat dan dicetak
+        window.onload = function() {
+            window.print();
+            downloadFile();
+        };
+    </script>
 </body>
 </html>

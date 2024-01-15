@@ -39,7 +39,8 @@
                 <div class="">
                     <div class="form-group">
                         <label for="name">Nama Customer</label>
-                        <input type="text" name="name_customer" class="form-control border-primary" required>
+                        <input type="text" name="name_customer" id="nama_customer" class="form-control border-primary"
+                            required>
                     </div>
                     <div class="form-group">
                         <label for="name">Nomor Meja</label>
@@ -60,8 +61,8 @@
                     <div class="row py-2">
                         <div class="col-12 col-md-8 text-center">
                             <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
-                            <button type="submit" class="btn btn-lg btn-success btn-block" data-toggle="modal"
-                                data-target="#confirmOrderCenter">
+                            <button type="submit" id="btn-selesai" class="btn btn-lg btn-success btn-block" data-toggle="modal"
+                                data-target="#confirmOrderCenter" disabled>
                                 Buat Transaksi
                             </button>
                         </div>
@@ -84,7 +85,7 @@
                 // Menemukan elemen td.subtotal terkait dan mengupdate nilainya
                 var subtotalElement = input.parentNode.nextElementSibling;
                 subtotalElement.innerHTML = 'Rp. ' + subtotal
-            .toLocaleString(); // Menambah format angka dengan toLocaleString()
+                    .toLocaleString(); // Menambah format angka dengan toLocaleString()
 
                 // Mengupdate nilai Total Price
                 updateTotalPrice();
@@ -111,5 +112,34 @@
             var totalPriceInput = document.getElementsByName('price_amount')[0];
             totalPriceInput.value = totalPrice; // Menambah format angka dengan toLocaleString()
         }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        $('#nama_customer, #table_id').on('input', function() {
+            var customerName = $('#nama_customer').val();
+            var tableId = $('#table_id').val();
+            var btnSelesai = document.getElementById("btn-selesai");
+
+            if (customerName && tableId) {
+                btnSelesai.disabled = false;
+            } else {
+                btnSelesai.disabled = true;
+            }
+        });
+
+        // Menangkap perubahan pada input #paid
+        $('#nama_customer, #table_id').on('input', function() {
+            var customerName = $('#nama_customer').val();
+            var tableId = $('#table_id').val();
+
+            let btn_selesai = document.getElementById("btn-selesai");
+
+            // Memeriksa apakah nilai paid kosong
+            if (!customerName && !tableId) {
+                // Menonaktifkan tombol
+                btn_selesai.disabled = true;
+            }
+        });
     </script>
 @endsection
