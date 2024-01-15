@@ -110,6 +110,8 @@ class TransaksiController extends Controller
     }
     public function nota(Request $request, string $id)
     {
+        $location = Location::where('location_id', Auth::user()->location->id)->get();
+        $account = Account::where('id', Auth::user()->id)->get();
         $data = Transaction::where('transactions.id', $id)
             ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
             ->select(['transactions.*', 'transaction_details.*'])

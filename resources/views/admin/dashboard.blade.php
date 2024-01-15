@@ -113,7 +113,7 @@
                             <li>
                                 <i class="fas fa-circle text-primary font-10 mr-2"></i>
                                 <span class="text-muted">Direct Sales</span>
-                                <span class="text-dark float-right font-weight-medium">$2346</span>
+                                <span class="text-dark float-right font-weight-medium">$10000</span>
                             </li>
                             <li class="mt-3">
                                 <i class="fas fa-circle text-danger font-10 mr-2"></i>

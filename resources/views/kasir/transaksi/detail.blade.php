@@ -36,9 +36,9 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Qty</th>
+                                <th scope="col">Nama Menu</th>
+                                <th scope="col">Harga</th>
+                                <th scope="col">Jumlah</th>
                                 <th scope="col">Subtotal</th>
                             </tr>
                         </thead>

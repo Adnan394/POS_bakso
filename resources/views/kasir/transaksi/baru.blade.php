@@ -11,9 +11,9 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Qty</th>
+                                    <th scope="col">Nama Menu</th>
+                                    <th scope="col">Harga</th>
+                                    <th scope="col">Jumlah</th>
                                     <th scope="col">Subtotal</th>
                                 </tr>
                             </thead>
@@ -53,7 +53,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="total_price">Total Price</label>
+                        <label for="total_price">Total Harga</label>
                         <input type="text" name="price_amount" class="form-control border-primary" value="0"
                             readonly>
                     </div>
@@ -62,7 +62,7 @@
                             <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
                             <button type="submit" class="btn btn-lg btn-success btn-block" data-toggle="modal"
                                 data-target="#confirmOrderCenter">
-                                Create Order
+                                Buat Transaksi
                             </button>
                         </div>
                     </div>

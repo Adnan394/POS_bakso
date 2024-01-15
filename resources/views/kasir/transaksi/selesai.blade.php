@@ -43,6 +43,14 @@
                                     @endforeach
                                 </ul>
                             </div>
+                            <div class="col-4 pl-0">
+                                <ul class="list-group list-group-flush">
+                                    @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->get() as $detail)
+                                        <li class="list-group-item border-0">Rp.{{ number_format($detail->price, 0, ',', '.') }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <hr>
                         </div>
                     </div>
                 </div>
