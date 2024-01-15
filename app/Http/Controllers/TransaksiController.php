@@ -71,7 +71,7 @@ class TransaksiController extends Controller
                 'price_amount' => $request->price_amount,
                 'payment_image' => ($request->payment_image) ? $request->payment_image : null,
                 'discount' => ($request->discount) ? $request->discount : null,
-                'pay_amount' => 100,
+                'pay_amount' => $request->price_amount,
                 'user_id' => Auth::user()->id,
                 'name_customer' => $request->name_customer
             ]);
@@ -108,14 +108,14 @@ class TransaksiController extends Controller
 
         return view('kasir.transaksi.detail', ['product' => $data, 'products' => $products , 'tables' => $tables, 'data' => Transaction::where('id', $id)->first()]);
     }
-    public function nota(Request $request, string $id)
-    {
-        $data = Transaction::where('transactions.id', $id)
-            ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
-            ->select(['transactions.*', 'transaction_details.*'])
-            ->get();
-        return view('kasir.transaksi.nota', ['product' => $data,  'data' => Transaction::where('id', $id)->first(), 'location' => Location::where('id', Auth::user()->location->id)->first(), 'paid' => $request->paid2]);
-    }
+    // public function nota(Request $request, string $id)
+    // {
+    //     $data = Transaction::where('transactions.id', $id)
+    //         ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
+    //         ->select(['transactions.*', 'transaction_details.*'])
+    //         ->get();
+    //     return view('kasir.transaksi.nota', ['product' => $data,  'data' => Transaction::where('id', $id)->first(), 'location' => Location::where('id', Auth::user()->location->id)->first(), 'paid' => $request->paid2]);
+    // }
 
    
 
@@ -168,7 +168,12 @@ class TransaksiController extends Controller
                 'status' => "Selesai"
             ]);
         }
-        return redirect()->route('transaksi.selesai');
+
+        $data = Transaction::where('transactions.id', $request->transaction_id)
+            ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
+            ->select(['transactions.*', 'transaction_details.*'])
+            ->get();
+        return view('kasir.transaksi.nota', ['product' => $data,  'data' => Transaction::where('id', $request->transaction_id)->first(), 'location' => Location::where('id', Auth::user()->location->id)->first(), 'paid' => $request->paid]);
     }
 
     /**
@@ -180,7 +185,7 @@ class TransaksiController extends Controller
 
     public function tambah_pesanan(Request $request) {
         $order_sequence = Transaction_detail::where('transaction_id', $request->transaksi_id)->orderBy('created_at', 'DESC')->limit(1)->first();
-        Transaction::where('id', $request->transaksi_id)->update(['price_amount' => $request->price_amount]);
+        Transaction::where('id', $request->transaksi_id)->update(['price_amount' => $request->price_amount, 'pay_amount' => $request->price_amount]);
         foreach($request->produk as $index => $product) {
             $qty = $request->qty[$index];
             
