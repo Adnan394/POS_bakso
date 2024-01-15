@@ -54,6 +54,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Name</th>
+                                            <th>Role</th>
                                             <th>Lokasi</th>
                                             <th>Posisi</th>
                                             <th>Action</th>
@@ -64,6 +65,7 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $item->name }}</td>
+                                                <td>{{ $item->role->name }}</td>
                                                 <td>{{ $item->location->locations }}</td>
                                                 <td>
                                                     <?php $outlet_detail_id = \App\Models\User_detail::where('user_id', $item->id)->pluck('outlet_detail_id'); 
@@ -122,9 +124,6 @@
                                                                                         </option>
                                                                                     @endforeach
                                                                                 </select>
-                                                                                <input type="text" name="name"
-                                                                                    class="form-control border-primary"
-                                                                                    value="{{ $item->name }}" required>
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="email">Email</label>
@@ -195,6 +194,17 @@
                                             <label for="name">Nama</label>
                                             <input type="text" name="name" class="form-control border-primary"
                                                 required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="role_id">Role</label>
+                                            <select name="role_id" id="role_id">
+                                                <option disabled selected>Pilih Lokasi Cabang</option>
+                                                @foreach (\App\Models\Role::all() as $role)
+                                                    <option value="{{ $role->id }}">
+                                                        {{ $role->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="location_id">Lokasi Cabang</label>

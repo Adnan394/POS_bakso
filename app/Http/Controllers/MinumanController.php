@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use App\Models\Transaction;
+use Illuminate\Http\Request;
 use App\Models\Transaction_detail;
+use Illuminate\Support\Facades\Auth;
 
 class MinumanController extends Controller
 {
@@ -14,7 +15,19 @@ class MinumanController extends Controller
      */
     public function index()
     {
-        $transaksi = Transaction::where('payment_id', null)->get();
+        // $transaksi = Transaction::where('payment_id', null)->get();
+        $user = User::join('user_details', 'users.id', '=', 'user_details.user_id')
+        ->join('outlet_details', 'user_details.outlet_detail_id', '=', 'outlet_details.id')
+        ->where('users.id', Auth::user()->id)
+        ->select('outlet_details.id')
+        ->first();
+        $transaksi = Transaction::join('users', 'transactions.user_id', 'users.id')
+                                ->join('user_details', 'users.id', 'user_details.user_id')
+                                ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+                                ->join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+                                ->where('outlet_details.id', $user->id)
+                                ->select(['transactions.*'])
+                                ->get();
         return view('outlet.minuman.index', ['transaksi' => $transaksi]);
     }
 

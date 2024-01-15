@@ -36,7 +36,7 @@ class AccountController extends Controller
     {
         User::create([
             'name' => $request->name,
-            'role_id' => '2',
+            'role_id' => $request->role_id,
             'location_id' => $request->location_id,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -101,6 +101,6 @@ class AccountController extends Controller
     public function destroy(string $id)
     {
         User::where('id', $id)->delete();
-        return redirect()->route('accounts.index')->with('success', 'Data Payment berhasil dihapus.');
+        return redirect()->route('accounts.index')->with('success', 'Data User berhasil dihapus.');
     }
 }

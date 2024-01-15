@@ -53,7 +53,7 @@
                     </div>
                     <div class="form-group">
                         <label for="price">Paid</label>
-                        <input type="number" name="paid" class="form-control border-primary" value="0"
+                        <input type="number" name="paid" class="form-control border-primary" value=""
                             onchange="updateReturn()">
                     </div>
                     <div class="form-group">
@@ -64,13 +64,14 @@
                         <label for="name">Metode Pembayaran</label>
                         <select name="payment_id" id="payment_id">
                             <option value="" readonly selected>Pilih Metode Pembayaran</option>
-                            @foreach ($payment as $data)
-                                <option value="{{ $data->id }}">
-                                    {{ $data->name }}
+                            @foreach ($payment as $pay)
+                                <option value="{{ $pay->id }}">
+                                    {{ $pay->name }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
+
                     <div class="row py-2">
                         <div class="col-8 text-center">
                             <button type="submit" class="btn btn-lg btn-success btn-block" data-toggle="modal"
@@ -78,12 +79,15 @@
                                 Selesaikan Orderan
                             </button>
                         </div>
+                    </form>
                         <div class="col-4">
-                           <a href="{{ route('transaksi.nota', $data->id) }}"><button type="button" class="btn btn-lg btn-primary btn-block">Invoice</button></a> 
+                            <form action="{{ route('transaksi.nota', $data->id) }}" method="GET">
+                                <input type="hidden" name="paid2" value="" id="paid2">
+                                <button type="submit" class="btn btn-lg btn-primary btn-block">Invoice</button>
+                            </form>
                         </div>
                     </div>
                 </div>
-                </form>
             </div>
         </div>
     </div>
@@ -120,7 +124,8 @@
         function updateReturn() {
             var totalPrice = parseFloat(document.getElementsByName('price_amount')[0].value);
             var paid = parseFloat(document.getElementsByName('paid')[0].value);
-
+            var paid2 = document.getElementById('paid2');
+            paid2.value = paid;
             var returnInput = document.getElementsByName('return')[0];
             returnInput.value = (paid - totalPrice).toFixed(2);
         }

@@ -108,16 +108,13 @@ class TransaksiController extends Controller
 
         return view('kasir.transaksi.detail', ['product' => $data, 'products' => $products , 'tables' => $tables, 'data' => Transaction::where('id', $id)->first()]);
     }
-    public function nota(string $id)
+    public function nota(Request $request, string $id)
     {
-        $location = Location::where('location_id', Auth::user()->location->id)->get();
-        $account = Account::where('id', Auth::user()->id)->get();
         $data = Transaction::where('transactions.id', $id)
             ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
             ->select(['transactions.*', 'transaction_details.*'])
             ->get();
-
-        return view('kasir.transaksi.detail', ['product' => $data,  'data' => Transaction::where('id', $id)->first()]);
+        return view('kasir.transaksi.nota', ['product' => $data,  'data' => Transaction::where('id', $id)->first(), 'location' => Location::where('id', Auth::user()->location->id)->first(), 'paid' => $request->paid2]);
     }
 
    
@@ -127,7 +124,6 @@ class TransaksiController extends Controller
      */
     public function edit(string $id)
     {
-        
         $payment = Payment::all();
         $products = Produk::all();
         $tables = Table::all();        
@@ -135,7 +131,8 @@ class TransaksiController extends Controller
             ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
             ->select(['transactions.*', 'transaction_details.*'])
             ->get();
-        return view('kasir.transaksi.edit   ', ['data' => Transaction::where('id', $id)->first(),'product' => $data, 'products' => $products, 'payment' => $payment]);
+        // return Transaction::where('id', $id)->first();
+        return view('kasir.transaksi.edit', ['data' => Transaction::where('id', $id)->first(),'product' => $data, 'products' => $products, 'payment' => $payment]);
     }
 
     public function selesai(Request $request) {

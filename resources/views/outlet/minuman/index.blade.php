@@ -48,8 +48,8 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Lokasi</th>
+                                            <th>Table</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -57,9 +57,14 @@
                                         @foreach ($transaksi as $item)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $item->name }}</td>
-                                                <td>{{ $item->location->locations }}</td>
-                                                <td>{{ $item->email }}</td>
+                                                <td>{{ $item->name_customer }}</td>
+                                                <td>{{ $item->table->number }}</td>
+                                                <?php $statusCount = 0; foreach(\App\Models\Transaction_detail::where('transaction_id', $item->id)->get() as $transactionStatus) {
+                                                    if($transactionStatus->status == "Diproses") {
+                                                        $statusCount += 1;
+                                                    }
+                                                } ?>
+                                                <td><span class="badge text-white {{ ($statusCount == 0) ? 'bg-success' : 'bg-danger'}}">{{ ($statusCount == 0) ? 'Selesai' : 'Belum selesai' }}</span></td>
                                                 <td>
                                                     <a href="" transaction-toggle="modal"
                                                         transaction-target="#modal-edit{{ $item->id }}" style="width: 50px" 
