@@ -55,7 +55,7 @@
     {!! $style !!}
 </head>
 <body onload="generatePDF()">
-    <button class="btn-print" style="position: absolute; right: 1rem; top: rem;" onclick="window.print()">Print</button>
+    {{-- <button class="btn-print" style="position: absolute; right: 1rem; top: rem;" onclick="window.print()">Print</button> --}}
     <div class="text-center">
         <h3 style="margin-bottom: 5px;">Bakso Lik Tono</h3>
         <p>{{ strtoupper($location->locations) }}</p>
@@ -97,11 +97,11 @@
             <td class="text-right">{{ ($data->discount) }}</td>
         </tr>
         <tr>
-            <td>Total Bayar:</td>
+            <td>Total Harga:</td>
             <td class="text-right">{{ number_format($data->price_amount, '0', ',', '.') }}</td>
         </tr>
         <tr>
-            <td>Diterima:</td>
+            <td>Jumlah Bayar:</td>
             <td class="text-right">{{ number_format($paid, '0', ',', '.') }}</td>
         </tr>
         <tr>
@@ -133,7 +133,7 @@
                     margin: 10,
                     filename: 'nota.pdf',
                     image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 1 },
+                    html2canvas: { scale: 2 },
                     jsPDF: { unit: 'mm', format: 'a6', orientation: 'portrait' }
                 });
             }
