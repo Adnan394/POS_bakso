@@ -57,7 +57,7 @@
 <body onload="window.print()">
     <button class="btn-print" style="position: absolute; right: 1rem; top: rem;" onclick="window.print()">Print</button>
     <div class="text-center">
-        <h3 style="margin-bottom: 5px;">{{ strtoupper($account->name) }}</h3>
+        <h3 style="margin-bottom: 5px;">Bakso Lik Tono</h3>
         <p>{{ strtoupper($location->locations) }}</p>
     </div>
     <br>
@@ -66,25 +66,18 @@
         <p style="float: right">{{ strtoupper(auth()->user()->name) }}</p>
     </div>
     <div class="clear-both" style="clear: both;"></div>
-    <p>No: {{ ($data->transaction_id) }}</p>
+    {{-- <p>No: {{ ($data->id) }}</p> --}}
     <p class="text-center">===================================</p>
     
     <br>
     <table width="100%" style="border: 0;">
-        @foreach ($transaksi as $item)
+        @foreach ($product as $item)
             <tr>
-                @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->get() as $detail)
-                <td colspan="3">{{ \App\Models\Produk::where('id', $detail->product_id)->first()->name }}</td>
-                @endforeach
-
+                <td colspan="3">{{ \App\Models\Produk::where('id', $item->product_id)->first()->name }}</td>
             </tr>
             <tr>
-                @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->get() as $detail)
-                <td>{{ $detail->qty }} x {{ ($detail->price) }}</td>
-                @endforeach
-
-                <td></td>
-                <td class="text-right">{{ ($item->jumlah * $item->harga_jual) }}</td>
+                <td>{{ $item->qty }} x {{ number_format($item->price, '0', ',', '.') }}</td>
+                <td class="text-right">{{ number_format($item->qty * $item->price, '0', ',', '.') }}</td>
             </tr>
         @endforeach
     </table>
@@ -93,27 +86,27 @@
     <table width="100%" style="border: 0;">
         <tr>
             <td>Total Harga:</td>
-            <td class="text-right">{{ ($transaksi->total_harga) }}</td>
+            <td class="text-right">{{ number_format($data->price_amount, '0', ',', '.') }}</td>
         </tr>
         <tr>
             <td>Total Item:</td>
-            <td class="text-right">{{ ($transaksi->total_item) }}</td>
+            <td class="text-right">{{ number_format($product->sum('qty'), '0', ',', '.') }}</td>
         </tr>
         <tr>
             <td>Diskon:</td>
-            <td class="text-right">{{ ($transaksi->diskon) }}</td>
+            <td class="text-right">{{ ($data->discount) }}</td>
         </tr>
         <tr>
             <td>Total Bayar:</td>
-            <td class="text-right">{{ ($transaksi->bayar) }}</td>
+            <td class="text-right">{{ number_format($data->price_amount, '0', ',', '.') }}</td>
         </tr>
         <tr>
             <td>Diterima:</td>
-            <td class="text-right">{{ ($transaksi->diterima) }}</td>
+            <td class="text-right">{{ number_format($paid, '0', ',', '.') }}</td>
         </tr>
         <tr>
             <td>Kembali:</td>
-            <td class="text-right">{{ ($penjualan->diterima - $penjualan->bayar) }}</td>
+            <td class="text-right">{{ number_format(($paid - $data->price_amount), '0', ',', '.') }}</td>
         </tr>
     </table>
 
