@@ -8,7 +8,7 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-7 align-self-center">
-                    <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">Data Akun Cabang</h4>
+                    <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">Daftar Pesanan</h4>
                     <div class="d-flex align-items-center">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb m-0 p-0">
@@ -17,12 +17,6 @@
                                 </li>
                             </ol>
                         </nav>
-                    </div>
-                </div>
-                <div class="col-5 align-self-center">
-                    <div class="customize-input float-right">
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#modal-tambah">Tambah Akun Cabang</button>
                     </div>
                 </div>
             </div>
@@ -47,38 +41,35 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">List Of Accounts</h4>
+                            <h4 class="card-title">List Of Pesanan</h4>
                             <div class="table-responsive">
                                 <table id="zero_config" class="table table-striped table-bordered no-wrap">
                                     <thead>
                                         <tr>
                                             <th>No</th>
                                             <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Lokasi</th>
+                                            <th>Table</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($data as $item)
+                                        @foreach ($transaksi as $item)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $item->name }}</td>
-                                                <td>{{ $item->location->locations }}</td>
-                                                <td>{{ $item->email }}</td>
+                                                <td>{{ $item->name_customer }}</td>
+                                                <td>{{ $item->table->number }}</td>
+                                                <?php $statusCount = 0; foreach(\App\Models\Transaction_detail::where('transaction_id', $item->id)->get() as $transactionStatus) {
+                                                    if($transactionStatus->status == "Diproses") {
+                                                        $statusCount += 1;
+                                                    }
+                                                } ?>
+                                                <td><span class="badge text-white {{ ($statusCount == 0) ? 'bg-success' : 'bg-danger'}}">{{ ($statusCount == 0) ? 'Selesai' : 'Belum selesai' }}</span></td>
                                                 <td>
-                                                    <a href="" data-toggle="modal"
-                                                        data-target="#modal-edit{{ $item->id }}" style="width: 50px" 
+                                                    <a href="" data-bs-toggle="modal"
+                                                        data-bs-target="#modal-edit{{ $item->id }}" style="width: 50px" 
                                                         class="btn btn-warning"><i class="bi bi-pencil"><span
                                                               class="fas fa-edit"></span></i></a>
-                                                    <form action="{{ route('accounts.destroy', $item->id) }}"
-                                                        method="POST">
-                                                        @method('DELETE')
-                                                        @csrf
-                                                        <button type="submit" style="width: 50px" class="btn btn-danger"><i
-                                                                class="bi bi-trash3">
-                                                                <span class="fas fa-trash-alt"></span></i></button>
-                                                    </form>
                                                 </td>
                                             </tr>
                                             <div id="modal-edit{{ $item->id }}" class="modal fade" tabindex="-1"
@@ -88,7 +79,7 @@
                                                         <div class="modal-header modal-colored-header bg-primary">
                                                             <h4 class="modal-title" id="modal-editLabel">Form Tambah Produl
                                                             </h4>
-                                                            <button type="reset" class="close" data-dismiss="modal"
+                                                            <button type="reset" class="close" data-bs-dismiss="modal"
                                                                 aria-hidden="true">×</button>
                                                         </div>
                                                         <div class="modal-body">
@@ -99,25 +90,11 @@
                                                                         <h4 class="card-title">Edit Product</h4>
                                                                         <form method="POST"
                                                                             action="{{ route('accounts.update', $item->id) }}"
-                                                                            enctype="multipart/form-data" class="mt-4">
+                                                                            enctype="multipart/form-transaction" class="mt-4">
                                                                             @method('PUT')
                                                                             @csrf
                                                                             <div class="form-group">
                                                                                 <label for="name">Nama</label>
-                                                                                <input type="text" name="name"
-                                                                                    class="form-control border-primary"
-                                                                                    value="{{ $item->name }}" required>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="location_id">Lokasi Cabang</label>
-                                                                                <select name="location_id" id="location_id">
-                                                                                    <option value="{{ $item->location_id }}" disabled selected>{{ $item->location->locations }}</option>
-                                                                                    @foreach ($locations as $location)
-                                                                                        <option value="{{ $location->id }}">
-                                                                                            {{ $location->locations }}
-                                                                                        </option>
-                                                                                    @endforeach
-                                                                                </select>
                                                                                 <input type="text" name="name"
                                                                                     class="form-control border-primary"
                                                                                     value="{{ $item->name }}" required>
@@ -165,7 +142,7 @@
                     <div class="modal-header modal-colored-header bg-primary">
                         <h4 class="modal-title" id="modal-tambahLabel">Form Tambah Produl
                         </h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <button type="button" class="close" transaction-dismiss="modal" aria-hidden="true">×</button>
                     </div>
                     <div class="modal-body">
 
@@ -174,25 +151,13 @@
                                 <div class="card-body">
                                     <h4 class="card-title">Tambahkan Akun Cabang</h4>
                                     <form method="POST" action="{{ route('accounts.store') }}"
-                                        enctype="multipart/form-data" class="mt-4">
+                                        enctype="multipart/form-transaction" class="mt-4">
                                         @csrf
                                         <div class="form-group">
                                             <label for="name">Nama</label>
                                             <input type="text" name="name" class="form-control border-primary"
                                                 required>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="location_id">Lokasi Cabang</label>
-                                            <select name="location_id" id="location_id">
-                                                <option disabled selected>Pilih Lokasi Cabang</option>
-                                                @foreach ($locations as $location)
-                                                    <option value="{{ $location->id }}">
-                                                        {{ $location->locations }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
                                         <div class="form-group">
                                             <label for="price">Email</label>
                                             <input type="email" name="email" class="form-control border-primary"

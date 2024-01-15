@@ -13,6 +13,7 @@ use App\Http\Controllers\OutletController;
 use App\Http\Controllers\TabelController;
 use App\Http\Controllers\MakananController;
 use App\Http\Controllers\MinumanController;
+use App\Http\Controllers\PesananOutletController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\TransaksiDetailController;
 
@@ -72,8 +73,7 @@ Route::prefix('/outlet')->middleware('auth')->group(function() {
     Route::get('/', function () {
         return view('outlet.dashboard');
     });
-    Route::resource('/makanan', MakananController::class);
-    Route::resource('/minuman', MinumanController::class);
+    Route::resource('/pesanan', PesananOutletController::class);
 });
 
 
