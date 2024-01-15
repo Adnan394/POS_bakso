@@ -24,6 +24,20 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('6e5959a700ebba645ca2', {
+            cluster: 'ap1'
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            alert(JSON.stringify(data));
+        });
+    </script>
 </head>
 
 <body>
@@ -103,8 +117,8 @@
                                 <img src="{{ asset('assets/images/users/profile-pic.jpg') }}" alt="user"
                                     class="rounded-circle" width="40">
                                 <span class="ml-2 d-none d-lg-inline-block"><span>Hello,</span> <span
-                                        class="text-dark">{{ Auth::user()->name }}</span> <i data-feather="chevron-down"
-                                        class="svg-icon"></i></span>
+                                        class="text-dark">{{ Auth::user()->name }}</span> <i
+                                        data-feather="chevron-down" class="svg-icon"></i></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                                 <a class="dropdown-item" href="{{ route('logout') }}"><i data-feather="power"
@@ -127,7 +141,7 @@
         <!-- ============================================================== -->
         <aside class="left-sidebar" data-sidebarbg="skin6">
             <!-- Sidebar scroll-->
-            
+
             <div class="scroll-sidebar" data-sidebarbg="skin6">
                 <!-- Sidebar navigation-->
                 @if (Auth::user()->role_id == 1)
@@ -139,9 +153,9 @@
                             <li class="list-divider"></li>
                             <li class="nav-small-cap"><span class="hide-menu">Data Master</span></li>
 
-                            <li class="sidebar-item"> <a class="sidebar-link has-arrow in active" href="javascript:void(0)"
-                                    aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span
-                                        class="hide-menu">Master Setting</span></a>
+                            <li class="sidebar-item"> <a class="sidebar-link has-arrow in active"
+                                    href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text"
+                                        class="feather-icon"></i><span class="hide-menu">Master Setting</span></a>
                                 <ul aria-expanded="false" class="collapse active first-level base-level-line in">
                                     <li class="sidebar-item"><a href="{{ route('products.index') }}"
                                             class="sidebar-link"><span class="hide-menu"> Produk
@@ -156,28 +170,30 @@
                                             </span></a>
                                     </li>
                                     <li class="sidebar-item"><a href="{{ route('tables.index') }}"
-                                        class="sidebar-link"><span class="hide-menu"> Data Meja
-                                        </span></a>
-                                </li>
+                                            class="sidebar-link"><span class="hide-menu"> Data Meja
+                                            </span></a>
+                                    </li>
                                 </ul>
                             </li>
-                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('accounts.index') }}"
-                                    aria-expanded="false"><i data-feather="user"
-                                        class="feather-icon"></i><span class="hide-menu">User Setting</span></a></li>
-                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('locations.index') }}"
-                                    aria-expanded="false"><i data-feather="map-pin" class="feather-icon"></i><span
+                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
+                                    href="{{ route('accounts.index') }}" aria-expanded="false"><i
+                                        data-feather="user" class="feather-icon"></i><span class="hide-menu">User
+                                        Setting</span></a></li>
+                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
+                                    href="{{ route('locations.index') }}" aria-expanded="false"><i
+                                        data-feather="map-pin" class="feather-icon"></i><span
                                         class="hide-menu">Location Setting</span></a></li>
 
                             <li class="list-divider"></li>
                             <li class="nav-small-cap"><span class="hide-menu">Data Transaksi</span></li>
                             <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="ui-cards.html"
-                                    aria-expanded="false"><i data-feather="shopping-cart" class="feather-icon"></i><span
-                                        class="hide-menu">Pengeluaran
+                                    aria-expanded="false"><i data-feather="shopping-cart"
+                                        class="feather-icon"></i><span class="hide-menu">Pengeluaran
                                     </span></a>
                             </li>
                             <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="ui-cards.html"
-                                    aria-expanded="false"><i data-feather="dollar-sign" class="feather-icon"></i><span
-                                        class="hide-menu">Penjualan
+                                    aria-expanded="false"><i data-feather="dollar-sign"
+                                        class="feather-icon"></i><span class="hide-menu">Penjualan
                                     </span></a>
                             </li>
                             <li class="list-divider"></li>
@@ -193,60 +209,60 @@
                         </ul>
                     </nav>
                 @elseif (Auth::user()->role_id == 2)
-                <nav class="sidebar-nav">
-                    <ul id="sidebarnav">
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link active" href="/admin"
-                                aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
-                                    class="hide-menu">Dashboard</span></a></li>
-                        <li class="list-divider"></li>
-                        <li class="nav-small-cap"><span class="hide-menu">Data Master</span></li>
+                    <nav class="sidebar-nav">
+                        <ul id="sidebarnav">
+                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link active" href="/admin"
+                                    aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
+                                        class="hide-menu">Dashboard</span></a></li>
+                            <li class="list-divider"></li>
+                            <li class="nav-small-cap"><span class="hide-menu">Data Master</span></li>
 
-                        <li class="sidebar-item"> <a class="sidebar-link has-arrow in active" href="javascript:void(0)"
-                                aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span
-                                    class="hide-menu">Master Setting</span></a>
-                            <ul aria-expanded="false" class="collapse active first-level base-level-line in">
-                                <li class="sidebar-item"><a href="{{ route('products.index') }}"
-                                        class="sidebar-link"><span class="hide-menu"> Produk
-                                        </span></a>
-                                </li>
-                                <li class="sidebar-item"><a href="{{ route('outlets.index') }}"
-                                        class="sidebar-link"><span class="hide-menu"> Outlet
-                                        </span></a>
-                                </li>
-                                <li class="sidebar-item"><a href="{{ route('payments.index') }}"
-                                        class="sidebar-link"><span class="hide-menu"> Payment Method
-                                        </span></a>
-                                </li>
-                                <li class="sidebar-item"><a href="{{ route('tables.index') }}"
-                                        class="sidebar-link"><span class="hide-menu"> Data Meja
-                                        </span></a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="list-divider"></li>
-                        <li class="nav-small-cap"><span class="hide-menu">Data Transaksi</span></li>
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="ui-cards.html"
-                                aria-expanded="false"><i data-feather="shopping-cart" class="feather-icon"></i><span
-                                    class="hide-menu">Pengeluaran
-                                </span></a>
-                        </li>
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="ui-cards.html"
-                                aria-expanded="false"><i data-feather="dollar-sign" class="feather-icon"></i><span
-                                    class="hide-menu">Penjualan
-                                </span></a>
-                        </li>
-                        <li class="list-divider"></li>
-                        <li class="nav-small-cap"><span class="hide-menu">Report</span></li>
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="ui-cards.html"
-                                aria-expanded="false"><i data-feather="printer" class="feather-icon"></i><span
-                                    class="hide-menu">Laporan Pemasukan
-                                </span></a>
-                        </li>
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
-                                href="{{ route('logout') }}" aria-expanded="false"><i data-feather="log-out"
-                                    class="feather-icon"></i><span class="hide-menu">Keluar</span></a></li>
-                    </ul>
-                </nav>
+                            <li class="sidebar-item"> <a class="sidebar-link has-arrow in active"
+                                    href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text"
+                                        class="feather-icon"></i><span class="hide-menu">Master Setting</span></a>
+                                <ul aria-expanded="false" class="collapse active first-level base-level-line in">
+                                    <li class="sidebar-item"><a href="{{ route('products.index') }}"
+                                            class="sidebar-link"><span class="hide-menu"> Produk
+                                            </span></a>
+                                    </li>
+                                    <li class="sidebar-item"><a href="{{ route('outlets.index') }}"
+                                            class="sidebar-link"><span class="hide-menu"> Outlet
+                                            </span></a>
+                                    </li>
+                                    <li class="sidebar-item"><a href="{{ route('payments.index') }}"
+                                            class="sidebar-link"><span class="hide-menu"> Payment Method
+                                            </span></a>
+                                    </li>
+                                    <li class="sidebar-item"><a href="{{ route('tables.index') }}"
+                                            class="sidebar-link"><span class="hide-menu"> Data Meja
+                                            </span></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-divider"></li>
+                            <li class="nav-small-cap"><span class="hide-menu">Data Transaksi</span></li>
+                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="ui-cards.html"
+                                    aria-expanded="false"><i data-feather="shopping-cart"
+                                        class="feather-icon"></i><span class="hide-menu">Pengeluaran
+                                    </span></a>
+                            </li>
+                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="ui-cards.html"
+                                    aria-expanded="false"><i data-feather="dollar-sign"
+                                        class="feather-icon"></i><span class="hide-menu">Penjualan
+                                    </span></a>
+                            </li>
+                            <li class="list-divider"></li>
+                            <li class="nav-small-cap"><span class="hide-menu">Report</span></li>
+                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="ui-cards.html"
+                                    aria-expanded="false"><i data-feather="printer" class="feather-icon"></i><span
+                                        class="hide-menu">Laporan Pemasukan
+                                    </span></a>
+                            </li>
+                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
+                                    href="{{ route('logout') }}" aria-expanded="false"><i data-feather="log-out"
+                                        class="feather-icon"></i><span class="hide-menu">Keluar</span></a></li>
+                        </ul>
+                    </nav>
                 @elseif (Auth::user()->role_id == 3)
                     <nav class="sidebar-nav">
                         <ul id="sidebarnav">
@@ -256,9 +272,9 @@
                             <li class="list-divider"></li>
                             <li class="nav-small-cap"><span class="hide-menu">Pemesanan</span></li>
 
-                            <li class="sidebar-item"> <a class="sidebar-link has-arrow active" href="javascript:void(0)"
-                                    aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span
-                                        class="hide-menu">Transaksi </span></a>
+                            <li class="sidebar-item"> <a class="sidebar-link has-arrow active"
+                                    href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text"
+                                        class="feather-icon"></i><span class="hide-menu">Transaksi </span></a>
                                 <ul aria-expanded="false" class="collapse  first-level base-level-line in">
                                     <li class="sidebar-item"><a href="{{ route('transaksi.create') }}"
                                             class="sidebar-link"><span class="hide-menu"> Transaksi Baru
@@ -289,9 +305,9 @@
                             <li class="list-divider"></li>
                             <li class="nav-small-cap"><span class="hide-menu">Pesanan</span></li>
 
-                            <li class="sidebar-item"> <a class="sidebar-link has-arrow active" href="javascript:void(0)"
-                                    aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span
-                                        class="hide-menu">Transaksi </span></a>
+                            <li class="sidebar-item"> <a class="sidebar-link has-arrow active"
+                                    href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text"
+                                        class="feather-icon"></i><span class="hide-menu">Transaksi </span></a>
                                 <ul aria-expanded="false" class="collapse  first-level base-level-line in">
                                     <li class="sidebar-item"><a href="{{ route('pesanan.index') }}"
                                             class="sidebar-link"><span class="hide-menu"> Pesanan
