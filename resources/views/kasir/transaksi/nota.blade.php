@@ -136,6 +136,7 @@
                     html2canvas: { scale: 2 },
                     jsPDF: { unit: 'mm', format: 'a6', orientation: 'portrait' }
                 });
+                window.location.href = "{{ route('transaksi.selesai') }}"
             }
         </script>
 </body>
