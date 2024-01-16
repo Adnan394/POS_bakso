@@ -7,6 +7,7 @@ use App\Models\Table;
 use App\Models\Payment;
 use App\Models\Location;
 use App\Models\Transaction;
+use App\Events\OutletNotification;
 use Illuminate\Http\Request;
 use App\Models\Transaction_detail;
 use GuzzleHttp\Handler\Proxy;
@@ -90,6 +91,17 @@ class TransaksiController extends Controller
                     ]);
                 }
             }
+
+            $datasend = [
+                'transaction_id' => $transaction->id,
+                'product_id' => $product,
+                'qty' => $qty,
+                'time' => $transaction->created_at->format('D, d/mY'),
+                'message' => 'Transaksi Baru',
+            ];
+
+            event(new OutletNotification($datasend));
+
             
             return redirect()->route('transaksi.berjalan')->with('success', 'Data Transaksi berhasil ditambahkan.');
     }

@@ -72,10 +72,13 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
 Route::prefix('/outlet')->middleware('auth')->group(function() {
     Route::get('/', function () {
         return view('outlet.dashboard');
+
     });
     Route::resource('/pesanan', PesananOutletController::class);
 });
 
+
+Route::get('testnotif', [PesananOutletController::class, 'testnotif']);
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'store'])->name('login.store');

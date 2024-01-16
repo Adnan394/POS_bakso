@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.outlet')
 
 @section('content')
     <div class="page-wrapper">
@@ -53,7 +53,7 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="content-table">
                                         @foreach ($transaksi as $item)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
