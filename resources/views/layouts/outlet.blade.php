@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta http-equiv="refresh" content="30">
+
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon.png') }}">
     <title>Admin Bakso Liktono</title>
@@ -24,6 +26,23 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <audio id="notificationSound" src="{{ asset('audio/notification.mp3') }}"></audio>
+
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('6e5959a700ebba645ca2', {
+            cluster: 'ap1'
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            notif(data);
+        });
+    </script>
 </head>
 
 <body>
@@ -41,6 +60,8 @@
     <!-- ============================================================== -->
     <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+        <button id="hiddenPlayButton" style="display: none;"></button>
+
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
@@ -347,6 +368,29 @@
 
     <script src="{{ asset('assets/extra-libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('dist/js/pages/datatable/datatable-basic.init.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+        function notif(data) {
+        // Mendapatkan elemen audio
+        var audio = document.getElementById('notificationSound');
+        
+        // Memicu pemutaran suara
+        audio.play();
+
+            Toastify({
+                text: data.message.message,
+                className: "info",
+                style: {
+                    background: "#3ed33edc",
+                },
+                gravity: "top",
+                position: "right",
+                duration: 5000,
+            }).showToast();
+
+
+        };
+    </script>
 </body>
 
 </html>

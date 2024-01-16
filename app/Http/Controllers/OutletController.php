@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Outlet;
 use App\Models\Location;
+use App\Models\Outlet;
 use App\Models\Outlet_detail;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
 class OutletController extends Controller
 {
@@ -18,11 +17,13 @@ class OutletController extends Controller
         $locations = Location::all();
         $data = Outlet_detail::all();
         return view('superadmin.data-master.outlets.index', [
-            'data' => $data , 
+            'data' => $data,
             'locations' => $locations,
-            'outlet' => Outlet::all()
+            'outlet' => Outlet::all(),
         ]);
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -44,7 +45,7 @@ class OutletController extends Controller
         ]);
 
         return redirect()->route('outlets.index')->with('success', 'Outlet berhasil ditambahkan.');
-        
+
     }
 
     /**
@@ -52,9 +53,8 @@ class OutletController extends Controller
      */
     public function show(string $id)
     {
-      
+
     }
-    
 
     /**
      * Show the form for editing the specified resource.
@@ -62,7 +62,7 @@ class OutletController extends Controller
     public function edit(string $id)
     {
         $data = Outlet::where('id', $id)->first();
-        return view('superadmin.data-master.outlets.index',['data' => $data]);
+        return view('superadmin.data-master.outlets.index', ['data' => $data]);
     }
 
     /**
@@ -73,7 +73,7 @@ class OutletController extends Controller
         $data = [
             'name' => $request->name,
             'location_id' => $request->location_id,
-            'outlet_id' => $request->outlet_id
+            'outlet_id' => $request->outlet_id,
         ];
 
         Outlet_detail::where('id', $id)->update($data);
