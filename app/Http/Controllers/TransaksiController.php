@@ -151,6 +151,7 @@ class TransaksiController extends Controller
                     });
             });
         }
+        
     
         // Ambil hasil query dan kirimkan ke view
         $transaksi = $query->get();

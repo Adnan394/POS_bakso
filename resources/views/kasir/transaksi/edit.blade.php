@@ -3,7 +3,7 @@
 @section('content')
     <div class="page-wrapper">
         <div class="row mt-5">
-            <div class="col-8 mt-3">
+            <div class="col-12 col-lg-8 mt-3">
                 <div data-spy="scroll" style="position: relative; height: 570px; overflow: auto;">
                     <table class="table table-striped mt-4">
                         <thead>
@@ -31,7 +31,7 @@
                     </table>
                 </div>
             </div>
-            <div class="col-4 mt-1">
+            <div class="col-12 col-lg-4 mt-1 px-lg-5">
                 <form action="{{ route('selesaikan_pesanan') }}" method="POST">
                     @csrf
                     <input type="hidden" name="transaction_id" value="{{ $data->id }}">
@@ -43,23 +43,23 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="price">Total Item</label>
+                            <label for="price">Jumlah Pesanan</label>
                             <input type="number" name="total_item" class="form-control border-primary"
                                 value="{{ $data->transaction_detail->sum('qty') }}" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="price">Total Price</label>
+                            <label for="price">Total Harga</label>
                             <input type="number" name="price_amount" class="form-control border-primary" value="0"
                                 readonly>
                         </div>
                         <div class="form-group">
-                            <label for="price">Paid</label>
+                            <label for="price">Dibayar</label>
                             <input type="number" name="paid" id="paid" class="form-control border-primary"
-                                value="" onchange="updateReturn()">
+                                value="0" onchange="updateReturn()">
                         </div>
                         <div class="form-group">
-                            <label for="price">Return</label>
-                            <input type="number" name="return" class="form-control border-primary" value="0"
+                            <label for="price">Kembalian</label>
+                            <input type="text" name="return" class="form-control border-primary" value="0"
                                 readonly>
                         </div>
                         <div class="form-group">
@@ -75,7 +75,7 @@
                         </div>
 
                         <div class="row py-2">
-                            <div class="col-8 text-center">
+                            <div class="col-12 text-center">
                                 <button type="submit" class="btn btn-lg btn-success btn-block" data-toggle="modal"
                                     data-target="#confirmOrderCenter" disabled id="btn-selesai">
                                     Selesaikan Orderan
@@ -107,24 +107,27 @@
 
             for (var i = 0; i < subtotalElements.length; i++) {
                 var subtotalText = subtotalElements[i].innerText;
-                var subtotalValue = parseFloat(subtotalText.replace('Rp. ', '').replace(',', ''));
+                var subtotalValue = parseFloat(subtotalText.replace('Rp. ', '').replace(/,/g,
+                    '')); // Menggunakan replace dengan regular expression
 
                 totalPrice += subtotalValue;
             }
 
             // Menemukan elemen input Total Price dan mengupdate nilainya
             var totalPriceInput = document.getElementsByName('price_amount')[0];
-            totalPriceInput.value = totalPrice;
+            totalPriceInput.value = totalPrice; // Menggunakan toLocaleString untuk menambah format angka
         }
 
         function updateReturn() {
             var totalPrice = parseFloat(document.getElementsByName('price_amount')[0].value);
             var paid = parseFloat(document.getElementsByName('paid')[0].value);
-            var paid2 = document.getElementById('paid2');
-            paid2.value = paid;
             var returnInput = document.getElementsByName('return')[0];
-            returnInput.value = (paid - totalPrice).toFixed(2);
+
+            var returnAmount = (paid - totalPrice).toFixed(
+            2); // Menggunakan toFixed(2) untuk membatasi desimal menjadi dua digit
+            returnInput.value = 'Rp. ' + returnAmount.replace(/\d(?=(\d{3})+\.)/g, '$&,'); // Menambahkan format Rupiah
         }
+
 
         document.addEventListener("DOMContentLoaded", function() {
             var inputProduk = document.querySelectorAll('input[name="product[]"]');

@@ -61,8 +61,8 @@
                     <div class="row py-2">
                         <div class="col-12 col-md-8 text-center">
                             <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
-                            <button type="submit" id="btn-selesai" class="btn btn-lg btn-success btn-block" data-toggle="modal"
-                                data-target="#confirmOrderCenter" disabled>
+                            <button type="submit" id="btn-selesai" class="btn btn-lg btn-success btn-block"
+                                data-toggle="modal" data-target="#confirmOrderCenter" disabled>
                                 Buat Transaksi
                             </button>
                         </div>
@@ -103,14 +103,15 @@
 
             for (var i = 0; i < subtotalElements.length; i++) {
                 var subtotalText = subtotalElements[i].innerText;
-                var subtotalValue = parseFloat(subtotalText.replace('Rp. ', '').replace(',', ''));
+                var subtotalValue = parseFloat(subtotalText.replace('Rp. ', '').replace(/,/g,
+                '')); // Menggunakan replace dengan regular expression
 
                 totalPrice += subtotalValue;
             }
 
             // Menemukan elemen input Total Price dan mengupdate nilainya
             var totalPriceInput = document.getElementsByName('price_amount')[0];
-            totalPriceInput.value = totalPrice; // Menambah format angka dengan toLocaleString()
+            totalPriceInput.value = totalPrice; // Menggunakan toLocaleString untuk menambah format angka
         }
     </script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
