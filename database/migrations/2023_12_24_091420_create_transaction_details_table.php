@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained('produks');
             $table->integer('price');
             $table->string('qty');
+            $table->string('note')->nullable();
             $table->string('status');
             $table->integer('order_sequence');
             $table->timestamps();

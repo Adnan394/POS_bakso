@@ -78,6 +78,7 @@ class TransaksiController extends Controller
 
             foreach($request->produk as $index => $product) {
                 $qty = $request->qty[$index];
+                $pesan = $request->pesan[$index];
                 
                 if ($qty != null) {
                     Transaction_detail::create([
@@ -85,6 +86,7 @@ class TransaksiController extends Controller
                         'product_id' => $product,
                         'price' => Produk::where('id', $product)->first()->price,
                         'qty' => $qty,
+                        'note' => $pesan,
                         'status' => "Diproses",
                         'order_sequence' => 1
                     ]);

@@ -15,6 +15,7 @@
                                     <th scope="col">Harga</th>
                                     <th scope="col">Jumlah</th>
                                     <th scope="col">Subtotal</th>
+                                    <th scope="col">Pesan</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -29,6 +30,7 @@
                                                 data-price="{{ $product->price }}">
                                         </td>
                                         <td class="subtotal">Rp. 0</td>
+                                        <td><input type="text" name="pesan[]" id=""></td>
                                     </tr>
                                 @endforeach
                             </tbody>
