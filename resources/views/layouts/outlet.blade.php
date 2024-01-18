@@ -27,7 +27,6 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <audio id="notificationSound" src="{{ asset('audio/notification.mp3') }}"></audio>
 
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <script>
@@ -371,12 +370,6 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
         function notif(data) {
-        // Mendapatkan elemen audio
-        var audio = document.getElementById('notificationSound');
-        
-        // Memicu pemutaran suara
-        audio.play();
-
             Toastify({
                 text: data.message.message,
                 className: "info",
@@ -387,8 +380,6 @@
                 position: "right",
                 duration: 5000,
             }).showToast();
-
-
         };
     </script>
 </body>
