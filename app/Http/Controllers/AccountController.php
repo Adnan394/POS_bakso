@@ -18,7 +18,10 @@ class AccountController extends Controller
     {
         $locations = Location::all();
         $data = User::all();
-        return view('superadmin.data-master.accounts.index', ['data' => $data , 'locations' => $locations, 'outlet_detail' => Outlet_detail::all()]);
+        return view('superadmin.data-master.accounts.index', [
+            'data' => $data , 
+            'locations' => $locations, 
+            'outlet_detail' => Outlet_detail::all()]);
     }
 
     /**
@@ -34,12 +37,17 @@ class AccountController extends Controller
      */
     public function store(Request $request)
     {
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'role_id' => $request->role_id,
             'location_id' => $request->location_id,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+        ]);
+
+        User_detail::create([
+            'user_id' => $user->id, 
+            'outlet_detail_id' => $request->outlet_detail_id
         ]);
 
         return redirect()->route('accounts.index')->with('success', 'Akun Cabang berhasil ditambahkan.');
