@@ -56,6 +56,14 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="name">Dibungkus/Ditempat</label>
+                        <select name="table_id" id="table_id" required>
+                            <option value="" disabled selected>Pilih Nomor Meja</option>
+                            <option value="">Dibungkus</option>
+                            <option value="">Ditempat</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="total_price">Total Harga</label>
                         <input type="text" name="price_amount" class="form-control border-primary" value="0"
                             readonly>
