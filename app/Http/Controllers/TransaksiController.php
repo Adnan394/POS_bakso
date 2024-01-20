@@ -73,6 +73,7 @@ class TransaksiController extends Controller
                 'payment_image' => ($request->payment_image) ? $request->payment_image : null,
                 'discount' => ($request->discount) ? $request->discount : null,
                 'pay_amount' => $request->price_amount,
+                'order_type' => $request->order_type,
                 'user_id' => Auth::user()->id,
                 'name_customer' => $request->name_customer
             ]);
@@ -203,6 +204,7 @@ class TransaksiController extends Controller
         Transaction::where('id', $request->transaksi_id)->update(['price_amount' => $request->price_amount, 'pay_amount' => $request->price_amount]);
         foreach($request->produk as $index => $product) {
             $qty = $request->qty[$index];
+            $pesan = $request->pesan[$index];
             
             if ($qty != null) {
                 Transaction_detail::create([
@@ -211,7 +213,8 @@ class TransaksiController extends Controller
                     'price' => Produk::where('id', $product)->first()->price,
                     'qty' => $qty,
                     'status' => "Diproses",
-                    'order_sequence' => $order_sequence->order_sequence + 1
+                    'order_sequence' => $order_sequence->order_sequence + 1,
+                    'note' => $pesan
                 ]);
             }
         }

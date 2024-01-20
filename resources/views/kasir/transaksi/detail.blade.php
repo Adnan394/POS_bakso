@@ -9,10 +9,11 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Qty</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Harga</th>
+                                <th scope="col">Jumlah</th>
                                 <th scope="col">Subtotal</th>
+                                <th scope="col">Pesan</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -24,6 +25,7 @@
                                     <td><input type="number" name="product[]" value="{{ $product->qty }}" onchange="updateSubtotal(this)"
                                             data-price="{{ $product->price }}" readonly></td>
                                     <td class="subtotal">Rp. 0</td>
+                                    <td>{{ $product->note }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -40,6 +42,7 @@
                                 <th scope="col">Harga</th>
                                 <th scope="col">Jumlah</th>
                                 <th scope="col">Subtotal</th>
+                                <th scope="col">Pesan</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -54,6 +57,7 @@
                                             data-price="{{ $product->price }}">
                                     </td>
                                     <td class="subtotal">Rp. 0</td>
+                                    <td><input type="text" name="pesan[]" id=""></td>
                                 </tr>
                             @endforeach
                         </tbody>

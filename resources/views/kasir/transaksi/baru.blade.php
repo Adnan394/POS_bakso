@@ -57,10 +57,10 @@
                     </div>
                     <div class="form-group">
                         <label for="name">Dibungkus/Ditempat</label>
-                        <select name="table_id" id="table_id" required>
-                            <option value="" disabled selected>Pilih Nomor Meja</option>
-                            <option value="">Dibungkus</option>
-                            <option value="">Ditempat</option>
+                        <select name="order_type" id="order_type" required>
+                            <option value="" disabled selected>Pilih</option>
+                            <option value="dibungkus">Dibungkus</option>
+                            <option value="ditempat">Ditempat</option>
                         </select>
                     </div>
                     <div class="form-group">
