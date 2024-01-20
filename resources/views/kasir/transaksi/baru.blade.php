@@ -15,6 +15,7 @@
                                     <th scope="col">Harga</th>
                                     <th scope="col">Jumlah</th>
                                     <th scope="col">Subtotal</th>
+                                    <th scope="col">Pesan</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -29,6 +30,7 @@
                                                 data-price="{{ $product->price }}">
                                         </td>
                                         <td class="subtotal">Rp. 0</td>
+                                        <td><input type="text" name="pesan[]" id=""></td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -55,10 +57,10 @@
                     </div>
                     <div class="form-group">
                         <label for="name">Dibungkus/Ditempat</label>
-                        <select name="table_id" id="table_id" required>
-                            <option value="" disabled selected>Pilih Nomor Meja</option>
-                            <option value="">Dibungkus</option>
-                            <option value="">Ditempat</option>
+                        <select name="order_type" id="order_type" required>
+                            <option value="" disabled selected>Pilih</option>
+                            <option value="dibungkus">Dibungkus</option>
+                            <option value="ditempat">Ditempat</option>
                         </select>
                     </div>
                     <div class="form-group">
