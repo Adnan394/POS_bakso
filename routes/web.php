@@ -27,9 +27,11 @@ use App\Http\Controllers\TransaksiDetailController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::get('/403', function() {
+    return view('403');
+});
 Route::get('/', [LoginController::class, 'index'])->name('login'); // Mengarahkan ke halaman login
-Route::prefix('/superadmin')->middleware('auth')->group(function() {
+Route::prefix('/superadmin')->middleware('auth', 'superadmin_access')->group(function() {
     Route::get('/', function () {
         return view('superadmin.dashboard');
     });
@@ -41,7 +43,7 @@ Route::prefix('/superadmin')->middleware('auth')->group(function() {
     Route::resource('/outlets', OutletController::class);
 });
 
-Route::prefix('/admin')->middleware('auth')->group(function() {
+Route::prefix('/admin')->middleware('auth', 'admin_access')->group(function() {
     Route::get('/', function () {
         return view('admin.dashboard');
     });
@@ -52,7 +54,7 @@ Route::prefix('/admin')->middleware('auth')->group(function() {
 
 });
 
-Route::prefix('/kasir')->middleware('auth')->group(function() {
+Route::prefix('/kasir')->middleware('auth', 'kasir_access')->group(function() {
     Route::get('/', function () {
         $transaksi_active = Transaction::where('payment_id', null)->get();
         $transaksi_done = Transaction::where('payment_id', '!=', null)->get();
@@ -69,7 +71,7 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
     Route::get('/nota/{id}', [TransaksiController::class, 'nota'])->name('transaksi.nota');
     Route::post('/selesaikan_pesanan', [TransaksiController::class, 'selesaikan_pesanan'])->name('selesaikan_pesanan');
 });
-Route::prefix('/outlet')->middleware('auth')->group(function() {
+Route::prefix('/outlet')->middleware('auth', 'outlet_access')->group(function() {
     Route::get('/', function () {
         return view('outlet.dashboard');
 

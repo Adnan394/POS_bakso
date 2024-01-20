@@ -198,7 +198,7 @@
                                         <div class="form-group">
                                             <label for="role_id">Role</label>
                                             <select name="role_id" id="role_id">
-                                                <option disabled selected>Pilih Lokasi Cabang</option>
+                                                <option disabled selected>Pilih Role</option>
                                                 @foreach (\App\Models\Role::all() as $role)
                                                     <option value="{{ $role->id }}">
                                                         {{ $role->name }}
@@ -213,6 +213,17 @@
                                                 @foreach ($locations as $location)
                                                     <option value="{{ $location->id }}">
                                                         {{ $location->locations }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="location_id">Posisi Outlet</label>
+                                            <select name="outlet_detail_id" id="location_id">
+                                                <option disabled selected>Pilih Posisi Outlet</option>
+                                                @foreach ($outlet_detail as $outlet_detail)
+                                                    <option value="{{ $outlet_detail->id }}">
+                                                        {{ $outlet_detail->name }}
                                                     </option>
                                                 @endforeach
                                             </select>
