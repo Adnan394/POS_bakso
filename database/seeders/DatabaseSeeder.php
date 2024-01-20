@@ -104,6 +104,14 @@ class DatabaseSeeder extends Seeder
             'outlet_id' => '1'
         ]);
         User::create([
+            'name' => 'Nabila',
+            'email' => 'nabila@gmail.com',
+            'role_id' => '5',
+            'password' => Hash::make('nabila123'),
+            'location_id' => '1',
+            'outlet_id' => '1'
+        ]);
+        User::create([
             'name' => 'Outlet Pusat',
             'email' => 'outlet1@gmail.com',
             'role_id' => '4',
