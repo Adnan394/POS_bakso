@@ -143,7 +143,7 @@
                                                                                     <option disabled selected>Pilih Posisi Outlet</option>
                                                                                     @foreach ($outlet_detail as $outlet)
                                                                                     <option value="{{ $outlet->id }}">
-                                                                                        {{ $outlet->name }}
+                                                                                        {{ $outlet->outlet->name }}-{{ $outlet->name }}
                                                                                     </option>
                                                                                     @endforeach
                                                                                 </select>
@@ -223,7 +223,7 @@
                                                 <option disabled selected>Pilih Posisi Outlet</option>
                                                 @foreach ($outlet_detail as $outlet_detail)
                                                     <option value="{{ $outlet_detail->id }}">
-                                                        {{ $outlet_detail->name }}
+                                                        {{ $outlet_detail->outlet->name }}-{{ $outlet_detail->name }}
                                                     </option>
                                                 @endforeach
                                             </select>

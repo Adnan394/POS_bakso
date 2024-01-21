@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Location;
 use App\Models\Produk;
 use App\Models\Outlet;
 use Illuminate\Http\Request;
@@ -14,9 +15,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = Produk::where('location_id', Auth::user()->location->id)->get();
+        $data = Produk::where('location_id', Auth::user()->location->id)
+                ->orWhere('location_id', null)->get();
         $outlets = Outlet::all();
-        return view('superadmin.data-master.products.index', ['data' => $data, 'outlets' => $outlets]);
+        $location = Location::all();
+        return view('superadmin.data-master.products.index', ['data' => $data, 'locations' => $location, 'outlets' => $outlets]);
     }
 
     /**
@@ -46,7 +49,7 @@ class ProductController extends Controller
             'status_stock' => $request->status_stock,
             'image' => $path . '/' . $fileName,
             'outlet_id' => $request->outlet_id,
-            'location_id' => Auth::user()->location->id
+            'location_id' => $request->location_id
         ]);
 
         return redirect()->route('products.index')->with('success', 'Data Product berhasil ditambahkan.');
@@ -87,7 +90,8 @@ class ProductController extends Controller
             'price' => $request->price,
             'status_stock' => $request->status_stock,
             'image' => $path . '/' . $fileName,
-            'outlet_id' => $request->outlet_id
+            'outlet_id' => $request->outlet_id,
+            'location_id' => $request->location_id
         ];
 
         Produk::where('id', $id)->update($data);

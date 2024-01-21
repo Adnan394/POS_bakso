@@ -123,8 +123,7 @@
             var paid = parseFloat(document.getElementsByName('paid')[0].value);
             var returnInput = document.getElementsByName('return')[0];
 
-            var returnAmount = (paid - totalPrice).toFixed(
-            2); // Menggunakan toFixed(2) untuk membatasi desimal menjadi dua digit
+            var returnAmount = (paid - totalPrice).toFixed(2); // Menggunakan toFixed(2) untuk membatasi desimal menjadi dua digit
             returnInput.value = 'Rp. ' + returnAmount.replace(/\d(?=(\d{3})+\.)/g, '$&,'); // Menambahkan format Rupiah
         }
 

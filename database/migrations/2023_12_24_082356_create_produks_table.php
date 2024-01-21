@@ -17,8 +17,12 @@ return new class extends Migration
             $table->integer('price');
             $table->string('image');
             $table->string('status_stock');
-            $table->foreignId('location_id')->constrained('locations');
-            $table->foreignId('outlet_id')->constrained('outlets');
+            $table->unsignedBigInteger('location_id')->nullable();
+            $table->foreign('location_id')->references('id')->on('locations')->onDelete('set null');
+            // $table->foreignId('location_id')->constrained('locations');
+            // $table->foreignId('outlet_id')->constrained('outlets');
+            $table->unsignedBigInteger('outlet_id')->nullable();
+            $table->foreign('outlet_id')->references('id')->on('outlets')->onDelete('set null');
             $table->timestamps();
         });
     }
