@@ -41,7 +41,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">List Of Pesanan</h4>
+                            <h4 class="card-title">Pesanan Dikerjakan</h4>
                             <div class="table-responsive">
                                 <table id="" class="table table-striped table-bordered no-wrap">
                                     <thead>
@@ -50,24 +50,30 @@
                                             <th>Nama Pelanggan</th>
                                             <th>No Meja</th>
                                             <th>Pesanan</th>
-                                            <th>Selesaikan Pesanan</th>
+                                            <th>Pilihan</th>
+                                            <th>Selesaikan</th>
                                         </tr>
                                     </thead>
                                     <tbody id="content-table">
-                                        @foreach ($transaksi as $item)
+                                        @foreach ($transaksi as $index => $item)
+                                        @if ($index == 0)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $item->name_customer }}</td>
                                                 <td>{{ $item->table->number }}</td>
-                                                <?php $statusCount = 0;
-                                                foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->get() as $transactionStatus) {
-                                                    if ($transactionStatus->status == 'Diproses') {
-                                                        $statusCount += 1;
-                                                    }
-                                                } ?>
-                                                <td><span
-                                                        class="badge text-white {{ $statusCount == 0 ? 'bg-success' : 'bg-danger' }}">{{ $statusCount == 0 ? 'Selesai' : 'Belum selesai' }}</span>
+                                                <td>
+                                                    @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->get() as $transaction_detail)
+                                                    <div class="d-flex justify-content-between">
+                                                        <span>
+                                                            {{ \App\Models\Produk::where('id', $transaction_detail->product_id)->first()->name }}
+                                                        </span>
+                                                        <span>
+                                                            x{{ $transaction_detail->qty }}
+                                                        </span>
+                                                    </div>
+                                                    @endforeach
                                                 </td>
+                                                <td>{{ $item->order_type }}</td>
                                                 <td>
                                                     <a href="" data-toggle="modal"
                                                         data-target="#modal-edit{{ $item->id }}" style="width: 50px"
@@ -89,21 +95,30 @@
                                                             
                                                         </div>
                                                         <div class="modal-footer">
-                                                          <button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="modal">Batal</button>
-                                                          <form action="" method="POST">
+                                                        <button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="modal">Batal</button>
+                                                        <form action="{{ route('pesanan.update', $item->id) }}" method="POST">
                                                             @method('PUT')
                                                             @csrf
                                                             <button class="btn btn-primary" type="submit">Lanjutkan</button>
-                                                          </form>
+                                                        </form>
                                                         </div>
 
                                                     </div><!-- /.modal-content -->
                                                 </div><!-- /.modal-dialog -->
                                             </div><!-- /.modal -->
+                                        @endif
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Antrian Pesanan</h4>
                             <div class="table-responsive">
                                 <table id="zero_config" class="table table-striped table-bordered no-wrap">
                                     <thead>
@@ -114,12 +129,15 @@
                                         </tr>
                                     </thead>
                                     <tbody id="content-table">
-                                        @foreach ($transaksi as $item)
-                                            <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $item->name_customer }}</td>
-                                                <td>{{ $item->table->number }}</td>
-                                            </tr>
+                                        @foreach ($transaksi as $index => $item)
+                                            @if ($index > 0)
+                                                <tr>
+                                                    <td>{{ $index }}</td>
+                                                    <td>{{ $item->name_customer }}</td>
+                                                    <td>{{ $item->table->number }}</td>
+                                                </tr>
+                                            @else
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>
