@@ -64,12 +64,14 @@
                                                 <td>
                                                     @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->get() as $transaction_detail)
                                                     <div class="d-flex justify-content-between">
-                                                        <span>
-                                                            {{ \App\Models\Produk::where('id', $transaction_detail->product_id)->first()->name }}
-                                                        </span>
-                                                        <span>
-                                                            x{{ $transaction_detail->qty }}
-                                                        </span>
+                                                        @if (\App\Models\Produk::where('id', $transaction_detail->product_id)->where('location_id', '!=', null)->first())
+                                                            <span>
+                                                                {{ \App\Models\Produk::where('id', $transaction_detail->product_id)->where('location_id', '!=', null)->first()->name }}
+                                                            </span>
+                                                            <span>
+                                                                x{{ $transaction_detail->qty }}
+                                                            </span>
+                                                        @endif
                                                     </div>
                                                     @endforeach
                                                 </td>

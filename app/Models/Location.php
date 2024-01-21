@@ -20,4 +20,8 @@ class Location extends Model
     public function outlet_detail() {
         return $this->hasMany(Outlet_detail::class);
     } 
+
+    public function produk() {
+        return $this->hasMany(Produk::class);
+    }
 }

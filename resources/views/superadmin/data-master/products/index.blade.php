@@ -57,6 +57,7 @@
                                             <th>Harga Produk</th>
                                             <th>Status Stock</th>
                                             <th>Gambar</th>
+                                            <th>Lokasi</th>
                                             <th>Outlet</th>
                                             <th>Action</th>
                                         </tr>
@@ -71,7 +72,8 @@
                                                 <td><img src="{{ asset($item->image) }}" alt="Image"
                                                         style="max-width: 100px; max-height: 100px;">
                                                 </td>
-                                                <td>{{ $item->outlet->name }}</td>
+                                                <td>{{( $item->location_id != null) ? \App\Models\Location::where('id', $item->location_id)->first()->locations : "" }}</td>
+                                                <td>{{( $item->outlet_id != null) ? \App\Models\Outlet::where('id', $item->outlet_id)->first()->name : "" }}</td>
                                                 <td>
                                                     <a href="" data-toggle="modal"
                                                         data-target="#modal-edit{{ $item->id }}" style="width: 50px"
@@ -142,14 +144,25 @@
                                                                                     id="exampleInputFile" required>
                                                                             </fieldset>
                                                                             <div class="form-group">
-                                                                                <label for="outlet_id">Lokasi
+                                                                                <label for="location_id">Lokasi
                                                                                     Cabang</label>
+                                                                                <select name="location_id" id="location_id">
+                                                                                    <option value="" disabled selected> Pilih Lokasi </option>
+                                                                                    @foreach ($locations as $loc)
+                                                                                        <option value="{{ $loc->id }}"> {{ $loc->locations }} </option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="outlet_id">Lokasi
+                                                                                    Outlet</label>
                                                                                 <select name="outlet_id"
                                                                                     id="outlet_id">
-                                                                                    <option value="{{ $item->outlet_id }}"
+                                                                                    {{-- <option value="{{ $item->outlet_id }}"
                                                                                         disabled selected>
-                                                                                        {{ $item->outlet->name }}
-                                                                                    </option>
+                                                                                        {{ ($item->outlet->name) ? $item->outlet->name : "" }}
+                                                                                    </option> --}}
+                                                                                    <option value="" disabled selected> Pilih Outlet </option>
                                                                                     @foreach ($outlets as $outlet)
                                                                                         <option
                                                                                             value="{{ $outlet->id }}">
@@ -224,21 +237,25 @@
                                                 class="form-control-file" id="exampleInputFile" required>
                                         </fieldset>
                                         <div class="form-group">
-                                            <label for="outlet_id">Lokasi
+                                            <label for="location_id">Lokasi
                                                 Cabang</label>
-                                            <select name="outlet_id"
-                                                id="outlet_id">
-                                                <option value=""
-                                                    disabled selected>
-                                                    pilih outlet/dapur
-                                                </option>
-                                                @foreach ($outlets as $outlet)
-                                                    <option
-                                                        value="{{ $outlet->id }}">
-                                                        {{ $outlet->name }}
-                                                    </option>
+                                            <select name="location_id" id="location_id">
+                                                <option value="" disabled selected> Pilih Lokasi </option>
+                                                @foreach ($locations as $loc)
+                                                    <option value="{{ $loc->id }}"> {{ $loc->locations }} </option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="outlet_id">Lokasi
+                                                Outlet</label>
+                                            <select name="outlet_id" id="outlet_id">
+                                                <option value="" disabled selected> pilih outlet/dapur </option>
+                                                @foreach ($outlets as $outlet)
+                                                    <option value="{{ $outlet->id }}"> {{ $outlet->name }} </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                         <div class="modal-footer">
                                             <button type="reset" class="btn btn-light">Kosongkan</button>
                                             <button type="submiy" class="btn btn-primary">Tambahkan</button>

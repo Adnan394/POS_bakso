@@ -10,6 +10,7 @@ use App\Models\Transaction;
 use App\Events\OutletNotification;
 use Illuminate\Http\Request;
 use App\Models\Transaction_detail;
+use App\Models\User;
 use GuzzleHttp\Handler\Proxy;
 use Illuminate\Support\Facades\Auth;
 
@@ -53,8 +54,8 @@ class TransaksiController extends Controller
      */
     public function create()
     {
-        $tables = Table::all();
-        $products = Produk::all();
+        $tables = Table::where('outlet_detail_id', Auth::user()->user_detail->outlet_detail_id)->get();
+        $products = Produk::where('location_id', Auth::user()->location->id)->get();
         return view('kasir.transaksi.baru', ['products' => $products, 'tables' => $tables]);
     }
     

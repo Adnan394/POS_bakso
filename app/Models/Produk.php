@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Transaction_detail;
 use App\Models\Outlet;
+use App\Models\Location;
+use App\Models\Transaction_detail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -19,5 +20,9 @@ class Produk extends Model
 
     public function outlet() {
         return $this->belongsTo(Outlet::class);
+    }
+
+    public function location() {
+        return $this->belongsTo(Location::class);
     }
 }

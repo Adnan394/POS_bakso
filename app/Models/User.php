@@ -54,4 +54,8 @@ class User extends Authenticatable
         return $this->belongsTo(Location::class);
     }
 
+    public function user_detail() {
+        return $this->hasOne(User_detail::class);
+    }
+
 }

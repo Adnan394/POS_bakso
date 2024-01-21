@@ -31,26 +31,26 @@ Route::get('/403', function() {
     return view('403');
 });
 Route::get('/', [LoginController::class, 'index'])->name('login'); // Mengarahkan ke halaman login
-Route::prefix('/superadmin')->middleware('auth', 'superadmin_access')->group(function() {
+Route::prefix('/superadmin')->group(function() {
     Route::get('/', function () {
         return view('superadmin.dashboard');
-    });
-    Route::resource('/products', ProductController::class);
-    Route::resource('/accounts', AccountController::class);
-    Route::resource('/locations', LocationController::class);
-    Route::resource('/tables', TabelController::class);
-    Route::resource('/payments', PaymentController::class);
-    Route::resource('/outlets', OutletController::class);
+    })->middleware('auth');
+    Route::resource('/products', ProductController::class)->middleware('auth', 'admin_access', 'superadmin_access');
+    Route::resource('/accounts', AccountController::class)->middleware('auth', 'admin_access');
+    Route::resource('/locations', LocationController::class)->middleware('auth', 'admin_access');
+    Route::resource('/tables', TabelController::class)->middleware('auth', 'admin_access', 'superadmin_access');
+    Route::resource('/payments', PaymentController::class)->middleware('auth', 'admin_access', 'superadmin_access');
+    Route::resource('/outlets', OutletController::class)->middleware('auth', 'admin_access', 'superadmin_access');
 });
 
-Route::prefix('/admin')->middleware('auth', 'admin_access')->group(function() {
+Route::prefix('/admin')->group(function() {
     Route::get('/', function () {
         return view('admin.dashboard');
-    });
-    Route::resource('/products', ProductController::class);
-    Route::resource('/payments', PaymentController::class);
-    Route::resource('/outlets', OutletController::class);
-    Route::resource('/tables', TabelController::class);
+    })->middleware('auth');
+    Route::resource('/products', ProductController::class)->middleware('auth', 'admin_access', 'superadmin_access');
+    Route::resource('/payments', PaymentController::class)->middleware('auth', 'admin_access', 'superadmin_access');
+    Route::resource('/outlets', OutletController::class)->middleware('auth', 'admin_access', 'superadmin_access');
+    Route::resource('/tables', TabelController::class)->middleware('auth', 'admin_access', 'superadmin_access');
 
 });
 
