@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <meta http-equiv="refresh" content="30">
+    {{-- <meta http-equiv="refresh" content="30"> --}}
 
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon.png') }}">
@@ -380,7 +380,11 @@
                 position: "right",
                 duration: 5000,
             }).showToast();
-        };
+
+            setTimeout(function() {
+                location.reload();
+            }, 1000); // Waktu (dalam milidetik) sebelum halaman diperbarui
+        }
     </script>
 </body>
 
