@@ -5,9 +5,14 @@
         <div class="row mt-5">
             <div class="col-12 col-lg-8 mt-3"> <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
                 <div data-spy="scroll" style="position: relative; height: 570px; overflow: auto;">
-                    <form method="POST" action="{{ route('transaksi.store') }}" enctype="multipart/form-data" class="mt-4">
+                    <div class="mt-3 ml-5" style="width: 30%">
+                        <label for="search">Cari Menu:</label>
+                        <input type="text" id="search" oninput="searchMenu()" class="form-control">
+                    </div>
+                    <form method="POST" action="{{ route('transaksi.store') }}" enctype="multipart/form-data"
+                        class="mt-4">
                         @csrf
-                        <table id="zero_config" class="table table-striped table-bordered no-wrap">
+                        <table id="zero_confi" class="table table-striped table-bordered no-wrap">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -84,23 +89,25 @@
         </div>
     </div>
     <script>
+        var subtotalValues = [];
+
         function updateSubtotal(input) {
             var price = parseFloat(input.getAttribute('data-price'));
             var quantity = parseInt(input.value);
 
-            // Memastikan quantity valid sebelum melakukan perhitungan
             if (!isNaN(quantity) && quantity >= 0) {
                 var subtotal = price * quantity;
+                var index = parseInt(input.parentNode.parentNode.rowIndex) - 1;
+                subtotalValues[index] = subtotal;
 
-                // Menemukan elemen td.subtotal terkait dan mengupdate nilainya
                 var subtotalElement = input.parentNode.nextElementSibling;
-                subtotalElement.innerHTML = 'Rp. ' + subtotal
-                    .toLocaleString(); // Menambah format angka dengan toLocaleString()
+                subtotalElement.innerHTML = 'Rp. ' + subtotal.toLocaleString();
 
-                // Mengupdate nilai Total Price
                 updateTotalPrice();
             } else {
-                // Jika quantity tidak valid, atur subtotal dan total price menjadi 0
+                var index = parseInt(input.parentNode.parentNode.rowIndex) - 1;
+                subtotalValues[index] = 0;
+
                 var subtotalElement = input.parentNode.nextElementSibling;
                 subtotalElement.innerHTML = 'Rp. 0';
                 updateTotalPrice();
@@ -108,23 +115,50 @@
         }
 
         function updateTotalPrice() {
-            var subtotalElements = document.getElementsByClassName('subtotal');
-            var totalPrice = 0;
+            var totalPrice = subtotalValues.reduce(function(accumulator, currentValue) {
+                return accumulator + currentValue;
+            }, 0);
 
-            for (var i = 0; i < subtotalElements.length; i++) {
-                var subtotalText = subtotalElements[i].innerText;
-                var subtotalValue = parseFloat(subtotalText.replace('Rp. ', '').replace(/,/g,
-                '')); // Menggunakan replace dengan regular expression
-
-                totalPrice += subtotalValue;
-            }
-
-            // Menemukan elemen input Total Price dan mengupdate nilainya
             var totalPriceInput = document.getElementsByName('price_amount')[0];
-            totalPriceInput.value = totalPrice; // Menggunakan toLocaleString untuk menambah format angka
+            totalPriceInput.value = totalPrice;
         }
     </script>
+
+    <script>
+        function searchMenu() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("search");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("zero_confi");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                // Ubah angka 1 sesuai dengan indeks kolom yang berisi nama menu
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+
+                    // Ubah kedua nilai menjadi huruf besar untuk mencocokkan secara case-insensitive
+                    txtValue = txtValue.toUpperCase();
+                    filter = filter.toUpperCase();
+
+                    // Menggunakan metode includes() untuk mencocokkan keyword
+                    if (txtValue.includes(filter)) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+
+            // Memanggil ulang fungsi updateTotalPrice setelah melakukan pencarian
+            updateTotalPrice();
+        }
+    </script>
+
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
 
     <script>
         $('#nama_customer, #table_id').on('input', function() {
@@ -136,20 +170,6 @@
                 btnSelesai.disabled = false;
             } else {
                 btnSelesai.disabled = true;
-            }
-        });
-
-        // Menangkap perubahan pada input #paid
-        $('#nama_customer, #table_id').on('input', function() {
-            var customerName = $('#nama_customer').val();
-            var tableId = $('#table_id').val();
-
-            let btn_selesai = document.getElementById("btn-selesai");
-
-            // Memeriksa apakah nilai paid kosong
-            if (!customerName && !tableId) {
-                // Menonaktifkan tombol
-                btn_selesai.disabled = true;
             }
         });
     </script>
