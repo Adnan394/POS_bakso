@@ -41,29 +41,27 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
+                            @foreach ($transaksi as $index => $item)
+                            @if ($index == 0)
                             <h4 class="card-title">Pesanan Dikerjakan</h4>
+                            <h4>Nama Pelanggan : {{ $item->name_customer }}</h4>
+                            <h4>No. Meja : {{ $item->table->number }}</h4>
                             <div class="table-responsive">
                                 <table id="" class="table table-striped table-bordered no-wrap">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Pelanggan</th>
-                                            <th>No Meja</th>
                                             <th>Pesanan</th>
                                             <th>Pilihan</th>
                                             <th>Selesaikan</th>
                                         </tr>
                                     </thead>
                                     <tbody id="content-table">
-                                        @foreach ($transaksi as $index => $item)
-                                        @if ($index == 0)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $item->name_customer }}</td>
-                                                <td>{{ $item->table->number }}</td>
                                                 <td>
                                                     @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->where('status', 'Diproses')->get() as $transaction_detail)
-                                                    <div class="d-flex justify-content-between">
+                                                    <div class="d-flex justify-content-between mb-5 font-20">
                                                         @if (\App\Models\Produk::where('id', $transaction_detail->product_id)->where('location_id', '!=', null)->first())
                                                             <span>
                                                                 {{ \App\Models\Produk::where('id', $transaction_detail->product_id)->where('location_id', '!=', null)->first()->name }}
@@ -73,6 +71,7 @@
                                                             </span>
                                                         @endif
                                                     </div>
+                                                    <hr style="border: 1px solid black">
                                                     @endforeach
                                                 </td>
                                                 <td>{{ $item->order_type }}</td>

@@ -148,14 +148,14 @@ class DatabaseSeeder extends Seeder
             'location_id' => 1,
         ]);
 
-        Produk::create([
-            'name' => 'Bakso Polos Isi 5 + Basreng',
-            'price' => 14000,
-            'image' => 'gambar_stock/bakso.jpg',
-            'status_stock' => 'Tersedia',
-            'outlet_id' => 1,
-            'location_id' => 1,
-        ]);
+        // Produk::create([
+        //     'name' => 'Bakso Polos Isi 5 + Basreng',
+        //     'price' => 14000,
+        //     'image' => 'gambar_stock/bakso.jpg',
+        //     'status_stock' => 'Tersedia',
+        //     'outlet_id' => 1,
+        //     'location_id' => 1,
+        // ]);
 
         Produk::create([
             'name' => 'Bakso Polos Isi 10 + Tetelan',
@@ -176,14 +176,14 @@ class DatabaseSeeder extends Seeder
             'location_id' => 1,
         ]);
 
-        Produk::create([
-            'name' => 'Bakso Urat 1, Polos 4 + Basreng',
-            'price' => 17000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_basreng.jpg',
-            'status_stock' => 'Tersedia',
-            'outlet_id' => 1,
-            'location_id' => 1,
-        ]);
+        // Produk::create([
+        //     'name' => 'Bakso Urat 1, Polos 4 + Basreng',
+        //     'price' => 17000,
+        //     'image' => 'gambar_stock/bakso_urat_1_polos_basreng.jpg',
+        //     'status_stock' => 'Tersedia',
+        //     'outlet_id' => 1,
+        //     'location_id' => 1,
+        // ]);
 
         Produk::create([
             'name' => 'Bakso Urat 1, Polos 5 + Tetelan',
@@ -202,14 +202,14 @@ class DatabaseSeeder extends Seeder
             'outlet_id' => 1,
             'location_id' => 1,
         ]);
-        Produk::create([
-            'name' => 'Bakso Daging 1, Polos 4 + Basreng',
-            'price' => 17000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
-            'status_stock' => 'Tersedia',
-            'outlet_id' => 1,
-            'location_id' => 1,
-        ]);
+        // Produk::create([
+        //     'name' => 'Bakso Daging 1, Polos 4 + Basreng',
+        //     'price' => 17000,
+        //     'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
+        //     'status_stock' => 'Tersedia',
+        //     'outlet_id' => 1,
+        //     'location_id' => 1,
+        // ]);
         Produk::create([
             'name' => 'Bakso Daging 1, Polos 5 + Tetelan',
             'price' => 22000,
@@ -226,17 +226,121 @@ class DatabaseSeeder extends Seeder
             'outlet_id' => 1,
             'location_id' => 1,
         ]);
+        // Produk::create([
+        //     'name' => 'Bakso Daging 1, Urat 1, Polos 4',
+        //     'price' => 22000,
+        //     'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
+        //     'status_stock' => 'Tersedia',
+        //     'outlet_id' => 1,
+        //     'location_id' => 1,
+        // ]);
         Produk::create([
-            'name' => 'Bakso Daging 1, Urat 1, Polos 4',
-            'price' => 22000,
+            'name' => 'Bakso Daging 1, Urat 1, Polos 5 + Tetelan',
+            'price' => 27000,
             'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
         ]);
         Produk::create([
-            'name' => 'Bakso Daging 1, Urat 1, Polos 5 + Tetelan',
-            'price' => 27000,
+            'name' => 'Basreng',
+            'price' => 10000,
+            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Mendoan',
+            'price' => 10000,
+            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Scalop Goreng',
+            'price' => 10000,
+            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Nugget Goreng',
+            'price' => 10000,
+            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Cireng Goreng',
+            'price' => 10000,
+            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Sosis Goreng',
+            'price' => 10000,
+            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Kentang Goreng',
+            'price' => 10000,
+            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Pisang Goreng',
+            'price' => 10000,
+            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Kaki Naga Goreng',
+            'price' => 10000,
+            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Mie Goreng',
+            'price' => 10000,
+            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Mie Nyemek',
+            'price' => 10000,
+            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Otak Otak',
+            'price' => 10000,
+            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Dumpling',
+            'price' => 12500,
             'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
@@ -253,12 +357,76 @@ class DatabaseSeeder extends Seeder
             'outlet_id' => 1,
             'location_id' => 1,
         ]);
+        Produk::create([
+            'name' => 'Juice Tomat',
+            'price' => 7000,
+            'image' => 'gambar_stock/juice_nanas.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
 
 
         // Es Jeruk
         Produk::create([
-            'name' => 'Es Jeruk',
-            'price' => 5000,
+            'name' => 'Juice Jeruk',
+            'price' => 7000,
+            'image' => 'gambar_stock/es_jeruk.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Juice Jambu',
+            'price' => 7000,
+            'image' => 'gambar_stock/es_jeruk.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Juice Melon',
+            'price' => 8000,
+            'image' => 'gambar_stock/es_jeruk.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Juice Mangga',
+            'price' => 8000,
+            'image' => 'gambar_stock/es_jeruk.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Juice Strawberry',
+            'price' => 8000,
+            'image' => 'gambar_stock/es_jeruk.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Juice Alpukat',
+            'price' => 10000,
+            'image' => 'gambar_stock/es_jeruk.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Juice Durian',
+            'price' => 10000,
+            'image' => 'gambar_stock/es_jeruk.jpg',
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Juice Naga',
+            'price' => 10000,
             'image' => 'gambar_stock/es_jeruk.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
@@ -273,20 +441,17 @@ class DatabaseSeeder extends Seeder
             'outlet_id' => 1,
             'location_id' => 1,
         ]);
-
-        // Es Jeruk
         Produk::create([
             'name' => 'Es Jeruk',
             'price' => 5000,
-            'image' => 'gambar_stock/es_jeruk.jpg',
+            'image' => 'gambar_stock/es_teh_manis.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
         ]);
 
-        // Es Kopi/Koptil
         Produk::create([
-            'name' => 'Es Kopi/Koptil',
+            'name' => 'Es Kopi/Kopi',
             'price' => 5000,
             'image' => 'gambar_stock/es_kopi_koptil.jpg',
             'status_stock' => 'Tersedia',
