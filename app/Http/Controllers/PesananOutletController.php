@@ -25,7 +25,7 @@ class PesananOutletController extends Controller
             ->first();
         $transaksi = Transaction::join('transaction_details', function($q) {
                 $q->on('transactions.id', 'transaction_details.transaction_id')
-                ->where('status', 'Diproses')
+                ->where('transaction_details.status', 'Diproses')
                 ->orderByDesc('transaction_details.created_at')
                 ->limit(1);
             })
@@ -33,6 +33,7 @@ class PesananOutletController extends Controller
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', $user->id)
+            // ->orderByDesc('transaction_details.created_at')
             ->select(['transactions.*'])
             ->distinct()
             ->get();

@@ -62,7 +62,7 @@
                                                 <td>{{ $item->name_customer }}</td>
                                                 <td>{{ $item->table->number }}</td>
                                                 <td>
-                                                    @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->get() as $transaction_detail)
+                                                    @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->where('status', 'Diproses')->get() as $transaction_detail)
                                                     <div class="d-flex justify-content-between">
                                                         @if (\App\Models\Produk::where('id', $transaction_detail->product_id)->where('location_id', '!=', null)->first())
                                                             <span>
@@ -140,26 +140,6 @@
                                                 </tr>
                                             @else
                                             @endif
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="table-responsive">
-                                <table id="zero_config" class="table table-striped table-bordered no-wrap">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama Pelanggan</th>
-                                            <th>No Meja</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="content-table">
-                                        @foreach ($transaksi as $item)
-                                            <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $item->name_customer }}</td>
-                                                <td>{{ $item->table->number }}</td>
-                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
