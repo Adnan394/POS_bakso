@@ -22,46 +22,50 @@
                                     <th scope="row">{{ $key + 1 }}</th>
                                     <td>{{ \App\Models\Produk::find($product->product_id)->name }}</td>
                                     <td>{{ $product->price }}</td>
-                                    <td><input type="number" name="product[]" value="{{ $product->qty }}" onchange="updateSubtotal(this)"
-                                            data-price="{{ $product->price }}" readonly></td>
+                                    <td><input type="number" name="product[]" value="{{ $product->qty }}"
+                                            onchange="updateSubtotal(this)" data-price="{{ $product->price }}" readonly>
+                                    </td>
                                     <td class="subtotal">Rp. 0</td>
                                     <td>{{ $product->note }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-
-        <form method="POST" action="{{ route('tambah_pesanan') }}" class="mt-4">
-            @csrf
-            <input type="hidden" name="transaksi_id" value="{{ $data->id }}">
-                    <table id="zero_config" class="table table-striped table-bordered no-wrap">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nama Menu</th>
-                                <th scope="col">Harga</th>
-                                <th scope="col">Jumlah</th>
-                                <th scope="col">Subtotal</th>
-                                <th scope="col">Pesan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($products as $key => $product)
+                    <div class="mt-3 ml-5" style="width: 30%">
+                        <label for="search">Cari Menu:</label>
+                        <input type="text" id="search" oninput="searchMenu()" class="form-control">
+                    </div>
+                    <form method="POST" action="{{ route('tambah_pesanan') }}" class="mt-4">
+                        @csrf
+                        <input type="hidden" name="transaksi_id" value="{{ $data->id }}">
+                        <table id="zero_confi" class="table table-striped table-bordered no-wrap">
+                            <thead>
                                 <tr>
-                                    <th scope="row">{{ $key + 1 }}</th>
-                                    <td>{{ $product->name }}</td>
-                                    <td>{{ $product->price }}</td>
-                                    <td>
-                                        <input type="hidden" name="produk[]" value="{{ $product->id }}">
-                                        <input type="number" name="qty[]" onchange="updateSubtotal(this)"
-                                            data-price="{{ $product->price }}">
-                                    </td>
-                                    <td class="subtotal">Rp. 0</td>
-                                    <td><input type="text" name="pesan[]" id=""></td>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nama Menu</th>
+                                    <th scope="col">Harga</th>
+                                    <th scope="col">Jumlah</th>
+                                    <th scope="col">Subtotal</th>
+                                    <th scope="col">Pesan</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($products as $key => $product)
+                                    <tr>
+                                        <th scope="row">{{ $key + 1 }}</th>
+                                        <td>{{ $product->name }}</td>
+                                        <td>{{ $product->price }}</td>
+                                        <td>
+                                            <input type="hidden" name="produk[]" value="{{ $product->id }}">
+                                            <input type="number" name="qty[]" onchange="updateSubtotal(this)"
+                                                data-price="{{ $product->price }}">
+                                        </td>
+                                        <td class="subtotal">Rp. 0</td>
+                                        <td><input type="text" name="pesan[]" id=""></td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                 </div>
             </div>
             <div class="col-12 col-lg-4 mt-1 px-lg-5"> <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
@@ -103,7 +107,7 @@
                             </button>
                         </div>
                     </div>
-        </form>
+                    </form>
                 </div>
             </div>
         </div>
@@ -130,7 +134,7 @@
             for (var i = 0; i < subtotalElements.length; i++) {
                 var subtotalText = subtotalElements[i].innerText;
                 var subtotalValue = parseFloat(subtotalText.replace('Rp. ', '').replace(/,/g,
-                '')); // Menggunakan replace dengan regular expression
+                    '')); // Menggunakan replace dengan regular expression
 
                 totalPrice += subtotalValue;
             }
@@ -149,13 +153,45 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-        var inputProduk = document.querySelectorAll('input[name="product[]"]');
-        inputProduk.forEach(function(input) {
-            updateSubtotal(input);
+            var inputProduk = document.querySelectorAll('input[name="product[]"]');
+            inputProduk.forEach(function(input) {
+                updateSubtotal(input);
+            });
+
+            updateTotalPrice(); // Memanggil fungsi updateTotalPrice setelah kedua tabel selesai dimuat
+
         });
-
-        updateTotalPrice(); // Memanggil fungsi updateTotalPrice setelah kedua tabel selesai dimuat
-
-    });
     </script>
+
+<script>
+    function searchMenu() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("search");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("zero_confi");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            // Ubah angka 1 sesuai dengan indeks kolom yang berisi nama menu
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+
+                // Ubah kedua nilai menjadi huruf besar untuk mencocokkan secara case-insensitive
+                txtValue = txtValue.toUpperCase();
+                filter = filter.toUpperCase();
+
+                // Menggunakan metode includes() untuk mencocokkan keyword
+                if (txtValue.includes(filter)) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+
+        // Memanggil ulang fungsi updateTotalPrice setelah melakukan pencarian
+        updateTotalPrice();
+    }
+</script>
 @endsection
