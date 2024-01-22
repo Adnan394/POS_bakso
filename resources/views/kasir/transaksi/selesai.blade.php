@@ -61,13 +61,13 @@
                                 </div>
                                 <hr>
                             </div>
-                            <div class="col-12 mt-5">
+                            {{-- <div class="col-12 mt-5">
                                 <form action="" method="GET" target="_blank">
                                     <input type="hidden" name="paid2" value="" id="paid2">
                                     <button type="submit" class="btn btn-lg btn-primary btn-block">Invoice</button>
                                 </form>
                             </div>
-                            <hr>
+                            <hr> --}}
                         </div>
                     </div>
                 @endforeach

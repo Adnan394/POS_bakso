@@ -12,7 +12,7 @@ $('#zero_config').DataTable(
     {
         "pageLength": 50,
         "responsive": true,
-        // "searching": false
+        "searching": false
     }
 );
 
