@@ -61,7 +61,7 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
                                                     @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->where('status', 'Diproses')->get() as $transaction_detail)
-                                                    <div class="d-flex justify-content-between mb-5 font-20">
+                                                    <div class="d-flex justify-content-between mb-3 font-20">
                                                         @if (\App\Models\Produk::where('id', $transaction_detail->product_id)->where('location_id', '!=', null)->first())
                                                             <span>
                                                                 {{ \App\Models\Produk::where('id', $transaction_detail->product_id)->where('location_id', '!=', null)->first()->name }}
@@ -71,7 +71,8 @@
                                                             </span>
                                                         @endif
                                                     </div>
-                                                    <hr style="border: 1px solid black">
+                                                    <p class="text-muted">Pesan : {{ $transaction_detail->note }}</p>
+                                                    <hr style="border: 1px solid grey">
                                                     @endforeach
                                                 </td>
                                                 <td>{{ $item->order_type }}</td>

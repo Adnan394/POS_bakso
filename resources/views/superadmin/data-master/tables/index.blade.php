@@ -112,7 +112,7 @@
                                                                                     <option value="{{ $item->outlet_detail->id }}" selected>{{ $item->outlet_detail->name }}</option>
                                                                                     @foreach ($outlet_detail as $o)
                                                                                         <option value="{{ $o->id }}">
-                                                                                            {{ $o->name }}
+                                                                                            {{ $o->outlet->name }}-{{ $o->name }}
                                                                                         </option>
                                                                                     @endforeach
                                                                                 </select>
@@ -170,7 +170,7 @@
                                                 <option disabled selected>Pilih Outlet</option>
                                                 @foreach ($outlet_detail as $o)
                                                     <option value="{{ $o->id }}">
-                                                        {{ $o->name }}
+                                                        {{ $o->outlet->name }}-{{ $o->name }}
                                                     </option>
                                                 @endforeach
                                             </select>

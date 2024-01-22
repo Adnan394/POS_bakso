@@ -33,7 +33,7 @@ class PesananOutletController extends Controller
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', $user->id)
-            // ->orderByDesc('transaction_details.created_at')
+            ->orderBy('transaction_details.updated_at')
             ->select(['transactions.*'])
             ->distinct()
             ->get();
