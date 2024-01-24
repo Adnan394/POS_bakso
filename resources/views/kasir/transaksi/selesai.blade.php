@@ -64,7 +64,7 @@
                             </div>
                             <hr class="mb-0">
                             <div class="col-12 my-3">
-                                <form action="" method="GET" target="_blank">
+                                <form action="{{ route('transaksi.nota', $item->id) }}" method="GET" target="_blank">
                                     <input type="hidden" name="paid2" value="" id="paid2">
                                     <button type="submit" class="btn btn-lg btn-primary btn-block">Invoice</button>
                                 </form>

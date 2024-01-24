@@ -167,7 +167,9 @@ class TransaksiController extends Controller
 
     public function selesaikan_pesanan(Request $request) {
         Transaction::where('id', $request->transaction_id)->update([
-            'payment_id' => $request->payment_id
+            'payment_id' => $request->payment_id,
+            'pay_receive' => $request->paid,
+            'pay_return' => $request->return
         ]);
 
         foreach (Transaction_detail::where('transaction_id', $request->transaction_id)->get() as $td) {
@@ -181,6 +183,14 @@ class TransaksiController extends Controller
             ->select(['transactions.*', 'transaction_details.*'])
             ->get();
         return view('kasir.transaksi.nota', ['product' => $data,  'data' => Transaction::where('id', $request->transaction_id)->first(), 'location' => Location::where('id', Auth::user()->location->id)->first(), 'paid' => $request->paid]);
+    }
+
+    public function nota($id) {
+        $data = Transaction::where('transactions.id', $id)
+            ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
+            ->select(['transactions.*', 'transaction_details.*'])
+            ->get();
+        return view('kasir.transaksi.nota', ['product' => $data,  'data' => Transaction::where('id', $id)->first(), 'location' => Location::where('id', Auth::user()->location->id)->first()]);
     }
 
     /**
