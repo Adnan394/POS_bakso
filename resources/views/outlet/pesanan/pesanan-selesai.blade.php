@@ -53,14 +53,11 @@
                                     </thead>
                                     <tbody id="content-table">
                                         @foreach ($transaksi as $index => $item)
-                                            @if ($index > 0)
-                                                <tr>
-                                                    <td>{{ $index }}</td>
-                                                    <td>{{ $item->name_customer }}</td>
-                                                    <td>{{ $item->table->number }}</td>
-                                                </tr>
-                                            @else
-                                            @endif
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $item->name_customer }}</td>
+                                                <td>{{ $item->table->number }}</td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -72,52 +69,6 @@
             <!-- order table -->
             <!-- ============================================================== -->
         </div>
-        <div id="modal-tambah" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-tambahLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header modal-colored-header bg-primary">
-                        <h4 class="modal-title" id="modal-tambahLabel">Form Tambah Produl
-                        </h4>
-                        <button type="button" class="close" transaction-dismiss="modal" aria-hidden="true">×</button>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="col-sm-12 col-md-12 col-lg-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">Tambahkan Akun Cabang</h4>
-                                    <form method="POST" action="{{ route('accounts.store') }}"
-                                        enctype="multipart/form-transaction" class="mt-4">
-                                        @csrf
-                                        <div class="form-group">
-                                            <label for="name">Nama</label>
-                                            <input type="text" name="name" class="form-control border-primary"
-                                                required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="price">Email</label>
-                                            <input type="email" name="email" class="form-control border-primary"
-                                                required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="price">Password</label>
-                                            <input type="password" name="password" class="form-control border-primary"
-                                                required>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="reset" class="btn btn-light">Kosongkan</button>
-                                            <button type="submiy" class="btn btn-primary">Tambahkan</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
 
     </div>
 @endsection

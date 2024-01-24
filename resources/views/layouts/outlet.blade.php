@@ -320,6 +320,10 @@
                                             class="sidebar-link"><span class="hide-menu"> Pesanan
                                             </span></a>
                                     </li>
+                                    <li class="sidebar-item"><a href="{{ route('pesanan-selesai') }}"
+                                        class="sidebar-link"><span class="hide-menu"> Pesanan Selesai
+                                        </span></a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="list-divider"></li>
