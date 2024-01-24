@@ -218,7 +218,6 @@ class TransaksiController extends Controller
             'transaction_id' => $request->transaksi_id,
             'product_id' => $product,
             'qty' => $qty,
-            'time' => $transaction->created_at->format('D, d/mY'),
             'message' => 'Transaksi Tambahan Baru',
         ];
 

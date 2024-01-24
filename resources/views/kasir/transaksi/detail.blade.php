@@ -77,7 +77,7 @@
                     </div>
                     <div class="form-group">
                         <label for="name">Nomor Meja</label>
-                        <select name="table_id" id="table_id" class="js-select2" required >
+                        <select name="table_id" id="table_id" class="js-select2 form-control border-primary" style="width: 100%;   height: calc(1.5em + 0.75rem + 2px);" required >
                             <option value="{{ $data->table_id }}" selected>{{ $data->table->number }}</option>
                             @foreach ($tables as $table)
                                 <option value="{{ $table->id }}">
@@ -88,7 +88,7 @@
                     </div>
                     <div class="form-group">
                         <label for="name">Dibungkus/Ditempat</label>
-                        <select name="order_type" id="order_type" required>
+                        <select name="order_type" id="order_type"  class="form-control border-primary" required>
                             <option value="" disabled selected>Pilih</option>
                             <option value="dibungkus">Dibungkus</option>
                             <option value="ditempat">Ditempat</option>
@@ -162,6 +162,8 @@
 
         });
     </script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script>
         $(document).ready(function() {
