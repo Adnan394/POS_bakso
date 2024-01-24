@@ -71,6 +71,23 @@ Route::prefix('/kasir')->middleware('auth', 'kasir_access')->group(function() {
     Route::get('/nota/{id}', [TransaksiController::class, 'nota'])->name('transaksi.nota');
     Route::post('/selesaikan_pesanan', [TransaksiController::class, 'selesaikan_pesanan'])->name('selesaikan_pesanan');
 });
+Route::prefix('/waiters')->middleware('auth', 'waiters_access')->group(function() {
+    Route::get('/', function () {
+        $transaksi_active = Transaction::where('payment_id', null)->get();
+        $transaksi_done = Transaction::where('payment_id', '!=', null)->get();
+        $transaksi_total = $transaksi_active->count() + $transaksi_done->count();
+        $persentase_active = $transaksi_active == null || $transaksi_active->count() == 0 ? 0 : ($transaksi_active->count() / $transaksi_total) * 100;
+        $produks = Produk::all();
+        $produk = $produks->count();
+        return view('kasir.dashboard', ['transaksi_active' => $transaksi_active, 'transaksi_done' => $transaksi_done, 'transaksi_total' => $transaksi_total, 'persentase_active' => $persentase_active, 'produks' => $produks, 'produk' => $produk]);
+    });
+    Route::resource('/transaksi', TransaksiController::class);
+    Route::post('/transaksi/tambah', [TransaksiController::class, 'tambah_pesanan'])->name('tambah_pesanan');
+    Route::get('/berjalan', [TransaksiController::class, 'berjalan'])->name('transaksi.berjalan');
+    Route::get('/selesai', [TransaksiController::class, 'selesai'])->name('transaksi.selesai');
+    Route::get('/nota/{id}', [TransaksiController::class, 'nota'])->name('transaksi.nota');
+    Route::post('/selesaikan_pesanan', [TransaksiController::class, 'selesaikan_pesanan'])->name('selesaikan_pesanan');
+});
 Route::prefix('/outlet')->middleware('auth', 'outlet_access')->group(function() {
     Route::get('/', function () {
         return view('outlet.dashboard');

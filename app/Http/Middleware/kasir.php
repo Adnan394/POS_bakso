@@ -16,7 +16,7 @@ class kasir
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->role_id == 3 || Auth::user()->role_id == 5)
+        if (Auth::user()->role_id == 3)
         {
             return $next($request);
         }

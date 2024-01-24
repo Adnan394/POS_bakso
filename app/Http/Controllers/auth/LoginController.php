@@ -36,7 +36,7 @@ class LoginController extends Controller
                 return redirect('/outlet');
             }
             if (Auth::user()->role_id == '5') {
-                return redirect('/kasir');
+                return redirect('/waiters');
             }
         }
 
