@@ -113,11 +113,11 @@
         </tr>
         <tr>
             <td>Jumlah Bayar:</td>
-            <td class="text-right">{{ number_format($paid, '0', ',', '.') }}</td>
+            <td class="text-right">{{ number_format($product[0]->pay_receive, '0', ',', '.') }}</td>
         </tr>
         <tr>
             <td>Kembali:</td>
-            <td class="text-right">{{ number_format(($paid - $data->price_amount), '0', ',', '.') }}</td>
+            <td class="text-right">{{ $product[0]->pay_return  }}</td>
         </tr>
     </table>
 
