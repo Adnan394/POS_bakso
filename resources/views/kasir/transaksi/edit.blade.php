@@ -64,7 +64,7 @@
                         </div>
                         <div class="form-group">
                             <label for="name">Metode Pembayaran</label>
-                            <select name="payment_id" id="payment_id">
+                            <select name="payment_id" id="payment_id" class="form-control border-primary">
                                 <option value="" readonly selected>Pilih Metode Pembayaran</option>
                                 @foreach ($payment as $pay)
                                     <option value="{{ $pay->id }}">

@@ -38,8 +38,9 @@
                                 <div class="col-6 pr-0">
                                     <ul class="list-group list-group-flush">
                                         @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->get() as $detail)
-                                            <li class="list-group-item border-0">
-                                                {{ \App\Models\Produk::where('id', $detail->product_id)->first()->name }}
+                                            <li class="list-group-item border-0" data-toggle="tooltip" data-placement="top"
+                                                title="{{ \App\Models\Produk::where('id', $detail->product_id)->first()->name }}">
+                                                {{ Illuminate\Support\Str::limit(\App\Models\Produk::where('id', $detail->product_id)->first()->name, 20) }}
                                             </li>
                                         @endforeach
                                     </ul>
@@ -61,16 +62,17 @@
                                 </div>
                                 <hr>
                             </div>
-                            <div class="col-12 mt-5">
+                            <hr class="mb-0">
+                            <div class="col-12 my   -3">
                                 <form action="" method="GET" target="_blank">
                                     <input type="hidden" name="paid2" value="" id="paid2">
                                     <button type="submit" class="btn btn-lg btn-primary btn-block">Invoice</button>
                                 </form>
                             </div>
-                            <hr>
                         </div>
                     </div>
                 @endforeach
+             
             </div>
         </div>
     </div>
