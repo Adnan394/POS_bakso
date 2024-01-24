@@ -18,7 +18,7 @@
             font-size: 15pt;
         }
         table td {
-            font-size: 9pt;
+            font-size: 12pt;
         }
         .text-center {
             text-align: center;
