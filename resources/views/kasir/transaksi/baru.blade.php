@@ -77,7 +77,7 @@
                         <div class="col-12 col-md-8 text-center">
                             <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
                             <button type="submit" id="btn-selesai" class="btn btn-lg btn-success btn-block"
-                                data-toggle="modal" data-target="#confirmOrderCenter" disabled>
+                                data-toggle="modal" data-target="#confirmOrderCenter">
                                 Buat Transaksi
                             </button>
                         </div>
@@ -177,7 +177,7 @@
             var tableId = $('#table_id').val();
             var btnSelesai = document.getElementById("btn-selesai");
 
-            if (customerName && tableId) {
+            if (customerName) {
                 btnSelesai.disabled = false;
             } else {
                 btnSelesai.disabled = true;

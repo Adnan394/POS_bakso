@@ -54,7 +54,7 @@ Route::prefix('/admin')->group(function() {
 
 });
 
-Route::prefix('/kasir')->middleware('auth', 'kasir_access')->group(function() {
+Route::prefix('/kasir')->middleware('auth')->group(function() {
     Route::get('/', function () {
         $transaksi_active = Transaction::where('payment_id', null)->get();
         $transaksi_done = Transaction::where('payment_id', '!=', null)->get();
@@ -71,7 +71,7 @@ Route::prefix('/kasir')->middleware('auth', 'kasir_access')->group(function() {
     Route::get('/nota/{id}', [TransaksiController::class, 'nota'])->name('transaksi.nota');
     Route::post('/selesaikan_pesanan', [TransaksiController::class, 'selesaikan_pesanan'])->name('selesaikan_pesanan');
 });
-Route::prefix('/waiters')->middleware('auth', 'waiters_access')->group(function() {
+Route::prefix('/waiters')->middleware('auth')->group(function() {
     Route::get('/', function () {
         $transaksi_active = Transaction::where('payment_id', null)->get();
         $transaksi_done = Transaction::where('payment_id', '!=', null)->get();

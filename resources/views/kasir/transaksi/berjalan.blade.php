@@ -34,7 +34,7 @@
                         </div>
                         <hr class="mt-0">
                         <div class="row">
-                            <div class="col-7 pr-0">
+                            <div class="col-6 pr-0">
                                 <ul class="list-group list-group-flush">
                                     @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->get() as $detail)
                                         <li class="list-group-item border-0">{{ \App\Models\Produk::where('id', $detail->product_id)->first()->name }}</li>
@@ -48,7 +48,7 @@
                                     @endforeach
                                 </ul>
                             </div>
-                            <div class="col-3 pl-0">
+                            <div class="col-4 pl-0">
                                 <ul class="list-group list-group-flush">
                                     @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->get() as $detail)
                                         <li class="list-group-item border-0">Rp.{{ number_format($detail->price, 0, ',', '.') }}</li>
