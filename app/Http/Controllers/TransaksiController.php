@@ -119,7 +119,7 @@ class TransaksiController extends Controller
         $tables = Table::all();        
         $data = Transaction::where('transactions.id', $id)
             ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
-            ->select(['transactions.*', 'transaction_details.*'])
+            ->select(['transactions.*', 'transaction_details.id as transaction_detail_id', 'transaction_details.*'])
             ->get();
 
         return view('kasir.transaksi.detail', ['product' => $data, 'products' => $products , 'tables' => $tables, 'data' => Transaction::where('id', $id)->first()]);
@@ -197,6 +197,21 @@ class TransaksiController extends Controller
             'pay_amount' => $request->price_amount,
             'order_type' => $request->order_type
         ]);
+
+        foreach ($request->prev_transaction_detail_id as $index => $transaction_id) {
+            $prev_produk = $request->prev_produk[$index];
+            $prev_status = $request->prev_status[$index];
+            $prev_order_sequence = $request->prev_order_sequence[$index];
+            $prev_qty = $request->prev_qty[$index];
+
+            Transaction_detail::where('id', $transaction_id)->update([
+                'product_id' => $prev_produk,
+                'status' => $prev_status,
+                'qty' => $prev_qty,
+                'order_sequence' => $prev_order_sequence,
+            ]);
+        }
+
         foreach($request->produk as $index => $product) {
             $qty = $request->qty[$index];
             $pesan = $request->pesan[$index];
