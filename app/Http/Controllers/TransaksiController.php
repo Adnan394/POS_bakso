@@ -224,6 +224,15 @@ class TransaksiController extends Controller
             }
         }
 
+        $datasend = [
+            'transaction_id' => $request->transaksi_id,
+            'product_id' => $product,
+            'qty' => $qty,
+            'message' => 'Transaksi Tambahan Baru',
+        ];
+
+        event(new OutletNotification($datasend));
+
         return redirect()->route('transaksi.berjalan');
     }
 
