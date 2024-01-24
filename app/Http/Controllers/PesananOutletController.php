@@ -93,6 +93,30 @@ class PesananOutletController extends Controller
         return redirect()->back();
     }
 
+    public function selesai() {
+        // $transaksi = Transaction::where('payment_id', null)->get();
+        $user = User::join('user_details', 'users.id', '=', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', '=', 'outlet_details.id')
+            ->where('users.id', Auth::user()->id)
+            ->select('outlet_details.id')
+            ->first();
+        $transaksi = Transaction::join('transaction_details', function($q) {
+                $q->on('transactions.id', 'transaction_details.transaction_id')
+                ->where('transaction_details.status', 'Jadi')
+                ->orderByDesc('transaction_details.created_at')
+                ->limit(1);
+            })
+            ->join('users', 'transactions.user_id', 'users.id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', $user->id)
+            ->orderByDesc('transaction_details.updated_at')
+            ->select(['transactions.*'])
+            ->distinct()
+            ->get();
+        return view('outlet.pesanan.pesanan-selesai', ['transaksi' => $transaksi]);
+    }
+
     /**
      * Remove the specified resource from storage.
      */

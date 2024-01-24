@@ -111,6 +111,7 @@ Route::prefix('/outlet')->middleware('auth', 'outlet_access')->group(function() 
 
     });
     Route::resource('/pesanan', PesananOutletController::class);
+    Route::get('/pesanan-selesai', [PesananOutletController::class, 'selesai'])->name('pesanan-selesai');
 });
 
 

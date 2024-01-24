@@ -123,17 +123,7 @@ class TransaksiController extends Controller
             ->get();
 
         return view('kasir.transaksi.detail', ['product' => $data, 'products' => $products , 'tables' => $tables, 'data' => Transaction::where('id', $id)->first()]);
-    }
-    // public function nota(Request $request, string $id)
-    // {
-    //     $data = Transaction::where('transactions.id', $id)
-    //         ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
-    //         ->select(['transactions.*', 'transaction_details.*'])
-    //         ->get();
-    //     return view('kasir.transaksi.nota', ['product' => $data,  'data' => Transaction::where('id', $id)->first(), 'location' => Location::where('id', Auth::user()->location->id)->first(), 'paid' => $request->paid2]);
-    // }
-
-   
+    }   
 
     /**
      * Show the form for editing the specified resource.
@@ -202,7 +192,7 @@ class TransaksiController extends Controller
 
     public function tambah_pesanan(Request $request) {
         $order_sequence = Transaction_detail::where('transaction_id', $request->transaksi_id)->orderBy('created_at', 'DESC')->limit(1)->first();
-        Transaction::where('id', $request->transaksi_id)->update([
+        $transaction = Transaction::where('id', $request->transaksi_id)->update([
             'price_amount' => $request->price_amount, 
             'pay_amount' => $request->price_amount,
             'order_type' => $request->order_type
@@ -228,6 +218,7 @@ class TransaksiController extends Controller
             'transaction_id' => $request->transaksi_id,
             'product_id' => $product,
             'qty' => $qty,
+            'time' => $transaction->created_at->format('D, d/mY'),
             'message' => 'Transaksi Tambahan Baru',
         ];
 
