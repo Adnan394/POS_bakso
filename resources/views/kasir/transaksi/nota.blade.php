@@ -68,16 +68,24 @@
     <div class="clear-both" style="clear: both;"></div>
     {{-- <p>No: {{ ($data->id) }}</p> --}}
     <p class="text-center">===================================</p>
-    
+    <div class="">
+        <p>
+            Nama : {{ $product[0]->name_customer }} 
+        </p>
+        <p>
+            Meja : {{ $product[0]->table->number }}
+        </p>
+    </div>
+    <p class="text-center">===================================</p>
     <br>
     <table width="100%" style="border: 0;">
         @foreach ($product as $item)
             <tr>
                 <td colspan="3">{{ \App\Models\Produk::where('id', $item->product_id)->first()->name }}</td>
             </tr>
-            <tr>
-                <td colspan="3">{{ \App\Models\Produk::where('id', $item->product_id)->first()->table->number }}</td>
-            </tr>
+            {{-- <tr>
+                <td colspan="3">{{ $item->table->number }}</td>
+            </tr> --}}
             <tr>
                 <td>{{ $item->qty }} x {{ number_format($item->price, '0', ',', '.') }}</td>
                 <td class="text-right">{{ number_format($item->qty * $item->price, '0', ',', '.') }}</td>
@@ -134,7 +142,7 @@
     
                 html2pdf(element, {
                     margin: 10,
-                    filename: 'nota.pdf',
+                    filename: 'nota-<?=$product[0]->name_customer?>.pdf',
                     image: { type: 'jpeg', quality: 0.98 },
                     html2canvas: { scale: 2 },
                     jsPDF: { unit: 'mm', format: 'a6', orientation: 'portrait' }
