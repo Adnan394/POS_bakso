@@ -5,6 +5,8 @@
         <div class="row mt-5">
             <div class="col-12 col-lg-8 mt-3"> <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
                 <div data-spy="scroll" style="position: relative; height: 570px; overflow: auto;">
+                    <form method="POST" action="{{ route('tambah_pesanan') }}" class="mt-4">
+                        @csrf
                     <table class="table table-striped mt-4">
                         <thead>
                             <tr>
@@ -22,7 +24,12 @@
                                     <th scope="row">{{ $key + 1 }}</th>
                                     <td>{{ \App\Models\Produk::find($product->product_id)->name }}</td>
                                     <td>{{ $product->price }}</td>
-                                    <td><input type="number" name="product[]" value="{{ $product->qty }}"
+                                    <td>
+                                        <input type="hidden" name="prev_transaction_detail_id[]" value="{{ $product->transaction_detail_id }}">
+                                        <input type="hidden" name="prev_produk[]" value="{{ $product->product_id }}">
+                                        <input type="hidden" name="prev_status[]" value="{{ $product->status }}">
+                                        <input type="hidden" name="prev_order_sequence[]" value="{{ $product->order_sequence }}">
+                                        <input type="number" name="prev_qty[]" value="{{ $product->qty }}"
                                             onchange="updateSubtotal(this)" data-price="{{ $product->price }}">
                                     </td>
                                     <td class="subtotal">Rp. 0</td>
@@ -35,8 +42,7 @@
                         <label for="search">Cari Menu:</label>
                         <input type="text" id="search" oninput="searchMenu()" class="form-control">
                     </div>
-                    <form method="POST" action="{{ route('tambah_pesanan') }}" class="mt-4">
-                        @csrf
+                    
                         <input type="hidden" name="transaksi_id" value="{{ $data->id }}">
                         <table id="zero_confi" class="table table-striped table-bordered no-wrap">
                             <thead>
@@ -153,7 +159,7 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            var inputProduk = document.querySelectorAll('input[name="product[]"]');
+            var inputProduk = document.querySelectorAll('input[name="prev_qty[]"]');
             inputProduk.forEach(function(input) {
                 updateSubtotal(input);
             });
