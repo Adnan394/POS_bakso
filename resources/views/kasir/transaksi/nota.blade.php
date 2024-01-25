@@ -136,19 +136,24 @@
         document.cookie = "innerHeight="+ ((height + 50) * 0.264583);
     </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.js"></script>
-        <script>
-            function generatePDF() {
-                const element = document.body; // Ganti dengan elemen yang ingin Anda konversi ke PDF
-    
-                html2pdf(element, {
-                    margin: 10,
-                    filename: 'nota-<?=$product[0]->name_customer?>.pdf',
-                    image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2 },
-                    jsPDF: { unit: 'mm', format: 'a6', orientation: 'portrait' }
-                });
-                window.location.href = "{{ route('transaksi.selesai') }}"
-            }
-        </script>
+       <script>
+    function generatePDF() {
+        const element = document.body; // Ganti dengan elemen yang ingin Anda konversi ke PDF
+
+        html2pdf(element, {
+            margin: 10,
+            filename: 'nota-<?=$data->id?>.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a6', orientation: 'portrait' }
+        });
+
+        // Menambahkan penundaan 3 detik sebelum mengalihkan
+        setTimeout(function () {
+            window.location.href = "{{ route('transaksi.selesai') }}";
+        }, 3000);
+    }
+</script>
+
 </body>
 </html>
