@@ -49,13 +49,13 @@
                         </div>
                         <div class="form-group">
                             <label for="price">Total Harga</label>
-                            <input type="number" name="price_amount" class="form-control border-primary" value="0"
+                            <input type="number" name="price_amount" class="form-control border-primary" value="{{ $data->price_amount }}"
                                 readonly>
                         </div>
                         <div class="form-group">
                             <label for="price">Dibayar</label>
                             <input type="number" name="paid" id="paid" class="form-control border-primary"
-                                value="0" onchange="updateReturn()">
+                                value="" onchange="updateReturn()">
                         </div>
                         <div class="form-group">
                             <label for="price">Kembalian</label>
@@ -101,22 +101,22 @@
             updateTotalPrice();
         }
 
-        function updateTotalPrice() {
-            var subtotalElements = document.getElementsByClassName('subtotal');
-            var totalPrice = 0;
+        // function updateTotalPrice() {
+        //     var subtotalElements = document.getElementsByClassName('subtotal');
+        //     var totalPrice = 0;
 
-            for (var i = 0; i < subtotalElements.length; i++) {
-                var subtotalText = subtotalElements[i].innerText;
-                var subtotalValue = parseFloat(subtotalText.replace('Rp. ', '').replace(/,/g,
-                    '')); // Menggunakan replace dengan regular expression
+        //     for (var i = 0; i < subtotalElements.length; i++) {
+        //         var subtotalText = subtotalElements[i].innerText;
+        //         var subtotalValue = parseFloat(subtotalText.replace('Rp. ', '').replace(/,/g,
+        //             '')); // Menggunakan replace dengan regular expression
 
-                totalPrice += subtotalValue;
-            }
+        //         totalPrice += subtotalValue;
+        //     }
 
-            // Menemukan elemen input Total Price dan mengupdate nilainya
-            var totalPriceInput = document.getElementsByName('price_amount')[0];
-            totalPriceInput.value = totalPrice; // Menggunakan toLocaleString untuk menambah format angka
-        }
+        //     // Menemukan elemen input Total Price dan mengupdate nilainya
+        //     var totalPriceInput = document.getElementsByName('price_amount')[0];
+        //     totalPriceInput.value = totalPrice; // Menggunakan toLocaleString untuk menambah format angka
+        // }
 
         function updateReturn() {
             var totalPrice = parseFloat(document.getElementsByName('price_amount')[0].value);
