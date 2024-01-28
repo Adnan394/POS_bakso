@@ -36,7 +36,28 @@
                         Tambah Transaksi</a>
                 </div>
             </div>
-            <div class="card-group">
+            <div class="card-group d-flex flex-wrap gap-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex d-lg-flex d-md-block align-items-center">
+                            <div>
+                                <h2 class="text-dark mb-1 font-weight-medium">
+                                {{ \App\Models\Transaction::whereExists(function ($query) {
+                                    $query->select(\DB::raw(1))
+                                        ->from('transaction_details')
+                                        ->whereRaw('transaction_details.transaction_id = transactions.id')
+                                        ->where('transaction_details.status', 'Diproses');
+                                })
+                                ->count();
+                                }}</h2>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Antrian</h6>
+                            </div>
+                            <div class="ml-auto mt-md-3 mt-lg-0">
+                                <span class="opacity-7 text-muted"><i data-feather="globe"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="card border-right">
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
