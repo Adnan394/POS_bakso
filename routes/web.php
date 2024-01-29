@@ -70,6 +70,10 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
     Route::get('/selesai', [TransaksiController::class, 'selesai'])->name('transaksi.selesai');
     Route::get('/nota/{id}', [TransaksiController::class, 'nota'])->name('transaksi.nota');
     Route::post('/selesaikan_pesanan', [TransaksiController::class, 'selesaikan_pesanan'])->name('selesaikan_pesanan');
+    Route::get('/pesanan_selesai', [TransaksiController::class, 'pesanan_selesai'])->name('pesanan_selesai');
+    Route::get('/pesanan_diproses', [TransaksiController::class, 'pesanan_diproses'])->name('pesanan_diproses');
+    Route::get('/konfirmasi', [TransaksiController::class, 'konfirmasi'])->name('konfirmasi');
+
 });
 Route::prefix('/waiters')->middleware('auth')->group(function() {
     Route::get('/', function () {
@@ -87,6 +91,9 @@ Route::prefix('/waiters')->middleware('auth')->group(function() {
     Route::get('/selesai', [TransaksiController::class, 'selesai'])->name('transaksi.selesai');
     Route::get('/nota/{id}', [TransaksiController::class, 'nota'])->name('transaksi.nota');
     Route::post('/selesaikan_pesanan', [TransaksiController::class, 'selesaikan_pesanan'])->name('selesaikan_pesanan');
+    Route::get('/pesanan_selesai', [TransaksiController::class, 'pesanan_selesai'])->name('pesanan_selesai');
+    Route::get('/pesanan_diproses', [TransaksiController::class, 'pesanan_diproses'])->name('pesanan_diproses');
+    Route::get('/konfirmasi', [TransaksiController::class, 'konfirmasi'])->name('konfirmasi');
 });
 
 Route::prefix('/outlet')->middleware('auth', 'outlet_access')->group(function() {
