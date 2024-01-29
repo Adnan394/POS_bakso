@@ -30,6 +30,7 @@
                                     <h5 class="card-title"><a href="#">{{ $item->name_customer }}</a></h5>
                                     <span class="badge {{ ($item->confirm_order == 0) ? "badge-danger" : "badge-success" }} d-flex align-items-center">{{ ($item->confirm_order == 0) ? "Belum Konfirmasi"  : "Sudah Konfirmasi"}}</span>
                                 </div>
+
                                 <small>{{ $item->created_at }}</small>
                                 <p class="card-text mt-2">Meja {{ $item->table->number }}</p>
                                 <p class="card-text">Untuk {{ $item->transaction_detail->sum('qty') }} items</p>
@@ -69,6 +70,7 @@
                             <hr class="mb-0">
                             <div class="col-12 my-3">
                                 <a data-toggle="modal" data-target="#modal-edit{{ $item->id }}">
+
                                     <button type="submit" class="btn btn-lg btn-primary btn-block">Konfirmasi</button>
                                 </a>
                             </div>
