@@ -25,6 +25,16 @@ class TransaksiController extends Controller
         return view('kasir.dashboard');
     }
 
+    public function konfirmasi(Request $request)
+    {    
+        // Query dasar untuk mendapatkan transaksi yang belum memiliki payment_id
+        $query = Transaction::where('payment_id', null);
+    
+        // Ambil hasil query dan kirimkan ke view
+        $transaksi = $query->get();
+        
+        return view('kasir.transaksi.konfirmasi', ['transaksi' => $transaksi]);
+    }
     public function berjalan(Request $request)
     {
         $keyword = $request->input('keyword');
@@ -249,6 +259,55 @@ class TransaksiController extends Controller
         event(new OutletNotification($datasend));
 
         return redirect()->route('transaksi.berjalan');
+    }
+
+    public function pesanan_diproses()
+    {
+        // $transaksi = Transaction::where('payment_id', null)->get();
+        $user = User::join('user_details', 'users.id', '=', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', '=', 'outlet_details.id')
+            ->where('users.id', Auth::user()->id)
+            ->select('outlet_details.id')
+            ->first();
+        $transaksi = Transaction::join('transaction_details', function($q) {
+                $q->on('transactions.id', 'transaction_details.transaction_id')
+                ->where('transaction_details.status', 'Diproses')
+                ->orderByDesc('transaction_details.created_at')
+                ->limit(1);
+            })
+            ->join('users', 'transactions.user_id', 'users.id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', $user->id)
+            ->orderBy('transaction_details.updated_at')
+            ->select(['transactions.*'])
+            ->distinct()
+            ->get();
+        return view('kasir.transaksi.pesanan', ['transaksi' => $transaksi]);
+    }
+
+    public function pesanan_selesai() {
+        // $transaksi = Transaction::where('payment_id', null)->get();
+        $user = User::join('user_details', 'users.id', '=', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', '=', 'outlet_details.id')
+            ->where('users.id', Auth::user()->id)
+            ->select('outlet_details.id')
+            ->first();
+        $transaksi = Transaction::join('transaction_details', function($q) {
+                $q->on('transactions.id', 'transaction_details.transaction_id')
+                ->where('transaction_details.status', 'Jadi')
+                ->orderByDesc('transaction_details.created_at')
+                ->limit(1);
+            })
+            ->join('users', 'transactions.user_id', 'users.id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', $user->id)
+            ->orderByDesc('transaction_details.updated_at')
+            ->select(['transactions.*'])
+            ->distinct()
+            ->get();
+        return view('kasir.transaksi.pesanan-selesai', ['transaksi' => $transaksi]);
     }
 
     /**
