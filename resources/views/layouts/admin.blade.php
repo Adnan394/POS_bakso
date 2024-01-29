@@ -277,7 +277,7 @@
                                             </span></a>
                                     </li>
                                     <li class="sidebar-item"><a href="{{ route('konfirmasi') }}"
-                                            class="sidebar-link"><span class="hide-menu"> Konfrmasi Transaksi
+                                            class="sidebar-link"><span class="hide-menu"> Konfirmasi Transaksi
                                             </span></a>
                                     </li>
                                 </ul>

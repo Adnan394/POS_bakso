@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('pay_receive')->nullable();
             $table->string('pay_return')->nullable();
             $table->string('order_type');
+            $table->string('confirm_order')->default(0);
             $table->foreignId('user_id')->constrained('users');
             $table->string('name_customer');
             $table->timestamps();
