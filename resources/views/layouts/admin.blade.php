@@ -296,6 +296,20 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li class="sidebar-item"> <a class="sidebar-link has-arrow active"
+                                    href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text"
+                                        class="feather-icon"></i><span class="hide-menu">Laporan Rekapitulasi</span></a>
+                                <ul aria-expanded="false" class="collapse  first-level base-level-line in">
+                                    <li class="sidebar-item"><a href="{{ route('rekap_harian') }}"
+                                            class="sidebar-link"><span class="hide-menu">Rekap Harian
+                                            </span></a>
+                                    </li>
+                                    <li class="sidebar-item"><a href="{{ route('pesanan_diproses') }}"
+                                            class="sidebar-link"><span class="hide-menu">Pengeluaran Harian
+                                            </span></a>
+                                    </li>
+                                </ul>
+                            </li>
                             <li class="list-divider"></li>
                             <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
                                     href="{{ route('logout') }}" aria-expanded="false"><i data-feather="log-out"

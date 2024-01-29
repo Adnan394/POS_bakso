@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Produk;
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Table;
+use App\Models\Produk;
 use App\Models\Payment;
 use App\Models\Location;
 use App\Models\Transaction;
-use App\Events\OutletNotification;
 use Illuminate\Http\Request;
-use App\Models\Transaction_detail;
-use App\Models\User;
 use GuzzleHttp\Handler\Proxy;
+use App\Events\OutletNotification;
+use App\Models\Transaction_detail;
 use Illuminate\Support\Facades\Auth;
 
 class TransaksiController extends Controller
@@ -309,6 +310,23 @@ class TransaksiController extends Controller
             ->distinct()
             ->get();
         return view('kasir.transaksi.pesanan-selesai', ['transaksi' => $transaksi]);
+    }
+
+    public function rekap_harian(Request $request) {
+        // ada req date 
+        if($request->date) {
+            $time = $request->date;
+            $data = Transaction::whereDate('created_at', $time)->get();
+            $carbonDate = Carbon::parse($time);
+            $humanTime = $carbonDate->format('d F Y');
+            echo json_encode(['data' => $data, 'human_time' => $humanTime]);
+        }else {
+            $time = now()->format('Y-m-d');
+            $data = Transaction::whereDate('created_at', $time)->get();
+            $carbonDate = Carbon::parse($time);
+            $humanTime = $carbonDate->format('d F Y');
+            return view('kasir.laporan.rekap_harian', ['data' => $data, 'human_time' => $humanTime]);
+        }
     }
 
     /**
