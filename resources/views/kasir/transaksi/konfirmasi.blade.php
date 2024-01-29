@@ -26,7 +26,10 @@
                     <div class="col-xl-6 col-lg-6 col-md-12">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title"><a href="#">{{ $item->name_customer }}</a></h5>
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="card-title"><a href="#">{{ $item->name_customer }}</a></h5>
+                                    <span class="badge {{ ($item->confirm_order == 0) ? "badge-danger" : "badge-success" }} d-flex align-items-center">{{ ($item->confirm_order == 0) ? "Belum Konfirmasi"  : "Sudah Konfirmasi"}}</span>
+                                </div>
                                 <small>{{ $item->created_at }}</small>
                                 <p class="card-text mt-2">Meja {{ $item->table->number }}</p>
                                 <p class="card-text">Untuk {{ $item->transaction_detail->sum('qty') }} items</p>
@@ -65,12 +68,12 @@
                             </div>
                             <hr class="mb-0">
                             <div class="col-12 my-3">
-                                <a data-toggle="modal" data-target="#modal-edit">
+                                <a data-toggle="modal" data-target="#modal-edit{{ $item->id }}">
                                     <button type="submit" class="btn btn-lg btn-primary btn-block">Konfirmasi</button>
                                 </a>
                             </div>
 
-                            <div id="modal-edit" class="modal fade" tabindex="-1"
+                            <div id="modal-edit{{ $item->id }}" class="modal fade" tabindex="-1"
                                 role="dialog" aria-labelledby="modal-editLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -85,7 +88,7 @@
                                         </div>
                                         <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="modal">Batal</button>
-                                        <form action="" method="POST">
+                                        <form action="{{ route('konfirmasi_store', $item->id) }}" method="POST">
                                             @method('PUT')
                                             @csrf
                                             <button class="btn btn-primary" type="submit">Lanjutkan</button>

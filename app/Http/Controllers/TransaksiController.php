@@ -27,13 +27,14 @@ class TransaksiController extends Controller
 
     public function konfirmasi(Request $request)
     {    
-        // Query dasar untuk mendapatkan transaksi yang belum memiliki payment_id
-        $query = Transaction::where('payment_id', null);
-    
-        // Ambil hasil query dan kirimkan ke view
-        $transaksi = $query->get();
+        $data = Transaction::whereIn('user_id', User::where('role_id', 5)->pluck('id'))->get();
         
-        return view('kasir.transaksi.konfirmasi', ['transaksi' => $transaksi]);
+        return view('kasir.transaksi.konfirmasi', ['transaksi' => $data]);
+    }
+    
+    public function konfirmasi_store($id) {
+        Transaction::where('id', $id)->update(['confirm_order' => 1]);
+        return redirect()->back();
     }
     public function berjalan(Request $request)
     {
