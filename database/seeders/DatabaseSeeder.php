@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Models\Location;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\User_detail;
 use App\Models\Outlet;
 use App\Models\Payment;
 use App\Models\Produk;
@@ -120,6 +121,26 @@ class DatabaseSeeder extends Seeder
             'outlet_id' => '1'
         ]);
 
+        User_detail::create([
+            'user_id' => '4',
+            'outlet_detail_id' => '1',
+        ]);
+        User_detail::create([
+            'user_id' => '5',
+            'outlet_detail_id' => '1',
+        ]);
+        User_detail::create([
+            'user_id' => '6',
+            'outlet_detail_id' => '1',
+        ]);
+
+        for ($i = 1; $i <= 30; $i++) {
+            Table::create([
+                'number' => $i,
+                'outlet_detail_id' => '1',
+            ]);
+        }
+
         Payment::create([
             'name' => 'Cash',
         ]);
@@ -133,7 +154,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Bakso Polos Isi 5',
             'price' => 10000,
-            'image' => 'gambar_stock/bakso_polos_isi_5.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -142,12 +162,10 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Bakso Polos Isi 10',
             'price' => 14000,
-            'image' => 'gambar_stock/bakso_polos_isi_10.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
         ]);
-
         // Produk::create([
         //     'name' => 'Bakso Polos Isi 5 + Basreng',
         //     'price' => 14000,
@@ -160,7 +178,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Bakso Polos Isi 10 + Tetelan',
             'price' => 19000,
-            'image' => 'gambar_stock/bakso_polos_isi_10_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -170,7 +187,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Bakso Urat 1, Polos 5',
             'price' => 17000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -188,7 +204,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Bakso Urat 1, Polos 5 + Tetelan',
             'price' => 22000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -197,7 +212,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Bakso Daging 1, Polos 5',
             'price' => 17000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -213,7 +227,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Bakso Daging 1, Polos 5 + Tetelan',
             'price' => 22000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -221,7 +234,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Bakso Campur Urat 1, Daging 1 Polos 5',
             'price' => 22000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -237,7 +249,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Bakso Daging 1, Urat 1, Polos 5 + Tetelan',
             'price' => 27000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -245,7 +256,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Basreng',
             'price' => 10000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -253,7 +263,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Mendoan',
             'price' => 10000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -261,7 +270,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Scalop Goreng',
             'price' => 10000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -269,7 +277,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Nugget Goreng',
             'price' => 10000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -277,7 +284,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Cireng Goreng',
             'price' => 10000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -285,7 +291,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Sosis Goreng',
             'price' => 10000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -293,7 +298,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Kentang Goreng',
             'price' => 10000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -301,7 +305,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Pisang Goreng',
             'price' => 10000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -309,7 +312,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Kaki Naga Goreng',
             'price' => 10000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -317,7 +319,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Mie Goreng',
             'price' => 10000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -325,7 +326,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Mie Nyemek',
             'price' => 10000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -333,7 +333,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Otak Otak',
             'price' => 10000,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -341,7 +340,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Dumpling',
             'price' => 12500,
-            'image' => 'gambar_stock/bakso_urat_1_polos_5_tetelan.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -352,7 +350,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Juice Nanas',
             'price' => 7000,
-            'image' => 'gambar_stock/juice_nanas.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -360,7 +357,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Juice Tomat',
             'price' => 7000,
-            'image' => 'gambar_stock/juice_nanas.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -371,7 +367,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Juice Jeruk',
             'price' => 7000,
-            'image' => 'gambar_stock/es_jeruk.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -379,7 +374,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Juice Jambu',
             'price' => 7000,
-            'image' => 'gambar_stock/es_jeruk.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -387,7 +381,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Juice Melon',
             'price' => 8000,
-            'image' => 'gambar_stock/es_jeruk.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -395,7 +388,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Juice Mangga',
             'price' => 8000,
-            'image' => 'gambar_stock/es_jeruk.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -403,7 +395,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Juice Strawberry',
             'price' => 8000,
-            'image' => 'gambar_stock/es_jeruk.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -411,7 +402,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Juice Alpukat',
             'price' => 10000,
-            'image' => 'gambar_stock/es_jeruk.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -419,7 +409,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Juice Durian',
             'price' => 10000,
-            'image' => 'gambar_stock/es_jeruk.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -427,7 +416,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Juice Naga',
             'price' => 10000,
-            'image' => 'gambar_stock/es_jeruk.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -436,7 +424,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Es Teh Manis',
             'price' => 3000,
-            'image' => 'gambar_stock/es_teh_manis.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -444,7 +431,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Es Jeruk',
             'price' => 5000,
-            'image' => 'gambar_stock/es_teh_manis.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -453,7 +439,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Es Kopi/Kopi',
             'price' => 5000,
-            'image' => 'gambar_stock/es_kopi_koptil.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -463,7 +448,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Es Milo Dalgona',
             'price' => 8000,
-            'image' => 'gambar_stock/es_milo_dalgona.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -473,7 +457,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Chocolatos',
             'price' => 5000,
-            'image' => 'gambar_stock/chocolatos.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -483,7 +466,6 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Telur',
             'price' => 3000,
-            'image' => 'gambar_stock/telur.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -493,26 +475,9 @@ class DatabaseSeeder extends Seeder
         Produk::create([
             'name' => 'Sosis',
             'price' => 3000,
-            'image' => 'gambar_stock/sosis.jpg',
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
         ]);
-
-        // Table::create([
-        //     'number' => 1,
-        // ]);
-        // Table::create([
-        //     'number' => 2,
-        // ]);
-        // Table::create([
-        //     'number' => 3,
-        // ]);
-        // Table::create([
-        //     'number' => 4,
-        // ]);
-        // Table::create([
-        //     'number' => 5,
-        // ]);
     }
 }

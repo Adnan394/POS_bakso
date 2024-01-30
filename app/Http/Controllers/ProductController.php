@@ -35,19 +35,11 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $path = 'gambar_stock'; // Nama folder di dalam direktori public_html
-
-        $file = $request->file('image');
-        $fileName = $file->getClientOriginalName();
-
-        // Upload the file to the public_html/uploads directory
-        $file->move($path, $fileName);
 
         Produk::create([
             'name' => $request->name,
             'price' => $request->price,
             'status_stock' => $request->status_stock,
-            'image' => $path . '/' . $fileName,
             'outlet_id' => $request->outlet_id,
             'location_id' => $request->location_id
         ]);
@@ -77,19 +69,10 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $path = 'gambar_stock'; // Nama folder di dalam direktori public_html
-
-        $file = $request->file('image');
-        $fileName = $file->getClientOriginalName();
-
-        // Upload the file to the public_html/uploads directory
-        $file->move($path, $fileName);
-
         $data = [
             'name' => $request->name,
             'price' => $request->price,
             'status_stock' => $request->status_stock,
-            'image' => $path . '/' . $fileName,
             'outlet_id' => $request->outlet_id,
             'location_id' => $request->location_id
         ];
