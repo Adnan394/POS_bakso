@@ -56,7 +56,6 @@
                                             <th>Nama Produk</th>
                                             <th>Harga Produk</th>
                                             <th>Status Stock</th>
-                                            <th>Gambar</th>
                                             <th>Lokasi</th>
                                             <th>Outlet</th>
                                             <th>Action</th>
@@ -69,9 +68,6 @@
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->price }}</td>
                                                 <td>{{ $item->status_stock }}</td>
-                                                <td><img src="{{ asset($item->image) }}" alt="Image"
-                                                        style="max-width: 100px; max-height: 100px;">
-                                                </td>
                                                 <td>{{( $item->location_id != null) ? \App\Models\Location::where('id', $item->location_id)->first()->locations : "" }}</td>
                                                 <td>{{( $item->outlet_id != null) ? \App\Models\Outlet::where('id', $item->outlet_id)->first()->name : "" }}</td>
                                                 <td>
@@ -134,15 +130,6 @@
                                                                                     <option value="Habis">Habis</option>
                                                                                 </select>
                                                                             </div>
-                                                                            <fieldset class="form-group">
-                                                                                <label for="customFile">Upload
-                                                                                    Gambar</label>
-                                                                                <input type="file" name="image"
-                                                                                    accept=".jpg , .jpeg , .png"
-                                                                                    value="{{ $item->image }}"
-                                                                                    class="form-control-file"
-                                                                                    id="exampleInputFile" required>
-                                                                            </fieldset>
                                                                             <div class="form-group">
                                                                                 <label for="location_id">Lokasi
                                                                                     Cabang</label>
@@ -231,11 +218,6 @@
                                                 <option value="Habis">Habis</option>
                                             </select>
                                         </div>
-                                        <fieldset class="form-group">
-                                            <label for="customFile">Upload Gambar</label>
-                                            <input type="file" name="image" accept=".jpg , .jpeg , .png"
-                                                class="form-control-file" id="exampleInputFile" required>
-                                        </fieldset>
                                         <div class="form-group">
                                             <label for="location_id">Lokasi
                                                 Cabang</label>
