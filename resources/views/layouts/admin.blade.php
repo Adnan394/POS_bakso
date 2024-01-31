@@ -268,11 +268,11 @@
                                             class="sidebar-link"><span class="hide-menu"> Transaksi Baru
                                             </span></a>
                                     </li>
-                                    <li class="sidebar-item"><a href="{{ route('transaksi.kasir_berjalan') }}"
+                                    <li class="sidebar-item"><a href="{{ route('transaksi.berjalan') }}"
                                             class="sidebar-link"><span class="hide-menu"> Transaksi Berjalan
                                             </span></a>
                                     </li>
-                                    <li class="sidebar-item"><a href="{{ route('transaksi.kasir_selesai') }}"
+                                    <li class="sidebar-item"><a href="{{ route('transaksi.selesai') }}"
                                             class="sidebar-link"><span class="hide-menu"> Transaksi Selesai
                                             </span></a>
                                     </li>
