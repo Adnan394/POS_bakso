@@ -13,6 +13,7 @@ use App\Http\Controllers\OutletController;
 use App\Http\Controllers\TabelController;
 use App\Http\Controllers\MakananController;
 use App\Http\Controllers\MinumanController;
+use App\Http\Controllers\PengeluranController;
 use App\Http\Controllers\PesananOutletController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\TransaksiDetailController;
@@ -76,6 +77,7 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
     Route::get('/konfirmasi', [TransaksiController::class, 'konfirmasi'])->name('kasir_konfirmasi');
     Route::put('/konfirmasi_store/{id}', [TransaksiController::class, 'konfirmasi_store'])->name('konfirmasi_store');
     Route::get('/rekap_harian', [TransaksiController::class, 'rekap_harian'])->name('rekap_harian');
+    Route::resource('/pengeluaran_harian', PengeluranController::class);
 });
 Route::prefix('/waiters')->middleware('auth')->group(function() {
     Route::get('/', function () {

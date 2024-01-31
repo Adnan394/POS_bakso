@@ -304,7 +304,7 @@
                                             class="sidebar-link"><span class="hide-menu">Rekap Harian
                                             </span></a>
                                     </li>
-                                    <li class="sidebar-item"><a href="{{ route('pesanan_diproses') }}"
+                                    <li class="sidebar-item"><a href="{{ route('pengeluaran_harian.index') }}"
                                             class="sidebar-link"><span class="hide-menu">Pengeluaran Harian
                                             </span></a>
                                     </li>
