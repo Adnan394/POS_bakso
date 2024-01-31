@@ -66,13 +66,13 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
     });
     Route::resource('/transaksi', TransaksiController::class);
     Route::post('/transaksi/tambah', [TransaksiController::class, 'tambah_pesanan'])->name('tambah_pesanan');
-    Route::get('/berjalan', [TransaksiController::class, 'berjalan'])->name('transaksi.berjalan');
-    Route::get('/selesai', [TransaksiController::class, 'selesai'])->name('transaksi.selesai');
+    Route::get('/kasir_berjalan', [TransaksiController::class, 'berjalan'])->name('transaksi.kasir_berjalan');
+    Route::get('/kasir_selesai', [TransaksiController::class, 'selesai'])->name('transaksi.kasir_selesai');
     Route::get('/nota/{id}', [TransaksiController::class, 'nota'])->name('transaksi.nota');
     Route::post('/selesaikan_pesanan', [TransaksiController::class, 'selesaikan_pesanan'])->name('selesaikan_pesanan');
-    Route::get('/pesanan_selesai', [TransaksiController::class, 'pesanan_selesai'])->name('pesanan_selesai');
-    Route::get('/pesanan_diproses', [TransaksiController::class, 'pesanan_diproses'])->name('pesanan_diproses');
-    Route::get('/konfirmasi', [TransaksiController::class, 'konfirmasi'])->name('konfirmasi');
+    Route::get('/kasir_pesanan_selesai', [TransaksiController::class, 'pesanan_selesai'])->name('kasir_pesanan_selesai');
+    Route::get('/kasir_pesanan_diproses', [TransaksiController::class, 'pesanan_diproses'])->name('kasir_pesanan_diproses');
+    Route::get('/kasir_konfirmasi', [TransaksiController::class, 'konfirmasi'])->name('kasir_konfirmasi');
     Route::put('/konfirmasi_store/{id}', [TransaksiController::class, 'konfirmasi_store'])->name('konfirmasi_store');
     Route::get('/rekap_harian', [TransaksiController::class, 'rekap_harian'])->name('rekap_harian');
 });

@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="page-wrapper">
-        <div class="row mt-5">
-            <div class="col-12 col-lg-8 mt-3"> <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
+        <div class=" mt-5">
+            <div class="col-12 col-lg-12 mt-3"> <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
                 <div data-spy="scroll" style="position: relative; height: 570px; overflow: auto;">
                     <div class="mt-3 ml-5" style="width: 30%">
                         <label for="search">Cari Menu:</label>
@@ -42,7 +42,7 @@
                         </table>
                 </div>
             </div>
-            <div class="col-12 col-lg-4 mt-1 px-lg-5"> <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
+            <div class="col-12 col-lg-12 mt-1 pt-5 px-lg-5"> <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
                 <div class="">
                     <div class="form-group">
                         <label for="name">Nama Customer</label>
@@ -74,7 +74,7 @@
                             readonly>
                     </div>
                     <div class="row py-2">
-                        <div class="col-12 col-md-8 text-center">
+                        <div class="col-12 col-md-12 text-center">
                             <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
                             <button type="submit" id="btn-selesai" class="btn btn-lg btn-success btn-block"
                                 data-toggle="modal" data-target="#confirmOrderCenter">

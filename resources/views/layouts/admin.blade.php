@@ -268,15 +268,15 @@
                                             class="sidebar-link"><span class="hide-menu"> Transaksi Baru
                                             </span></a>
                                     </li>
-                                    <li class="sidebar-item"><a href="{{ route('pesanan_diproses') }}"
+                                    <li class="sidebar-item"><a href="{{ route('transaksi.kasir_berjalan') }}"
                                             class="sidebar-link"><span class="hide-menu"> Transaksi Berjalan
                                             </span></a>
                                     </li>
-                                    <li class="sidebar-item"><a href="{{ route('pesanan_selesai') }}"
+                                    <li class="sidebar-item"><a href="{{ route('transaksi.kasir_selesai') }}"
                                             class="sidebar-link"><span class="hide-menu"> Transaksi Selesai
                                             </span></a>
                                     </li>
-                                    <li class="sidebar-item"><a href="{{ route('konfirmasi') }}"
+                                    <li class="sidebar-item"><a href="{{ route('kasir_konfirmasi') }}"
                                             class="sidebar-link"><span class="hide-menu"> Konfirmasi Transaksi
                                             </span></a>
                                     </li>
@@ -286,11 +286,11 @@
                                     href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text"
                                         class="feather-icon"></i><span class="hide-menu">Antrian Dapur </span></a>
                                 <ul aria-expanded="false" class="collapse  first-level base-level-line in">
-                                    <li class="sidebar-item"><a href="{{ route('pesanan_diproses') }}"
+                                    <li class="sidebar-item"><a href="{{ route('kasir_pesanan_diproses') }}"
                                             class="sidebar-link"><span class="hide-menu"> Antrian Pesanan
                                             </span></a>
                                     </li>
-                                    <li class="sidebar-item"><a href="{{ route('pesanan_selesai') }}"
+                                    <li class="sidebar-item"><a href="{{ route('kasir_pesanan_selesai') }}"
                                             class="sidebar-link"><span class="hide-menu"> Antrian Selesai
                                             </span></a>
                                     </li>
