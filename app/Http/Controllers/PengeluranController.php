@@ -19,10 +19,11 @@ class PengeluranController extends Controller
             $carbonDate = Carbon::parse($time);
             $humanTime = $carbonDate->format('d F Y');
             $data = Pengeluaran::whereDate('created_at', $request->date)->get();
-
+            $pengeluaran = Pengeluaran::whereDate('created_at', $request->date)->sum('amount');
             echo json_encode([
                 'data' => $data,
-                'human_time' => $humanTime
+                'human_time' => $humanTime,
+                'pengeluaran' => number_format($pengeluaran, 0, ",", ",")
             ]);
         }else {
             $time = now()->format('Y-m-d');

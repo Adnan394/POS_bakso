@@ -134,6 +134,7 @@
 
                     $("#report").html(html);
                     $("#humanTime").html(data.human_time);
+                    $("#pengeluaran").html(`Rp. ${data.pengeluaran}`);
                 }
             });
         });
