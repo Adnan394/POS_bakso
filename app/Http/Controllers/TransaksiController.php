@@ -316,16 +316,52 @@ class TransaksiController extends Controller
         // ada req date 
         if($request->date) {
             $time = $request->date;
-            $data = Transaction::whereDate('created_at', $time)->get();
             $carbonDate = Carbon::parse($time);
             $humanTime = $carbonDate->format('d F Y');
-            echo json_encode(['data' => $data, 'human_time' => $humanTime]);
+            $transaction = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->whereDate('transactions.created_at', $time)
+            ->select(['transactions.*', 'users.name as user_name'])
+            ->get();
+            $transaction_detail = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+                                ->join('produks', 'transaction_details.product_id', 'produks.id')
+                                ->join('users', 'users.id', 'transactions.user_id')
+                                ->whereDate('transactions.created_at', $time)
+                                ->select(['transaction_details.*', 'users.name as user_name', 'produks.name as produk_name'])
+                                ->get();
+            $revenue = Transaction::whereDate('created_at', $time)->where('payment_id', '!=', null)->sum('pay_amount');
+            $earningCash = Transaction::whereDate('created_at', $time)->where('payment_id', 1)->sum('pay_amount');
+            $earningQris = Transaction::whereDate('created_at', $time)->where('payment_id', 2)->sum('pay_amount');
+            $earningBank = Transaction::whereDate('created_at', $time)->where('payment_id', 3)->sum('pay_amount');
+            $minus = Transaction::whereDate('created_at', $time)->where('payment_id', null)->sum('pay_amount');
+            echo json_encode([
+                'transactions' => $transaction, 
+                'transaction_details' => $transaction_detail,
+                'human_time' => $humanTime,
+                'revenue' => number_format($revenue, 0, ",", ","),
+                'earningCash' => number_format($earningCash, 0, ",", ","),
+                'earningQris' => number_format($earningQris, 0, ",", ","),
+                'earningBank' => number_format($earningBank, 0, ",", ","),
+                'minus' => number_format($minus, 0, ",", ",")
+            ]);
         }else {
             $time = now()->format('Y-m-d');
             $data = Transaction::whereDate('created_at', $time)->get();
             $carbonDate = Carbon::parse($time);
             $humanTime = $carbonDate->format('d F Y');
-            return view('kasir.laporan.rekap_harian', ['data' => $data, 'human_time' => $humanTime]);
+            $revenue = Transaction::whereDate('created_at', $time)->where('payment_id', '!=', null)->sum('pay_amount');
+            $earningCash = Transaction::whereDate('created_at', $time)->where('payment_id', 1)->sum('pay_amount');
+            $earningQris = Transaction::whereDate('created_at', $time)->where('payment_id', 2)->sum('pay_amount');
+            $earningBank = Transaction::whereDate('created_at', $time)->where('payment_id', 3)->sum('pay_amount');
+            $minus = Transaction::whereDate('created_at', $time)->where('payment_id', null)->sum('pay_amount');
+            return view('kasir.laporan.rekap_harian', [
+                'data' => $data, 
+                'human_time' => $humanTime,
+                'revenue' => number_format($revenue, 0, ",", ","),
+                'earningCash' => number_format($earningCash, 0, ",", ","),
+                'earningQris' => number_format($earningQris, 0, ",", ","),
+                'earningBank' => number_format($earningBank, 0, ",", ","),
+                'minus' => number_format($minus, 0, ",", ",")
+            ]);
         }
     }
 
