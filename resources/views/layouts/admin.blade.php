@@ -264,7 +264,7 @@
                                     href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text"
                                         class="feather-icon"></i><span class="hide-menu">Transaksi </span></a>
                                 <ul aria-expanded="false" class="collapse  first-level base-level-line in">
-                                    <li class="sidebar-item"><a href="{{ route('transaksi.create') }}"
+                                    <li class="sidebar-item"><a href="{{ route('create_transaksi') }}"
                                             class="sidebar-link"><span class="hide-menu"> Transaksi Baru
                                             </span></a>
                                     </li>

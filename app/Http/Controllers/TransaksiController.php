@@ -70,9 +70,13 @@ class TransaksiController extends Controller
         $products = Produk::where('location_id', Auth::user()->location->id)->get();
         return view('kasir.transaksi.baru', ['products' => $products, 'tables' => $tables]);
     }
+    public function create_transaksi()
+    {
+        $tables = Table::where('outlet_detail_id', Auth::user()->user_detail->outlet_detail_id)->get();
+        $products = Produk::where('location_id', Auth::user()->location->id)->get();
+        return view('kasir.transaksi.baru', ['products' => $products, 'tables' => $tables]);
+    }
     
-
-
     /**
      * Store a newly created resource in storage.
      */
@@ -119,7 +123,11 @@ class TransaksiController extends Controller
             event(new OutletNotification($datasend));
 
             
-            return redirect()->route('transaksi.berjalan')->with('success', 'Data Transaksi berhasil ditambahkan.');
+            if (Auth::user()->role_id == 3) {
+                return redirect()->route('transaksi.kasir_berjalan')->with('success', 'Data Transaksi berhasil ditambahkan.');
+            } elseif (Auth::user()->role_id == 5) {
+                return redirect()->route('transaksi.berjalan')->with('success', 'Data Transaksi berhasil ditambahkan.');
+            }
     }
 
     /**
