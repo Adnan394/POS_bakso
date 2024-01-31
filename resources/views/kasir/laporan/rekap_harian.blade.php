@@ -94,43 +94,43 @@
             </div>
             <div class="row pb-5">
                 <table id="zero_confi" class="table table-striped table-bordered no-wrap">
-                <thead class="text-center"> 
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Pelanggan</th>
-                        <th scope="col">Penanggung Jawab</th>
-                        <th scope="col" colspan="3">Pesanan</th>
-                        <th scope="col">Total Bayar</th>
-                        <th scope="col">Pembayaran</th>
-                    </tr>
-                </thead>
-                <tbody id="report">
-                    @foreach ($data as $key => $transaksi)
+                    <thead class="text-center"> 
                         <tr>
-                            <th scope="row">{{ $key + 1 }}</th>
-                            <td>{{ $transaksi->name_customer }}</td>
-                            <td>{{ \App\Models\User::where('id', $transaksi->user_id)->first()->name }}</td>
-                            <td>
-                                @foreach (\App\Models\transaction_detail::where('transaction_id', $transaksi->id)->get() as $item)
-                                    <p>{{ \App\Models\Produk::where('id', $item->product_id)->first()->name }}</p>
-                                @endforeach
-                            </td>
-                            <td>
-                                @foreach (\App\Models\transaction_detail::where('transaction_id', $transaksi->id)->get() as $item)
-                                    <p>{{ $item->qty }}</p>
-                                @endforeach
-                            </td>
-                            <td>
-                                @foreach (\App\Models\transaction_detail::where('transaction_id', $transaksi->id)->get() as $item)
-                                    <p>{{ \App\Models\Produk::where('id', $item->product_id)->first()->price * $item->qty }}</p>
-                                @endforeach
-                            </td>
-                            <td>{{ number_format($transaksi->pay_amount, 0, ",", ",") }}</td>
-                            <td>{{ $transaksi->payment->name }}</td>
+                            <th scope="col">#</th>
+                            <th scope="col">Pelanggan</th>
+                            <th scope="col">Penanggung Jawab</th>
+                            <th scope="col" colspan="3">Pesanan</th>
+                            <th scope="col">Total Bayar</th>
+                            <th scope="col">Pembayaran</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody id="report">
+                        @foreach ($data as $key => $transaksi)
+                            <tr>
+                                <th scope="row">{{ $key + 1 }}</th>
+                                <td>{{ $transaksi->name_customer }}</td>
+                                <td>{{ \App\Models\User::where('id', $transaksi->user_id)->first()->name }}</td>
+                                <td>
+                                    @foreach (\App\Models\transaction_detail::where('transaction_id', $transaksi->id)->get() as $item)
+                                        <p>{{ \App\Models\Produk::where('id', $item->product_id)->first()->name }}</p>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @foreach (\App\Models\transaction_detail::where('transaction_id', $transaksi->id)->get() as $item)
+                                        <p>{{ $item->qty }}</p>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @foreach (\App\Models\transaction_detail::where('transaction_id', $transaksi->id)->get() as $item)
+                                        <p>{{ \App\Models\Produk::where('id', $item->product_id)->first()->price * $item->qty }}</p>
+                                    @endforeach
+                                </td>
+                                <td>{{ number_format($transaksi->pay_amount, 0, ",", ",") }}</td>
+                                <td>{{ $transaksi->payment->name }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
 
             </div>
         </div>
