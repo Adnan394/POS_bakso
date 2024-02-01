@@ -115,6 +115,7 @@
         updateReturn(); // Memanggil fungsi updateReturn setelah menambah nilai
     }
 
+<<<<<<< HEAD
         // function updateTotalPrice() {
         //     var subtotalElements = document.getElementsByClassName('subtotal');
         //     var totalPrice = 0;
@@ -123,6 +124,8 @@
         updateReturn(); // Memanggil fungsi updateReturn setelah menambah nilai
     }
 
+=======
+>>>>>>> 4afbcdb (Update edit.blade.php)
         function updateReturn() {
             var totalPrice = parseFloat(document.getElementsByName('price_amount')[0].value);
             var paid = parseFloat(document.getElementsByName('paid')[0].value);
