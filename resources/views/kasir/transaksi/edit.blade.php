@@ -103,9 +103,6 @@
             // Menemukan elemen td.subtotal terkait dan mengupdate nilainya
             var subtotalElement = input.parentNode.nextElementSibling;
             subtotalElement.innerHTML = 'Rp. ' + subtotal.toLocaleString();
-
-            // Mengupdate nilai Total Price
-            updateTotalPrice();
         }
 
         function addAmount(amount) {
@@ -115,23 +112,6 @@
 
         updateReturn(); // Memanggil fungsi updateReturn setelah menambah nilai
     }
-
-        // function updateTotalPrice() {
-        //     var subtotalElements = document.getElementsByClassName('subtotal');
-        //     var totalPrice = 0;
-
-        //     for (var i = 0; i < subtotalElements.length; i++) {
-        //         var subtotalText = subtotalElements[i].innerText;
-        //         var subtotalValue = parseFloat(subtotalText.replace('Rp. ', '').replace(/,/g,
-        //             '')); // Menggunakan replace dengan regular expression
-
-        //         totalPrice += subtotalValue;
-        //     }
-
-        //     // Menemukan elemen input Total Price dan mengupdate nilainya
-        //     var totalPriceInput = document.getElementsByName('price_amount')[0];
-        //     totalPriceInput.value = totalPrice; // Menggunakan toLocaleString untuk menambah format angka
-        // }
 
         function updateReturn() {
             var totalPrice = parseFloat(document.getElementsByName('price_amount')[0].value);
@@ -154,31 +134,21 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script>
-        $(document).ready(function() {
-            $('#paid').on('change', function() {
-                var paid = $(this).val();
+          $(document).ready(function() {
+        // Menangkap perubahan pada input #paid dan select #payment_id
+        $('#paid, #payment_id').on('change input', function() {
+            var paid = $('#paid').val();
+            var paymentId = $('#payment_id').val();
 
-                let btn_selesai = document.getElementById("btn-selesai");
+            let btn_selesai = document.getElementById("btn-selesai");
 
-                if (paid) {
-                    btn_selesai.disabled = false;
-                } else {
-                    btn_selesai.disabled = true;
-                }
-            });
-
-            // Menangkap perubahan pada input #paid
-            $('#paid').on('input', function() {
-                var paid = $(this).val();
-
-                let btn_selesai = document.getElementById("btn-selesai");
-
-                // Memeriksa apakah nilai paid kosong
-                if (!paid) {
-                    // Menonaktifkan tombol
-                    btn_selesai.disabled = true;
-                }
-            });
+            // Memeriksa apakah nilai paid dan payment_id tidak kosong
+            if (paid && paymentId) {
+                btn_selesai.disabled = false;
+            } else {
+                btn_selesai.disabled = true;
+            }
         });
+    });
     </script>
 @endsection
