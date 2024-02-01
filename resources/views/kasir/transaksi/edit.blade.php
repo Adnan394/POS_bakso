@@ -49,14 +49,21 @@
                         </div>
                         <div class="form-group">
                             <label for="price">Total Harga</label>
-                            <input type="number" name="price_amount" class="form-control border-primary" value="{{ $data->price_amount }}"
-                                readonly>
+                            <input type="number" name="price_amount" class="form-control border-primary"
+                                value="{{ $data->price_amount }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="price">Dibayar</label>
-                            <input type="number" name="paid" id="paid" class="form-control border-primary"
-                                value="" onchange="updateReturn()">
+                            <div class="input-group">
+                                <input type="number" name="paid" id="paid" class="form-control border-primary" value=""
+                                    onchange="updateReturn()">
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-outline-secondary" onclick="addAmount(50000)">50000</button>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="addAmount(100000)">100000</button>
+                                </div>
+                            </div>
                         </div>
+                        
                         <div class="form-group">
                             <label for="price">Kembalian</label>
                             <input type="text" name="return" class="form-control border-primary" value="0"
@@ -101,6 +108,14 @@
             updateTotalPrice();
         }
 
+        function addAmount(amount) {
+        var paidInput = document.getElementById('paid');
+        var currentPaid = parseFloat(paidInput.value) || 0;
+        paidInput.value = currentPaid + amount;
+
+        updateReturn(); // Memanggil fungsi updateReturn setelah menambah nilai
+    }
+
         // function updateTotalPrice() {
         //     var subtotalElements = document.getElementsByClassName('subtotal');
         //     var totalPrice = 0;
@@ -123,7 +138,8 @@
             var paid = parseFloat(document.getElementsByName('paid')[0].value);
             var returnInput = document.getElementsByName('return')[0];
 
-            var returnAmount = (paid - totalPrice).toFixed(2); // Menggunakan toFixed(2) untuk membatasi desimal menjadi dua digit
+            var returnAmount = (paid - totalPrice).toFixed(
+                2); // Menggunakan toFixed(2) untuk membatasi desimal menjadi dua digit
             returnInput.value = 'Rp. ' + returnAmount.replace(/\d(?=(\d{3})+\.)/g, '$&,'); // Menambahkan format Rupiah
         }
 
