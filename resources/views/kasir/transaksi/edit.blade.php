@@ -109,6 +109,16 @@
         var paidInput = document.getElementById('paid');
         var currentPaid = parseFloat(paidInput.value) || 0;
         paidInput.value = currentPaid + amount;
+<<<<<<< HEAD
+=======
+
+        updateReturn(); // Memanggil fungsi updateReturn setelah menambah nilai
+    }
+
+        // function updateTotalPrice() {
+        //     var subtotalElements = document.getElementsByClassName('subtotal');
+        //     var totalPrice = 0;
+>>>>>>> 78301b1 (menambahkan tombol di kembalian)
 
         updateReturn(); // Memanggil fungsi updateReturn setelah menambah nilai
     }
