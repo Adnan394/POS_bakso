@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="page-wrapper">
-        <div class="row mt-5">
-            <div class="col-12 col-lg-8 mt-3"> <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
+        <div class=" mt-5">
+            <div class="col-12 col-lg-12 mt-3"> <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
                 <div data-spy="scroll" style="position: relative; height: 570px; overflow: auto;">
                     <div class="mt-3 ml-5" style="width: 30%">
                         <label for="search">Cari Menu:</label>
@@ -42,7 +42,7 @@
                         </table>
                 </div>
             </div>
-            <div class="col-12 col-lg-4 mt-1 px-lg-5"> <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
+            <div class="col-12 col-lg-12 mt-1 pt-5 px-lg-5"> <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
                 <div class="">
                     <div class="form-group">
                         <label for="name">Nama Customer</label>
@@ -51,7 +51,7 @@
                     </div>
                     <div class="form-group">
                         <label for="name">Nomor Meja</label>
-                        <select name="table_id" id="table_id" class="js-select2" required>
+                        <select name="table_id" id="table_id" class="js-select2 form-control border-primary" readonly >
                             <option value="" disabled selected>Pilih Nomor Meja</option>
                             @foreach ($tables as $table)
                                 <option value="{{ $table->id }}">
@@ -62,7 +62,7 @@
                     </div>
                     <div class="form-group">
                         <label for="name">Dibungkus/Ditempat</label>
-                        <select name="order_type" id="order_type" required>
+                        <select name="order_type" id="order_type" class="form-control border-primary" required>
                             <option value="" disabled selected>Pilih</option>
                             <option value="dibungkus">Dibungkus</option>
                             <option value="ditempat">Ditempat</option>
@@ -74,10 +74,10 @@
                             readonly>
                     </div>
                     <div class="row py-2">
-                        <div class="col-12 col-md-8 text-center">
+                        <div class="col-12 col-md-12 text-center">
                             <!-- Mengubah lebar kolom menjadi 12 pada tampilan mobile -->
                             <button type="submit" id="btn-selesai" class="btn btn-lg btn-success btn-block"
-                                data-toggle="modal" data-target="#confirmOrderCenter" disabled>
+                                data-toggle="modal" data-target="#confirmOrderCenter">
                                 Buat Transaksi
                             </button>
                         </div>
@@ -177,7 +177,7 @@
             var tableId = $('#table_id').val();
             var btnSelesai = document.getElementById("btn-selesai");
 
-            if (customerName && tableId) {
+            if (customerName) {
                 btnSelesai.disabled = false;
             } else {
                 btnSelesai.disabled = true;
