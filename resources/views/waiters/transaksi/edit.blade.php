@@ -49,14 +49,21 @@
                         </div>
                         <div class="form-group">
                             <label for="price">Total Harga</label>
-                            <input type="number" name="price_amount" class="form-control border-primary" value="0"
-                                readonly>
+                            <input type="number" name="price_amount" class="form-control border-primary"
+                                value="{{ $data->price_amount }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="price">Dibayar</label>
-                            <input type="number" name="paid" id="paid" class="form-control border-primary"
-                                value="0" onchange="updateReturn()">
+                            <div class="input-group">
+                                <input type="number" name="paid" id="paid" class="form-control border-primary" value=""
+                                    onchange="updateReturn()">
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-outline-secondary" onclick="addAmount(50000)">50000</button>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="addAmount(100000)">100000</button>
+                                </div>
+                            </div>
                         </div>
+                        
                         <div class="form-group">
                             <label for="price">Kembalian</label>
                             <input type="text" name="return" class="form-control border-primary" value="0"
@@ -64,7 +71,7 @@
                         </div>
                         <div class="form-group">
                             <label for="name">Metode Pembayaran</label>
-                            <select name="payment_id" id="payment_id">
+                            <select name="payment_id" id="payment_id" class="form-control border-primary">
                                 <option value="" readonly selected>Pilih Metode Pembayaran</option>
                                 @foreach ($payment as $pay)
                                     <option value="{{ $pay->id }}">
@@ -101,29 +108,38 @@
             updateTotalPrice();
         }
 
-        function updateTotalPrice() {
-            var subtotalElements = document.getElementsByClassName('subtotal');
-            var totalPrice = 0;
+        function addAmount(amount) {
+        var paidInput = document.getElementById('paid');
+        var currentPaid = parseFloat(paidInput.value) || 0;
+        paidInput.value = currentPaid + amount;
 
-            for (var i = 0; i < subtotalElements.length; i++) {
-                var subtotalText = subtotalElements[i].innerText;
-                var subtotalValue = parseFloat(subtotalText.replace('Rp. ', '').replace(/,/g,
-                    '')); // Menggunakan replace dengan regular expression
+        updateReturn(); // Memanggil fungsi updateReturn setelah menambah nilai
+    }
 
-                totalPrice += subtotalValue;
-            }
+        // function updateTotalPrice() {
+        //     var subtotalElements = document.getElementsByClassName('subtotal');
+        //     var totalPrice = 0;
 
-            // Menemukan elemen input Total Price dan mengupdate nilainya
-            var totalPriceInput = document.getElementsByName('price_amount')[0];
-            totalPriceInput.value = totalPrice; // Menggunakan toLocaleString untuk menambah format angka
-        }
+        //     for (var i = 0; i < subtotalElements.length; i++) {
+        //         var subtotalText = subtotalElements[i].innerText;
+        //         var subtotalValue = parseFloat(subtotalText.replace('Rp. ', '').replace(/,/g,
+        //             '')); // Menggunakan replace dengan regular expression
+
+        //         totalPrice += subtotalValue;
+        //     }
+
+        //     // Menemukan elemen input Total Price dan mengupdate nilainya
+        //     var totalPriceInput = document.getElementsByName('price_amount')[0];
+        //     totalPriceInput.value = totalPrice; // Menggunakan toLocaleString untuk menambah format angka
+        // }
 
         function updateReturn() {
             var totalPrice = parseFloat(document.getElementsByName('price_amount')[0].value);
             var paid = parseFloat(document.getElementsByName('paid')[0].value);
             var returnInput = document.getElementsByName('return')[0];
 
-            var returnAmount = (paid - totalPrice).toFixed(2); // Menggunakan toFixed(2) untuk membatasi desimal menjadi dua digit
+            var returnAmount = (paid - totalPrice).toFixed(
+                2); // Menggunakan toFixed(2) untuk membatasi desimal menjadi dua digit
             returnInput.value = 'Rp. ' + returnAmount.replace(/\d(?=(\d{3})+\.)/g, '$&,'); // Menambahkan format Rupiah
         }
 
