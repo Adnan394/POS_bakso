@@ -96,43 +96,43 @@ class DatabaseSeeder extends Seeder
             'location_id' => '1',
             'outlet_id' => '1'
         ]);
-        User::create([
-            'name' => 'Kasir Pusat',
-            'email' => 'kasir1@gmail.com',
-            'role_id' => '3',
-            'password' => Hash::make('kasir123'),
-            'location_id' => '1',
-            'outlet_id' => '1'
-        ]);
-        User::create([
-            'name' => 'Nabila',
-            'email' => 'nabila@gmail.com',
-            'role_id' => '5',
-            'password' => Hash::make('nabila123'),
-            'location_id' => '1',
-            'outlet_id' => '1'
-        ]);
-        User::create([
-            'name' => 'Outlet Pusat',
-            'email' => 'outlet1@gmail.com',
-            'role_id' => '4',
-            'password' => Hash::make('outlet123'),
-            'location_id' => '1',
-            'outlet_id' => '1'
-        ]);
+        // User::create([
+        //     'name' => 'Kasir Pusat',
+        //     'email' => 'kasir1@gmail.com',
+        //     'role_id' => '3',
+        //     'password' => Hash::make('kasir123'),
+        //     'location_id' => '1',
+        //     'outlet_id' => '1'
+        // ]);
+        // User::create([
+        //     'name' => 'Nabila',
+        //     'email' => 'nabila@gmail.com',
+        //     'role_id' => '5',
+        //     'password' => Hash::make('nabila123'),
+        //     'location_id' => '1',
+        //     'outlet_id' => '1'
+        // ]);
+        // User::create([
+        //     'name' => 'Outlet Pusat',
+        //     'email' => 'outlet1@gmail.com',
+        //     'role_id' => '4',
+        //     'password' => Hash::make('outlet123'),
+        //     'location_id' => '1',
+        //     'outlet_id' => '1'
+        // ]);
 
-        User_detail::create([
-            'user_id' => '4',
-            'outlet_detail_id' => '1',
-        ]);
-        User_detail::create([
-            'user_id' => '5',
-            'outlet_detail_id' => '1',
-        ]);
-        User_detail::create([
-            'user_id' => '6',
-            'outlet_detail_id' => '1',
-        ]);
+        // User_detail::create([
+        //     'user_id' => '4',
+        //     'outlet_detail_id' => '1',
+        // ]);
+        // User_detail::create([
+        //     'user_id' => '5',
+        //     'outlet_detail_id' => '1',
+        // ]);
+        // User_detail::create([
+        //     'user_id' => '6',
+        //     'outlet_detail_id' => '1',
+        // ]);
 
         for ($i = 1; $i <= 30; $i++) {
             Table::create([
@@ -429,8 +429,36 @@ class DatabaseSeeder extends Seeder
             'location_id' => 1,
         ]);
         Produk::create([
+            'name' => 'Teh Anget Manis',
+            'price' => 4000,
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Es Teh Tawar',
+            'price' => 2000,
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Teh anget Tawar',
+            'price' => 2000,
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
             'name' => 'Es Jeruk',
             'price' => 5000,
+            'status_stock' => 'Tersedia',
+            'outlet_id' => 1,
+            'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Air Es',
+            'price' => 1000,
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
@@ -478,6 +506,41 @@ class DatabaseSeeder extends Seeder
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
+        ]);
+        Produk::create([
+            'name' => 'Ketupat',
+            'price' => 2000,
+            'status_stock' => 'Tersedia',
+        ]);
+        Produk::create([
+            'name' => 'Krupuk',
+            'price' => 2000,
+            'status_stock' => 'Tersedia',
+        ]);
+        Produk::create([
+            'name' => 'Pangsit',
+            'price' => 7000,
+            'status_stock' => 'Tersedia',
+        ]);
+        Produk::create([
+            'name' => 'Siomay Goreng',
+            'price' => 7000,
+            'status_stock' => 'Tersedia',
+        ]);
+        Produk::create([
+            'name' => 'Klanting',
+            'price' => 2000,
+            'status_stock' => 'Tersedia',
+        ]);
+        Produk::create([
+            'name' => 'Rambak',
+            'price' => 3000,
+            'status_stock' => 'Tersedia',
+        ]);
+        Produk::create([
+            'name' => 'Kacang',
+            'price' => 2000,
+            'status_stock' => 'Tersedia',
         ]);
     }
 }
