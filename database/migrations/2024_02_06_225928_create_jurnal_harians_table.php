@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('jurnal_harians', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
+            $table->string('jml_cash_laporan'); 
+            $table->string('jml_cash_lapangan'); 
             $table->timestamps();
         });
     }

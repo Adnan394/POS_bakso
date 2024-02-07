@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('stok_barang_jurnal_harians', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('jurnal_harian_id')->constrained('jurnal_harians');
+            $table->foreignId('bahan_setengah_jadi_id')->constrained('bahan_setengah_jadis');
+            $table->string('lokasi');
+            $table->string('qty');
             $table->timestamps();
         });
     }
