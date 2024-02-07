@@ -1,22 +1,23 @@
 <?php
 
+use App\Models\Produk;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Models\Transaction;
-use App\Models\Produk;
-use App\Http\Controllers\auth\LoginController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\AccountController;
-use App\Http\Controllers\LocationController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\OutletController;
 use App\Http\Controllers\TabelController;
+use App\Http\Controllers\OutletController;
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\MakananController;
 use App\Http\Controllers\MinumanController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\PengeluranController;
 use App\Http\Controllers\PesananOutletController;
-use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\TransaksiDetailController;
+use App\Http\Controllers\bahanSetengahJadiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,11 +38,12 @@ Route::prefix('/superadmin')->group(function() {
         return view('superadmin.dashboard');
     })->middleware('auth');
     Route::resource('/products', ProductController::class)->middleware('auth', 'admin_access', 'superadmin_access');
-    Route::resource('/accounts', AccountController::class)->middleware('auth', 'admin_access');
-    Route::resource('/locations', LocationController::class)->middleware('auth', 'admin_access');
+    Route::resource('/accounts', AccountController::class)->middleware('auth', 'superadmin_access');
+    Route::resource('/locations', LocationController::class)->middleware('auth', 'superadmin_access');
     Route::resource('/tables', TabelController::class)->middleware('auth', 'admin_access', 'superadmin_access');
     Route::resource('/payments', PaymentController::class)->middleware('auth', 'admin_access', 'superadmin_access');
     Route::resource('/outlets', OutletController::class)->middleware('auth', 'admin_access', 'superadmin_access');
+    Route::resource('bahan_setengah_jadi', bahanSetengahJadiController::class)->middleware('auth', 'superadmin_access');
 });
 
 Route::prefix('/admin')->group(function() {

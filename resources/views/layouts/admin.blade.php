@@ -145,6 +145,11 @@
                                     href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text"
                                         class="feather-icon"></i><span class="hide-menu">Master Setting</span></a>
                                 <ul aria-expanded="false" class="collapse active first-level base-level-line in">
+                                    <li class="sidebar-item">
+                                        <a href="{{ route('bahan_setengah_jadi.index') }}" class="sidebar-link">
+                                            <span class="hide-menu">Bahan Setengah Jadi</span>
+                                        </a>
+                                    </li>
                                     <li class="sidebar-item"><a href="{{ route('products.index') }}"
                                             class="sidebar-link"><span class="hide-menu"> Produk
                                             </span></a>

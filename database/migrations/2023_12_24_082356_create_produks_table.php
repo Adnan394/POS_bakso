@@ -18,10 +18,11 @@ return new class extends Migration
             $table->string('status_stock');
             $table->unsignedBigInteger('location_id')->nullable();
             $table->foreign('location_id')->references('id')->on('locations')->onDelete('set null');
-            // $table->foreignId('location_id')->constrained('locations');
-            // $table->foreignId('outlet_id')->constrained('outlets');
             $table->unsignedBigInteger('outlet_id')->nullable();
             $table->foreign('outlet_id')->references('id')->on('outlets')->onDelete('set null');
+            $table->integer('qty_bakso_polos')->default(0);
+            $table->integer('qty_bakso_urat')->default(0);
+            $table->integer('qty_bakso_danging')->default(0);
             $table->timestamps();
         });
     }
