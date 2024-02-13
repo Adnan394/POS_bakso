@@ -157,6 +157,9 @@ class DatabaseSeeder extends Seeder
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
+            'qty_bakso_polos' => 5,
+            'qty_bakso_urat' => 0,
+            'qty_bakso_daging' => 0,
         ]);
 
         Produk::create([
@@ -165,6 +168,9 @@ class DatabaseSeeder extends Seeder
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
+            'qty_bakso_polos' => 10,
+            'qty_bakso_urat' => 0,
+            'qty_bakso_daging' => 0,
         ]);
         // Produk::create([
         //     'name' => 'Bakso Polos Isi 5 + Basreng',
@@ -181,6 +187,9 @@ class DatabaseSeeder extends Seeder
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
+            'qty_bakso_polos' => 10,
+            'qty_bakso_urat' => 0,
+            'qty_bakso_daging' => 0,
         ]);
 
         // Bakso Urat 1
@@ -190,6 +199,9 @@ class DatabaseSeeder extends Seeder
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
+            'qty_bakso_polos' => 5,
+            'qty_bakso_urat' => 1,
+            'qty_bakso_daging' => 0,
         ]);
 
         // Produk::create([
@@ -215,6 +227,9 @@ class DatabaseSeeder extends Seeder
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
+            'qty_bakso_polos' => 5,
+            'qty_bakso_urat' => 0,
+            'qty_bakso_daging' => 1,
         ]);
         // Produk::create([
         //     'name' => 'Bakso Daging 1, Polos 4 + Basreng',
@@ -230,6 +245,9 @@ class DatabaseSeeder extends Seeder
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
+            'qty_bakso_polos' => 5,
+            'qty_bakso_urat' => 0,
+            'qty_bakso_daging' => 1,
         ]);
         Produk::create([
             'name' => 'Bakso Campur Urat 1, Daging 1 Polos 5',
@@ -237,6 +255,9 @@ class DatabaseSeeder extends Seeder
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
+            'qty_bakso_polos' => 5,
+            'qty_bakso_urat' => 1,
+            'qty_bakso_daging' => 1,
         ]);
         // Produk::create([
         //     'name' => 'Bakso Daging 1, Urat 1, Polos 4',
@@ -252,6 +273,9 @@ class DatabaseSeeder extends Seeder
             'status_stock' => 'Tersedia',
             'outlet_id' => 1,
             'location_id' => 1,
+            'qty_bakso_polos' => 5,
+            'qty_bakso_urat' => 1,
+            'qty_bakso_daging' => 1,
         ]);
         Produk::create([
             'name' => 'Basreng',
