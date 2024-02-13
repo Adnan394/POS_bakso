@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreign('outlet_id')->references('id')->on('outlets')->onDelete('set null');
             $table->integer('qty_bakso_polos')->default(0);
             $table->integer('qty_bakso_urat')->default(0);
-            $table->integer('qty_bakso_danging')->default(0);
+            $table->integer('qty_bakso_daging')->default(0);
             $table->timestamps();
         });
     }
