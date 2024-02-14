@@ -313,6 +313,10 @@
                                             class="sidebar-link"><span class="hide-menu">Pengeluaran Harian
                                             </span></a>
                                     </li>
+                                    <li class="sidebar-item"><a href="{{ route('jurnal_harian.index') }}"
+                                            class="sidebar-link"><span class="hide-menu">Jurnal Harian
+                                            </span></a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="list-divider"></li>
