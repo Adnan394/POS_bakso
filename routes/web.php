@@ -18,6 +18,7 @@ use App\Http\Controllers\PengeluranController;
 use App\Http\Controllers\PesananOutletController;
 use App\Http\Controllers\TransaksiDetailController;
 use App\Http\Controllers\bahanSetengahJadiController;
+use App\Http\Controllers\JurnalHarianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +81,7 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
     Route::put('/konfirmasi_store/{id}', [TransaksiController::class, 'konfirmasi_store'])->name('konfirmasi_store');
     Route::get('/rekap_harian', [TransaksiController::class, 'rekap_harian'])->name('rekap_harian');
     Route::resource('/pengeluaran_harian', PengeluranController::class);
+    Route::resource('/jurnal_harian', JurnalHarianController::class);
 });
 Route::prefix('/waiters')->middleware('auth')->group(function() {
     Route::get('/', function () {
