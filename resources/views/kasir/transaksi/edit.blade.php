@@ -55,8 +55,10 @@
                         <div class="form-group">
                             <label for="price">Dibayar</label>
                             <div class="input-group">
-                                <input type="number" name="paid" id="paid" class="form-control border-primary" value=""
-                                    onchange="updateReturn()">
+                                <div class="mb-2">
+                                    <input type="number" name="paid" id="paid" class="form-control border-primary" value=""
+                                        onchange="updateReturn()">
+                                </div>
                                 <div class="input-group-append">
                                     <button type="button" class="btn btn-outline-secondary" onclick="addAmount(50000)">50000</button>
                                     <button type="button" class="btn btn-outline-secondary" onclick="addAmount(100000)">100000</button>
@@ -106,26 +108,19 @@
         }
 
         function addAmount(amount) {
-        var paidInput = document.getElementById('paid');
-        var currentPaid = parseFloat(paidInput.value) || 0;
-        paidInput.value = currentPaid + amount;
-<<<<<<< HEAD
-=======
+            var paidInput = document.getElementById('paid');
+            var currentPaid = parseFloat(paidInput.value) || 0;
+            paidInput.value = currentPaid + amount;
+            updateReturn(); // Memanggil fungsi updateReturn setelah menambah nilai
+        }
 
-        updateReturn(); // Memanggil fungsi updateReturn setelah menambah nilai
-    }
-
-<<<<<<< HEAD
         // function updateTotalPrice() {
         //     var subtotalElements = document.getElementsByClassName('subtotal');
         //     var totalPrice = 0;
->>>>>>> 78301b1 (menambahkan tombol di kembalian)
 
         updateReturn(); // Memanggil fungsi updateReturn setelah menambah nilai
-    }
+    
 
-=======
->>>>>>> 4afbcdb (Update edit.blade.php)
         function updateReturn() {
             var totalPrice = parseFloat(document.getElementsByName('price_amount')[0].value);
             var paid = parseFloat(document.getElementsByName('paid')[0].value);
