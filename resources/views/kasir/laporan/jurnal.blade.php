@@ -93,28 +93,31 @@
                                         @csrf
                                         <div class="form-group">
                                             <label for="name">Jumlah Cash Lapangan</label>
-                                            <input type="text" name="name" class="form-control border-primary"
+                                            <input type="text" name="cash_lapangan" class="form-control border-primary"
                                                 required>
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Jumlah Cash Laporan</label>
-                                            <input type="text" name="qty" class="form-control border-primary"
+                                            <input type="text" name="cash_laporan" class="form-control border-primary"
                                                 >
                                         </div>
                                         <label for="">Bakso Urat</label>
                                         <hr>
                                         <div class="form-group">
                                             <label for="name">Di Dandang</label>
+                                            <input type="hidden" name="lokasi[]" value="dandang">
                                             <input type="text" name="amount" class="form-control border-primary"
                                                 required>
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Di Freezer Belakang</label>
+                                            <input type="hidden" name="lokasi[]" value="freezer belakang">
                                             <input type="text" name="amount" class="form-control border-primary"
                                                 required>
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Di Freezer Depan</label>
+                                            <input type="hidden" name="lokasi[]" value="freezer depan">
                                             <input type="text" name="amount" class="form-control border-primary"
                                                 required>
                                         </div>

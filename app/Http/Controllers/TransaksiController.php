@@ -106,7 +106,8 @@ class TransaksiController extends Controller
                         'price' => Produk::where('id', $product)->first()->price,
                         'qty' => $qty,
                         'note' => $pesan,
-                        'status' => "Diproses",
+                        'status' => "Berjalan",
+                        'order_status' => 'Diproses',
                         'order_sequence' => 1
                     ]);
                 }
@@ -252,7 +253,8 @@ class TransaksiController extends Controller
                     'product_id' => $product,
                     'price' => Produk::where('id', $product)->first()->price,
                     'qty' => $qty,
-                    'status' => "Diproses",
+                    'status' => "Berjalan",
+                    'order_status' => "Diproses",
                     'order_sequence' => $order_sequence->order_sequence + 1,
                     'note' => $pesan
                 ]);
@@ -281,7 +283,7 @@ class TransaksiController extends Controller
             ->first();
         $transaksi = Transaction::join('transaction_details', function($q) {
                 $q->on('transactions.id', 'transaction_details.transaction_id')
-                ->where('transaction_details.status', 'Diproses')
+                ->where('transaction_details.order_status', 'Diproses')
                 ->orderByDesc('transaction_details.created_at')
                 ->limit(1);
             })
@@ -305,7 +307,7 @@ class TransaksiController extends Controller
             ->first();
         $transaksi = Transaction::join('transaction_details', function($q) {
                 $q->on('transactions.id', 'transaction_details.transaction_id')
-                ->where('transaction_details.status', 'Jadi')
+                ->where('transaction_details.order_status', 'Jadi')
                 ->orderByDesc('transaction_details.created_at')
                 ->limit(1);
             })
