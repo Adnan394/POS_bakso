@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\bahan_setengah_jadi;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\jurnal_harian;
+use App\Models\stok_barang_jurnal_harian;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 
@@ -19,12 +22,28 @@ class JurnalHarianController extends Controller
             $time = $request->date;
             $carbonDate = Carbon::parse($time);
             $humanTime = $carbonDate->format('d F Y');
-            $data = jurnal_harian::whereDate('created_at', $request->date)->get();
-            $jurnal_harian = jurnal_harian::whereDate('created_at', $request->date)->sum('amount');
+            $data = jurnal_harian::whereDate('created_at', $time)->get();
+            $bp_dandang = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 1)->where('lokasi', 'dandang')->first()->qty;
+            $bp_freezer_belakang = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 1)->where('lokasi', 'freezer belakang')->first()->qty;
+            $bp_freezer_depan = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 1)->where('lokasi', 'freezer depan')->first()->qty;
+            $bu_dandang = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 2)->where('lokasi', 'dandang')->first()->qty;
+            $bu_freezer_belakang = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 2)->where('lokasi', 'freezer belakang')->first()->qty;
+            $bu_freezer_depan = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 2)->where('lokasi', 'freezer depan')->first()->qty;
+            $bd_dandang = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 3)->where('lokasi', 'dandang')->first()->qty;
+            $bd_freezer_belakang = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 3)->where('lokasi', 'freezer belakang')->first()->qty;
+            $bd_freezer_depan = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 3)->where('lokasi', 'freezer depan')->first()->qty;
             echo json_encode([
                 'data' => $data,
                 'human_time' => $humanTime,
-                'jurnal_harian' => number_format($jurnal_harian, 0, ",", ",")
+                'bp_dandang' => $bp_dandang,
+                'bp_freezer_belakang' => $bp_freezer_belakang,
+                'bp_freezer_depan' => $bp_freezer_depan,
+                'bu_dandang' => $bu_dandang,
+                'bu_freezer_belakang' => $bu_freezer_belakang,
+                'bu_freezer_depan' => $bu_freezer_depan,
+                'bd_dandang' => $bd_dandang,
+                'bd_freezer_belakang' => $bd_freezer_belakang,
+                'bd_freezer_depan' => $bd_freezer_depan
             ]);
         }else {
             $time = now()->format('Y-m-d');
@@ -51,7 +70,42 @@ class JurnalHarianController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request;
+        $jurnal_harian = jurnal_harian::create([
+            'user_id' => Auth::user()->id,
+            'jml_cash_laporan' => $request->cash_laporan, 
+            'jml_cash_lapangan' => $request->cash_lapangan, 
+        ]);
+
+        // bakso polos 
+        for ($i=0; $i < 3; $i++) { 
+            stok_barang_jurnal_harian::create([
+                'jurnal_harian_id' => $jurnal_harian->id,
+                'bahan_setengah_jadi_id' => 1,
+                'lokasi' => $request->bp_lokasi[$i],
+                'qty' => $request->bp_qty[$i]
+            ]);
+        }
+        // bakso urat 
+        for ($i=0; $i < 3; $i++) { 
+            stok_barang_jurnal_harian::create([
+                'jurnal_harian_id' => $jurnal_harian->id,
+                'bahan_setengah_jadi_id' => 2,
+                'lokasi' => $request->bu_lokasi[$i],
+                'qty' => $request->bu_qty[$i]
+            ]);
+        }
+        // bakso daging 
+        for ($i=0; $i < 3; $i++) { 
+            stok_barang_jurnal_harian::create([
+                'jurnal_harian_id' => $jurnal_harian->id,
+                'bahan_setengah_jadi_id' => 3,
+                'lokasi' => $request->bd_lokasi[$i],
+                'qty' => $request->bd_qty[$i]
+            ]);
+        }
+
+        return redirect()->back();
     }
 
     /**
