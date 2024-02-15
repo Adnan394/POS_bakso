@@ -25,7 +25,7 @@ class PesananOutletController extends Controller
             ->first();
         $transaksi = Transaction::join('transaction_details', function($q) {
                 $q->on('transactions.id', 'transaction_details.transaction_id')
-                ->where('transaction_details.status', 'Diproses')
+                ->where('transaction_details.order_status', 'Diproses')
                 ->orderByDesc('transaction_details.created_at')
                 ->limit(1);
             })
@@ -37,6 +37,7 @@ class PesananOutletController extends Controller
             ->select(['transactions.*'])
             ->distinct()
             ->get();
+            // return $transaksi;
         return view('outlet.pesanan.index', ['transaksi' => $transaksi]);
     }
 
@@ -84,7 +85,7 @@ class PesananOutletController extends Controller
     {
         // return $request;
 
-        Transaction_detail::where('transaction_id', $id)->update(['status' => 'Jadi']);
+        Transaction_detail::where('transaction_id', $id)->update(['order_status' => 'Jadi']);
 
         // foreach ($request->produk as $produk) {
         //     Transaction_detail::where('transaction_id', $id)->where('product_id', $produk)->update(['status' => 'Jadi']);
@@ -102,7 +103,7 @@ class PesananOutletController extends Controller
             ->first();
         $transaksi = Transaction::join('transaction_details', function($q) {
                 $q->on('transactions.id', 'transaction_details.transaction_id')
-                ->where('transaction_details.status', 'Jadi')
+                ->where('transaction_details.order_status', 'Jadi')
                 ->orderByDesc('transaction_details.created_at')
                 ->limit(1);
             })

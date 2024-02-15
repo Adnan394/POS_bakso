@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('qty');
             $table->string('note')->nullable();
             $table->string('status');
+            $table->string('order_status');
             $table->integer('order_sequence');
             $table->timestamps();
         });
