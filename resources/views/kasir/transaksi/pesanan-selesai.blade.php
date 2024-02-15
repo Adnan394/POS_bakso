@@ -60,7 +60,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->name_customer }}</td>
                                             <td>
-                                                @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->where('status', 'Selesai')->get() as $transaction_detail)
+                                                @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->where('order_status', 'Jadi')->get() as $transaction_detail)
                                                 <div class="d-flex justify-content-between mb-3">
                                                     @if (\App\Models\Produk::where('id', $transaction_detail->product_id)->where('location_id', '!=', null)->first())
                                                         <span>

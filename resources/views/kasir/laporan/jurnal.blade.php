@@ -36,16 +36,16 @@
                 </div>
             </div> --}}
 
-            <div class="row">
+            <div class="row" style="position: relative; overflow-x: auto;">
                 <table id="zero_confi" class="table table-striped table-bordered no-wrap">
                     <thead class="text-center"> 
                         <tr>
                             <th scope="col"></th>
                             <th scope="col"></th>
                             <th scope="col"></th>
-                            <th scope="col" colspan="3">Bahan Setengah Jadi</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
+                            <th scope="col" colspan="3">Bakso Polos</th>
+                            <th scope="col" colspan="3">Bakso Urat</th>
+                            <th scope="col" colspan="3">Bakso Daging</th>
                         </tr>
                         <tr>
                             <th scope="col">#</th>
@@ -54,17 +54,29 @@
                             <th scope="col">Dandang</th>
                             <th scope="col">Freezer Depan</th>
                             <th scope="col">Freezer Belakang</th>
-                            <th scope="col">Lokasi</th>
-                            <th scope="col">Jumlah</th>
+                            <th scope="col">Dandang</th>
+                            <th scope="col">Freezer Depan</th>
+                            <th scope="col">Freezer Belakang</th>
+                            <th scope="col">Dandang</th>
+                            <th scope="col">Freezer Depan</th>
+                            <th scope="col">Freezer Belakang</th>
                         </tr>
                     </thead>
                     <tbody id="report">
                         @foreach ($data as $key => $transaksi)
                             <tr>
-                                <td>{{ $key + 1 }}</td>
-                                <td>{{ $transaksi->name }}</td>
-                                <td>{{ $transaksi->qty }}</td>
-                                <td>{{ number_format($transaksi->amount, 0, ",", ",") }}</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>Rp. {{ number_format($transaksi->jml_cash_lapangan, "0", ",", ",") }}</td>
+                                <td>Rp. {{ number_format($transaksi->jml_cash_laporan, "0", ",", ",") }}</td>
+                                <td>{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 1)->where('lokasi', 'dandang')->first()->qty }}</td>
+                                <td>{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 1)->where('lokasi', 'freezer depan')->first()->qty }}</td>
+                                <td>{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 1)->where('lokasi', 'freezer belakang')->first()->qty }}</td>
+                                <td>{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 2)->where('lokasi', 'dandang')->first()->qty }}</td>
+                                <td>{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 2)->where('lokasi', 'freezer depan')->first()->qty }}</td>
+                                <td>{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 2)->where('lokasi', 'freezer belakang')->first()->qty }}</td>
+                                <td>{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 3)->where('lokasi', 'dandang')->first()->qty }}</td>
+                                <td>{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 3)->where('lokasi', 'freezer depan')->first()->qty }}</td>
+                                <td>{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 3)->where('lokasi', 'freezer belakang')->first()->qty }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -88,7 +100,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Tambahkan Laporan Jurnal</h4>
-                                    <form method="POST" action="{{ route('pengeluaran_harian.store') }}"
+                                    <form method="POST" action="{{ route('jurnal_harian.store') }}"
                                         enctype="multipart/form-data" class="mt-4">
                                         @csrf
                                         <div class="form-group">
@@ -105,54 +117,60 @@
                                         <hr>
                                         <div class="form-group">
                                             <label for="name">Di Dandang</label>
-                                            <input type="hidden" name="lokasi[]" value="dandang">
-                                            <input type="text" name="amount" class="form-control border-primary"
+                                            <input type="hidden" name="bu_lokasi[]" value="dandang">
+                                            <input type="text" name="bu_qty[]" class="form-control border-primary"
                                                 required>
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Di Freezer Belakang</label>
-                                            <input type="hidden" name="lokasi[]" value="freezer belakang">
-                                            <input type="text" name="amount" class="form-control border-primary"
+                                            <input type="hidden" name="bu_lokasi[]" value="freezer belakang">
+                                            <input type="text" name="bu_qty[]" class="form-control border-primary"
                                                 required>
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Di Freezer Depan</label>
-                                            <input type="hidden" name="lokasi[]" value="freezer depan">
-                                            <input type="text" name="amount" class="form-control border-primary"
+                                            <input type="hidden" name="bu_lokasi[]" value="freezer depan">
+                                            <input type="text" name="bu_qty[]" class="form-control border-primary"
                                                 required>
                                         </div>
                                         <label for="">Bakso Polos</label>
                                         <hr>
                                         <div class="form-group">
                                             <label for="name">Di Dandang</label>
-                                            <input type="text" name="amount" class="form-control border-primary"
+                                            <input type="hidden" name="bp_lokasi[]" value="dandang">
+                                            <input type="text" name="bp_qty[]" class="form-control border-primary"
                                                 required>
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Di Freezer Belakang</label>
-                                            <input type="text" name="amount" class="form-control border-primary"
+                                            <input type="hidden" name="bp_lokasi[]" value="freezer belakang">
+                                            <input type="text" name="bp_qty[]" class="form-control border-primary"
                                                 required>
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Di Freezer Depan</label>
-                                            <input type="text" name="amount" class="form-control border-primary"
+                                            <input type="hidden" name="bp_lokasi[]" value="freezer depan">
+                                            <input type="text" name="bp_qty[]" class="form-control border-primary"
                                                 required>
                                         </div>
                                         <label for="">Bakso Daging</label>
                                         <hr>
                                         <div class="form-group">
                                             <label for="name">Di Dandang</label>
-                                            <input type="text" name="amount" class="form-control border-primary"
+                                            <input type="hidden" name="bd_lokasi[]" value="dandang">
+                                            <input type="text" name="bd_qty[]" class="form-control border-primary"
                                                 required>
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Di Freezer Belakang</label>
-                                            <input type="text" name="amount" class="form-control border-primary"
+                                            <input type="hidden" name="bd_lokasi[]" value="freezer belakang">
+                                            <input type="text" name="bd_qty[]" class="form-control border-primary"
                                                 required>
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Di Freezer Depan</label>
-                                            <input type="text" name="amount" class="form-control border-primary"
+                                            <input type="hidden" name="bd_lokasi[]" value="freezer depan">
+                                            <input type="text" name="bd_qty[]" class="form-control border-primary"
                                                 required>
                                         </div>
                                         <div class="modal-footer">
@@ -175,7 +193,7 @@
         $("#date").on("change", function() {
             $.ajax({
                 type: 'GET',
-                url: "{{ route('pengeluaran_harian.index') }}",
+                url: "{{ route('jurnal_harian.index') }}",
                 dataType: "JSON",
                 data: {
                     date : $("#date").val(),
@@ -183,19 +201,26 @@
                 success: function(data) {
                     html = "";
                     $.each(data.data, function(i, item) {
-                        html += `
+                        html = `
                             <tr>
                                 <td>${i + 1}</td>
-                                <td>${item.name}</td>
-                                <td>${item.qty}</td>
-                                <td>${item.amount.toLocaleString('id-ID')}</td>
+                                <td>${item.jml_cash_laporan}</td>
+                                <td>${item.jml_cash_lapangan}</td>
+                                <td>${data.bp_dandang}</td>
+                                <td>${data.bp_freezer_depan}</td>
+                                <td>${data.bp_freezer_belakang}</td>
+                                <td>${data.bu_dandang}</td>
+                                <td>${data.bu_freezer_depan}</td>
+                                <td>${data.bu_freezer_belakang}</td>
+                                <td>${data.bd_dandang}</td>
+                                <td>${data.bd_freezer_depan}</td>
+                                <td>${data.bd_freezer_belakang}</td>
                             </tr>
                         `
                     });
 
                     $("#report").html(html);
                     $("#humanTime").html(data.human_time);
-                    $("#pengeluaran").html(`Rp. ${data.pengeluaran}`);
                 }
             });
         });
