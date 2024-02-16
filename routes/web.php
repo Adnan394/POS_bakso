@@ -45,6 +45,9 @@ Route::prefix('/superadmin')->group(function() {
     Route::resource('/payments', PaymentController::class)->middleware('auth', 'admin_access', 'superadmin_access');
     Route::resource('/outlets', OutletController::class)->middleware('auth', 'admin_access', 'superadmin_access');
     Route::resource('bahan_setengah_jadi', bahanSetengahJadiController::class)->middleware('auth', 'superadmin_access');
+    Route::get('/rekap_admin', [TransaksiController::class, 'rekap_admin'])->name('rekap_admin');
+    Route::resource('/pengeluaran_admin', PengeluranController::class);
+    Route::resource('/jurnal_admin', JurnalHarianController::class);
 });
 
 Route::prefix('/admin')->group(function() {

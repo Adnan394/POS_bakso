@@ -179,14 +179,19 @@
 
                             <li class="list-divider"></li>
                             <li class="nav-small-cap"><span class="hide-menu">Data Transaksi</span></li>
-                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="ui-cards.html"
+                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('pengeluaran_admin.index') }}"
                                     aria-expanded="false"><i data-feather="shopping-cart"
                                         class="feather-icon"></i><span class="hide-menu">Pengeluaran
                                     </span></a>
                             </li>
-                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="ui-cards.html"
+                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('rekap_admin') }}"
                                     aria-expanded="false"><i data-feather="dollar-sign"
-                                        class="feather-icon"></i><span class="hide-menu">Penjualan
+                                        class="feather-icon"></i><span class="hide-menu">Rekap 
+                                    </span></a>
+                            </li>
+                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('jurnal_admin.index') }}"
+                                    aria-expanded="false"><i data-feather="dollar-sign"
+                                        class="feather-icon"></i><span class="hide-menu">Jurnal
                                     </span></a>
                             </li>
                             <li class="list-divider"></li>
