@@ -80,6 +80,7 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
     Route::get('/konfirmasi', [TransaksiController::class, 'konfirmasi'])->name('kasir_konfirmasi');
     Route::put('/konfirmasi_store/{id}', [TransaksiController::class, 'konfirmasi_store'])->name('konfirmasi_store');
     Route::get('/rekap_harian', [TransaksiController::class, 'rekap_harian'])->name('rekap_harian');
+    Route::get('/rekap_produk', [TransaksiController::class, 'rekap_produk'])->name('rekap_produk');
     Route::resource('/pengeluaran_harian', PengeluranController::class);
     Route::resource('/jurnal_harian', JurnalHarianController::class);
 });

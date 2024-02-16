@@ -438,6 +438,78 @@ class TransaksiController extends Controller
         }
     }
 
+    public function rekap_produk(Request $request) {
+        if($request->date) {
+            $time = now()->format('Y-m-d');
+                $data = Transaction::join('transaction_details', 'transaction_details.transaction_id', 'transactions.id')
+                ->join('produks', 'transaction_details.product_id', 'produks.id')
+                ->join('users', 'users.id', 'transactions.user_id')
+                ->join('user_details', 'users.id', 'user_details.user_id')
+                ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+                ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
+                ->whereDate('transactions.created_at', $request->date)
+                ->select(['produks.name', 'transaction_details.qty as porsi'])
+                ->get();
+    
+                $groupedData = $data->groupBy('name')->map(function ($item) {
+                    return $item->sum('porsi');
+                });
+    
+                // Menampilkan hasil
+                $hasil = [];
+                foreach ($groupedData as $name => $totalPorsi) {
+                    $hasil[] = [
+                        'menu' => $name,
+                        'porsi' => $totalPorsi
+                    ];
+                }
+
+                echo json_encode($hasil);
+        }else {
+            $time = now()->format('Y-m-d');
+                $data = Transaction::join('transaction_details', 'transaction_details.transaction_id', 'transactions.id')
+                ->join('produks', 'transaction_details.product_id', 'produks.id')
+                ->join('users', 'users.id', 'transactions.user_id')
+                ->join('user_details', 'users.id', 'user_details.user_id')
+                ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+                ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
+                ->whereDate('transactions.created_at', $time)
+                ->select(['produks.name', 'transaction_details.qty as porsi'])
+                ->get();
+    
+                $groupedData = $data->groupBy('name')->map(function ($item) {
+                    return $item->sum('porsi');
+                });
+    
+                // Menampilkan hasil
+                $hasil = [];
+                foreach ($groupedData as $name => $totalPorsi) {
+                    $hasil[] = [
+                        'menu' => $name,
+                        'porsi' => $totalPorsi
+                    ];
+                }
+    
+                $jml_bakso = Transaction::join('transaction_details', 'transaction_details.transaction_id', 'transactions.id')
+                ->join('produks', 'transaction_details.product_id', 'produks.id')
+                ->join('users', 'users.id', 'transactions.user_id')
+                ->join('user_details', 'users.id', 'user_details.user_id')
+                ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+                ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
+                ->where('produks.qty_bakso_polos', '!=', 0)
+                ->orWhere('produks.qty_bakso_urat', '!=', 0)
+                ->orWhere('produks.qty_bakso_daging', '!=', 0)
+                ->whereDate('transactions.created_at', $time)
+                ->selectRaw('SUM(produks.qty_bakso_daging * transaction_details.qty) as bakso_daging')
+                // ->select(['produks.qty_bakso_polos as bakso_polos', 'transaction_details.qty as qty'])
+                ->get();
+    
+                
+                // return $jml_bakso;
+                return view('kasir.laporan.rekap_produk', ['data' => $hasil]);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      */
