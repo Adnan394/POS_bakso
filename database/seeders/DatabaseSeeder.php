@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\bahan_setengah_jadi;
 use App\Models\Location;
 use App\Models\Role;
 use App\Models\User;
@@ -565,6 +567,16 @@ class DatabaseSeeder extends Seeder
             'name' => 'Kacang',
             'price' => 2000,
             'status_stock' => 'Tersedia',
+        ]);
+
+        bahan_setengah_jadi::create([
+            'name' => 'Bakso Polos'
+        ]);
+        bahan_setengah_jadi::create([
+            'name' => 'Bakso Urat'
+        ]);
+        bahan_setengah_jadi::create([
+            'name' => 'Bakso Daging'
         ]);
     }
 }

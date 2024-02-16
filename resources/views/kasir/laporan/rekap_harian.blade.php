@@ -92,8 +92,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row pb-5">
-                <table id="zero_confi" class="table table-striped table-bordered no-wrap">
+            <div class="row pb-5" style="position: relative; overflow-x:scroll;">
+                <table id="zero_config" class="table table-striped table-bordered no-wrap">
                     <thead class="text-center"> 
                         <tr>
                             <th scope="col">#</th>
@@ -111,22 +111,22 @@
                                 <td>{{ $transaksi->name_customer }}</td>
                                 <td>{{ \App\Models\User::where('id', $transaksi->user_id)->first()->name }}</td>
                                 <td>
-                                    @foreach (\App\Models\transaction_detail::where('transaction_id', $transaksi->id)->get() as $item)
+                                    @foreach (\App\Models\Transaction_detail::where('transaction_id', $transaksi->id)->get() as $item)
                                         <p>{{ \App\Models\Produk::where('id', $item->product_id)->first()->name }}</p>
                                     @endforeach
                                 </td>
                                 <td>
-                                    @foreach (\App\Models\transaction_detail::where('transaction_id', $transaksi->id)->get() as $item)
+                                    @foreach (\App\Models\Transaction_detail::where('transaction_id', $transaksi->id)->get() as $item)
                                         <p>{{ $item->qty }}</p>
                                     @endforeach
                                 </td>
                                 <td>
-                                    @foreach (\App\Models\transaction_detail::where('transaction_id', $transaksi->id)->get() as $item)
+                                    @foreach (\App\Models\Transaction_detail::where('transaction_id', $transaksi->id)->get() as $item)
                                         <p>{{ \App\Models\Produk::where('id', $item->product_id)->first()->price * $item->qty }}</p>
                                     @endforeach
                                 </td>
                                 <td>{{ number_format($transaksi->pay_amount, 0, ",", ",") }}</td>
-                                <td>{{ $transaksi->payment->name }}</td>
+                                <td>{{ ($transaksi->payment->name) ?? 'Belum Bayar' }}</td>
                             </tr>
                         @endforeach
                     </tbody>

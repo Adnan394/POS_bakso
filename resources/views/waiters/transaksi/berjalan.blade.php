@@ -65,10 +65,10 @@
                                 <hr>
                             </div>
                             <hr class="mb-0">
-                            <div class="card-body mx-auto">
-                                <a href="{{ route('transaksi.show', $item->id) }}" class="card-link">Tambahkan Orderan
-                                    Tambahan</a>
-                            </div>
+                            <!--<div class="card-body mx-auto">-->
+                            <!--    <a href="{{ route('transaksi.show', $item->id) }}" class="card-link">Tambahkan Orderan-->
+                            <!--        Tambahan</a>-->
+                            <!--</div>-->
                             <div class="card-body mx-auto pt-0">
                                 <a href="{{ route('transaksi.edit', $item->id) }}" class="btn btn-success">Selesaikan
                                     Orderan</a>

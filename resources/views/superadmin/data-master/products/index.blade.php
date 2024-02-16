@@ -134,7 +134,11 @@
                                                                                 <label for="location_id">Lokasi
                                                                                     Cabang</label>
                                                                                 <select name="location_id" id="location_id">
+                                                                                    @if($item->location_id)
+                                                                                    <option value="{{ $item->location_id }}" selected> {{ \App\Models\Location::where('id', $item->location_id)->first()->locations }} </option>
+                                                                                    @else
                                                                                     <option value="" disabled selected> Pilih Lokasi </option>
+                                                                                    @endif
                                                                                     @foreach ($locations as $loc)
                                                                                         <option value="{{ $loc->id }}"> {{ $loc->locations }} </option>
                                                                                     @endforeach
@@ -149,7 +153,11 @@
                                                                                         disabled selected>
                                                                                         {{ ($item->outlet->name) ? $item->outlet->name : "" }}
                                                                                     </option> --}}
+                                                                                    @if($item->outlet_id)
+                                                                                    <option value="{{ $item->outlet_id }}">{{ \App\Models\Outlet::where('id' , $item->outlet_id)->first()->name}}</option>
+                                                                                    @else
                                                                                     <option value="" disabled selected> Pilih Outlet </option>
+                                                                                    @endif
                                                                                     @foreach ($outlets as $outlet)
                                                                                         <option
                                                                                             value="{{ $outlet->id }}">
@@ -187,7 +195,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header modal-colored-header bg-primary">
-                        <h4 class="modal-title" id="modal-tambahLabel">Form Tambah Produl
+                        <h4 class="modal-title" id="modal-tambahLabel">Form Tambah Produk
                         </h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
@@ -196,7 +204,7 @@
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Tambahkan Product</h4>
+                                    <h4 class="card-title">Tambahkan Produk</h4>
                                     <form method="POST" action="{{ route('products.store') }}"
                                         enctype="multipart/form-data" class="mt-4">
                                         @csrf

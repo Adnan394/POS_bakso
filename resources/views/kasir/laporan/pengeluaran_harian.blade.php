@@ -36,8 +36,8 @@
                 </div>
             </div>
 
-            <div class="row">
-                <table id="zero_confi" class="table table-striped table-bordered no-wrap">
+            <div class="row" style="position: relative; overflow-x:scroll;">
+                <table id="zero_config" class="table table-striped table-bordered no-wrap">
                     <thead class="text-center"> 
                         <tr>
                             <th scope="col">#</th>
