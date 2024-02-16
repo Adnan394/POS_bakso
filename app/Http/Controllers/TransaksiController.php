@@ -28,7 +28,12 @@ class TransaksiController extends Controller
 
     public function konfirmasi(Request $request)
     {    
-        $data = Transaction::whereIn('user_id', User::where('role_id', 5)->pluck('id'))->get();
+        // $data = Transaction::whereIn('user_id', User::where('role_id', 5)->pluck('id'))->get();
+        $data = Transaction::join('users', 'users.id', 'transactions.user_id')
+        ->join('user_details', 'users.id', 'user_details.user_id')
+        ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+        ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
+        ->whereIn('transactions.user_id', User::where('role_id', 5)->pluck('id'))->select('transactions.*')->get();
         
         return view('kasir.transaksi.konfirmasi', ['transaksi' => $data]);
     }
@@ -42,7 +47,11 @@ class TransaksiController extends Controller
         $keyword = $request->input('keyword');
     
         // Query dasar untuk mendapatkan transaksi yang belum memiliki payment_id
-        $query = Transaction::where('payment_id', null);
+        $query = Transaction::join('users', 'users.id', 'transactions.user_id')
+        ->join('user_details', 'users.id', 'user_details.user_id')
+        ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+        ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)->where('transactions.payment_id', null)
+        ->select('transactions.*');
     
         // Jika ada keyword, tambahkan kondisi pencarian
         if ($keyword) {
@@ -67,13 +76,13 @@ class TransaksiController extends Controller
     public function create()
     {
         $tables = Table::where('outlet_detail_id', Auth::user()->user_detail->outlet_detail_id)->get();
-        $products = Produk::where('location_id', Auth::user()->location->id)->get();
+        $products = Produk::where('status_stock', 'Tersedia')->get();
         return view('kasir.transaksi.baru', ['products' => $products, 'tables' => $tables]);
     }
     public function create_transaksi()
     {
         $tables = Table::where('outlet_detail_id', Auth::user()->user_detail->outlet_detail_id)->get();
-        $products = Produk::where('location_id', Auth::user()->location->id)->get();
+        $products = Produk::where('status_stock', 'Tersedia')->get();
         return view('kasir.transaksi.baru', ['products' => $products, 'tables' => $tables]);
     }
     
@@ -167,7 +176,11 @@ class TransaksiController extends Controller
         $keyword = $request->input('keyword');
     
         // Query dasar untuk mendapatkan transaksi yang belum memiliki payment_id
-        $query = Transaction::where('payment_id', '!=', null);
+        $query = Transaction::join('users', 'users.id', 'transactions.user_id')
+        ->join('user_details', 'users.id', 'user_details.user_id')
+        ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+        ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)->where('transactions.payment_id', '!=', null)
+        ->select('transactions.*');
     
         // Jika ada keyword, tambahkan kondisi pencarian
         if ($keyword) {
@@ -329,20 +342,46 @@ class TransaksiController extends Controller
             $carbonDate = Carbon::parse($time);
             $humanTime = $carbonDate->format('d F Y');
             $transaction = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->whereDate('transactions.created_at', $time)
             ->select(['transactions.*', 'users.name as user_name'])
             ->get();
             $transaction_detail = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
                                 ->join('produks', 'transaction_details.product_id', 'produks.id')
                                 ->join('users', 'users.id', 'transactions.user_id')
+                                ->join('user_details', 'users.id', 'user_details.user_id')
+                                ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+                                ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
                                 ->whereDate('transactions.created_at', $time)
                                 ->select(['transaction_details.*', 'users.name as user_name', 'produks.name as produk_name'])
                                 ->get();
-            $revenue = Transaction::whereDate('created_at', $time)->where('payment_id', '!=', null)->sum('pay_amount');
-            $earningCash = Transaction::whereDate('created_at', $time)->where('payment_id', 1)->sum('pay_amount');
-            $earningQris = Transaction::whereDate('created_at', $time)->where('payment_id', 2)->sum('pay_amount');
-            $earningBank = Transaction::whereDate('created_at', $time)->where('payment_id', 3)->sum('pay_amount');
-            $minus = Transaction::whereDate('created_at', $time)->where('payment_id', null)->sum('pay_amount');
+            $revenue = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
+            ->whereDate('transactions.created_at', $time)->where('payment_id', '!=', null)->sum('pay_amount');
+            $earningCash = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
+            ->whereDate('transactions.created_at', $time)->where('payment_id', 1)->sum('pay_amount');
+            $earningQris = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
+            ->whereDate('transactions.created_at', $time)->where('payment_id', 2)->sum('pay_amount');
+            $earningBank = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
+            ->whereDate('transactions.created_at', $time)->where('payment_id', 3)->sum('pay_amount');
+            $minus = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
+            ->whereDate('transactions.created_at', $time)->where('payment_id', null)->sum('pay_amount');
             echo json_encode([
                 'transactions' => $transaction, 
                 'transaction_details' => $transaction_detail,
@@ -355,14 +394,38 @@ class TransaksiController extends Controller
             ]);
         }else {
             $time = now()->format('Y-m-d');
-            $data = Transaction::whereDate('created_at', $time)->get();
+            $data = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
+            ->whereDate('transactions.created_at', $time)->select('transactions.*')->get();
             $carbonDate = Carbon::parse($time);
             $humanTime = $carbonDate->format('d F Y');
-            $revenue = Transaction::whereDate('created_at', $time)->where('payment_id', '!=', null)->sum('pay_amount');
-            $earningCash = Transaction::whereDate('created_at', $time)->where('payment_id', 1)->sum('pay_amount');
-            $earningQris = Transaction::whereDate('created_at', $time)->where('payment_id', 2)->sum('pay_amount');
-            $earningBank = Transaction::whereDate('created_at', $time)->where('payment_id', 3)->sum('pay_amount');
-            $minus = Transaction::whereDate('created_at', $time)->where('payment_id', null)->sum('pay_amount');
+            $revenue = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
+            ->whereDate('transactions.created_at', $time)->where('payment_id', '!=', null)->sum('pay_amount');
+            $earningCash = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
+            ->whereDate('transactions.created_at', $time)->where('payment_id', 1)->sum('pay_amount');
+            $earningQris = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
+            ->whereDate('transactions.created_at', $time)->where('payment_id', 2)->sum('pay_amount');
+            $earningBank = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
+            ->whereDate('transactions.created_at', $time)->where('payment_id', 3)->sum('pay_amount');
+            $minus = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
+            ->whereDate('transactions.created_at', $time)->where('payment_id', null)->sum('pay_amount');
             return view('kasir.laporan.rekap_harian', [
                 'data' => $data, 
                 'human_time' => $humanTime,
