@@ -143,7 +143,7 @@
         $("#date").on("change", function() {
             $.ajax({
             type: 'GET',
-            url: "{{ route('rekap_harian') }}",
+            url: "{{ route('rekap_admin') }}",
             dataType: "JSON",
             data: {
                 date : $("#date").val(),
