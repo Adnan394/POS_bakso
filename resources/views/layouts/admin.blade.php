@@ -179,7 +179,7 @@
 
                             <li class="list-divider"></li>
                             <li class="nav-small-cap"><span class="hide-menu">Data Transaksi</span></li>
-                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="pengeluaran_admin"
+                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('pengeluaran_admin.index') }}"
                                     aria-expanded="false"><i data-feather="shopping-cart"
                                         class="feather-icon"></i><span class="hide-menu">Pengeluaran
                                     </span></a>
@@ -189,7 +189,7 @@
                                         class="feather-icon"></i><span class="hide-menu">Rekap 
                                     </span></a>
                             </li>
-                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="jurnal_admin"
+                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('jurnal_admin.index') }}"
                                     aria-expanded="false"><i data-feather="dollar-sign"
                                         class="feather-icon"></i><span class="hide-menu">Jurnal
                                     </span></a>
