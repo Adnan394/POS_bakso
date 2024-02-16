@@ -310,6 +310,10 @@
                                     href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text"
                                         class="feather-icon"></i><span class="hide-menu">Laporan Rekapitulasi</span></a>
                                 <ul aria-expanded="false" class="collapse  first-level base-level-line in">
+                                    <li class="sidebar-item"><a href="{{ route('rekap_produk') }}"
+                                            class="sidebar-link"><span class="hide-menu">Rekap Produk
+                                            </span></a>
+                                    </li>
                                     <li class="sidebar-item"><a href="{{ route('rekap_harian') }}"
                                             class="sidebar-link"><span class="hide-menu">Rekap Harian
                                             </span></a>
