@@ -572,18 +572,15 @@ class TransaksiController extends Controller
                 return view('kasir.laporan.rekap_produk', ['data' => $hasil]);
         }
     }
-    
-
-
     public function rekap_admin(Request $request) {
         // ada req date 
         if($request->date) {
             $time = $request->date;
             $carbonDate = Carbon::parse($time);
             $humanTime = $carbonDate->format('d F Y');
-            $transaction = Transaction::join('users', 'users.id', 'transactions.user_id')
+            $transaction = Transaction::join('user_details', 'user_details.user_id', 'transactions.user_id')
                 ->whereDate('transactions.created_at', $time)
-                ->select(['transactions.*', 'users.name as user_name'])
+                ->select(['transactions.*'])
                 ->get();
             $transaction_detail = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
                 ->join('produks', 'transaction_details.product_id', 'produks.id')
@@ -623,13 +620,12 @@ class TransaksiController extends Controller
             ]);
         } else {
             $time = now()->format('Y-m-d');
-            $carbonDate = Carbon::parse($time);
-            $humanTime = $carbonDate->format('d F Y');
             $data = Transaction::join('user_details', 'user_details.user_id', 'transactions.user_id')
                 ->whereDate('transactions.created_at', $time)
                 ->select('transactions.*')
                 ->get();
-            
+            $carbonDate = Carbon::parse($time);
+            $humanTime = $carbonDate->format('d F Y');
             $revenue = Transaction::join('user_details', 'user_details.user_id', 'transactions.user_id')
                 ->whereDate('transactions.created_at', $time)
                 ->where('payment_id', '!=', null)
@@ -650,7 +646,7 @@ class TransaksiController extends Controller
                 ->whereDate('transactions.created_at', $time)
                 ->where('payment_id', null)
                 ->sum('pay_amount');
-            return view('superadmin.laporan.rekap_admin', [
+            return view('kasir.laporan.rekap_harian', [
                 'data' => $data, 
                 'human_time' => $humanTime,
                 'revenue' => number_format($revenue, 0, ",", ","),
@@ -661,6 +657,7 @@ class TransaksiController extends Controller
             ]);
         }
     }
+
 
     /**
      * Remove the specified resource from storage.

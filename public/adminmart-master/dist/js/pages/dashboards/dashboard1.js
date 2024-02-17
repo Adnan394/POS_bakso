@@ -46,7 +46,7 @@ $(function () {
     // income
     // ============================================================== 
     var data = {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
         series: [
             [5, 4, 3, 7, 5, 10]
         ]
@@ -117,7 +117,7 @@ $(function () {
     // Earning Stastics Chart
     // ==============================================================
     var chart = new Chartist.Line('.stats', {
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
         series: [
             [11, 10, 15, 21, 14, 23, 12]
         ]
