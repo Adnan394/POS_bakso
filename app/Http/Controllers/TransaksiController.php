@@ -461,7 +461,8 @@ class TransaksiController extends Controller
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
-            ->whereDate('transactions.created_at', $time)->select('transactions.*')->get();
+            ->whereDate('transactions.created_at', $time)
+            ->select('transactions.*')->get();
             $carbonDate = Carbon::parse($time);
             $humanTime = $carbonDate->format('d F Y');
             $revenue = Transaction::join('users', 'users.id', 'transactions.user_id')
@@ -527,7 +528,28 @@ class TransaksiController extends Controller
                     ];
                 }
 
-                echo json_encode($hasil);
+                $jml_bakso = Transaction::join('transaction_details', 'transaction_details.transaction_id', 'transactions.id')
+                ->join('produks', 'transaction_details.product_id', 'produks.id')
+                ->join('users', 'users.id', 'transactions.user_id')
+                ->join('user_details', 'users.id', 'user_details.user_id')
+                ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+                ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
+                ->whereDate('transactions.created_at', $request->date)
+                ->where(function($q) {
+                    $q->where('produks.qty_bakso_polos', '!=', 0)
+                    ->orWhere('produks.qty_bakso_urat', '!=', 0)
+                    ->orWhere('produks.qty_bakso_daging', '!=', 0);
+                })
+                ->selectRaw('SUM(produks.qty_bakso_polos * transaction_details.qty) as bakso_polos')
+                ->selectRaw('SUM(produks.qty_bakso_urat * transaction_details.qty) as bakso_urat')
+                ->selectRaw('SUM(produks.qty_bakso_daging * transaction_details.qty) as bakso_daging')
+                // ->select(['produks.qty_bakso_polos as bakso_polos', 'transaction_details.qty as qty'])
+                ->get();
+
+                echo json_encode([
+                    'data' => $hasil,
+                    'jml_bakso' => $jml_bakso
+                ]);
         }else {
             $time = now()->format('Y-m-d');
                 $data = Transaction::join('transaction_details', 'transaction_details.transaction_id', 'transactions.id')
@@ -559,17 +581,23 @@ class TransaksiController extends Controller
                 ->join('user_details', 'users.id', 'user_details.user_id')
                 ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
                 ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
-                ->where('produks.qty_bakso_polos', '!=', 0)
-                ->orWhere('produks.qty_bakso_urat', '!=', 0)
-                ->orWhere('produks.qty_bakso_daging', '!=', 0)
                 ->whereDate('transactions.created_at', $time)
+                ->where(function($q) {
+                    $q->where('produks.qty_bakso_polos', '!=', 0)
+                    ->orWhere('produks.qty_bakso_urat', '!=', 0)
+                    ->orWhere('produks.qty_bakso_daging', '!=', 0);
+                })
+                ->selectRaw('SUM(produks.qty_bakso_polos * transaction_details.qty) as bakso_polos')
+                ->selectRaw('SUM(produks.qty_bakso_urat * transaction_details.qty) as bakso_urat')
                 ->selectRaw('SUM(produks.qty_bakso_daging * transaction_details.qty) as bakso_daging')
                 // ->select(['produks.qty_bakso_polos as bakso_polos', 'transaction_details.qty as qty'])
                 ->get();
     
                 
-                // return $jml_bakso;
-                return view('kasir.laporan.rekap_produk', ['data' => $hasil]);
+                return view('kasir.laporan.rekap_produk', [
+                    'data' => $hasil,
+                    'jml_polos' => $jml_bakso
+                ]);
         }
     }
     public function rekap_admin(Request $request) {
@@ -664,6 +692,10 @@ class TransaksiController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+    }
+
+    public function transaction_salah($id) {
+        Transaction_detail::where('transaction_id', $id)->update(['status' => 'Salah']);
+        return redirect()->back();
     }
 }

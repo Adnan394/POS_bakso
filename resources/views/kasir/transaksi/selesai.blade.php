@@ -73,9 +73,28 @@
                                         <input type="hidden" name="paid2" value="" id="paid2">
                                         <button type="submit" class="btn btn-lg btn-primary btn-block">Invoice</button>
                                     </form>
+                                    <div class="">
+                                        <p class="text-danger text-center" data-toggle="modal" data-target="#modal-tambah{{ $item->id }}">transaksi Salah?</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                        <div id="modal-tambah{{ $item->id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-tambahLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-body m-5">
+                                        <h2 class="text-center">Apakah Anda menyatakan bahwa pesanan ini kesalahan Operator?</h2>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form action="{{ route('transaction_salah', $item->id) }}" method="POST">
+                                        @csrf
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </form>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
                     @endforeach
             </div>
         </div>

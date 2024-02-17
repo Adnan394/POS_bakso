@@ -242,9 +242,9 @@
                             </li>
                             <li class="list-divider"></li>
                             <li class="nav-small-cap"><span class="hide-menu">Data Transaksi</span></li>
-                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="ui-cards.html"
+                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('stok_harian.index') }}"
                                     aria-expanded="false"><i data-feather="shopping-cart"
-                                        class="feather-icon"></i><span class="hide-menu">Pengeluaran
+                                        class="feather-icon"></i><span class="hide-menu">Stok Harian
                                     </span></a>
                             </li>
                             <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="ui-cards.html"
