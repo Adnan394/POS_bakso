@@ -36,8 +36,29 @@
                         Tambah Transaksi</a>
                 </div>
             </div>
-            <div class="card-group">
-                <div class="card border-right">
+            <div class="card-group d-flex flex-wrap gap-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex d-lg-flex d-md-block align-items-center">
+                            <div>
+                                <h2 class="text-dark mb-1 font-weight-medium">
+                                {{ \App\Models\Transaction::whereExists(function ($query) {
+                                    $query->select(\DB::raw(1))
+                                        ->from('transaction_details')
+                                        ->whereRaw('transaction_details.transaction_id = transactions.id')
+                                        ->where('transaction_details.status', 'Diproses');
+                                })
+                                ->count();
+                                }}</h2>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Antrian</h6>
+                            </div>
+                            <div class="ml-auto mt-md-3 mt-lg-0">
+                                <span class="opacity-7 text-muted"><i data-feather="globe"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-right ml-2">
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
@@ -46,7 +67,7 @@
                                     <span
                                         class="badge bg-primary font-12 text-white font-weight-medium badge-pill ml-2 d-lg-block d-md-none">+{{ number_format($persentase_active, 2) }}</span>
                                 </div>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Transaksi Berjalan</h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Transaksi Berjalan Hari Ini</h6>
                             </div>
                             <div class="ml-auto mt-md-3 mt-lg-0">
                                 <span class="opacity-7 text-muted"><i data-feather="user-plus"></i></span>
@@ -54,13 +75,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="card border-right">
+                <div class="card border-right ml-2">
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
                                 <h2 class="text-dark mb-1 w-100 text-truncate font-weight-medium"><sup
                                         class="set-doller"></sup>{{ $transaksi_done->count()  }}</h2>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Transaksi Selesai
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Transaksi Selesai Hari ini
                                 </h6>
                             </div>
                             <div class="ml-auto mt-md-3 mt-lg-0">
@@ -69,7 +90,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card border-right">
+                <div class="card border-right ml-2">
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
@@ -77,7 +98,7 @@
                                     <h2 class="text-dark mb-1 font-weight-medium">
                                         {{ $transaksi_total }}</h2>
                                 </div>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Semua Transaksi</h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Semua Transaksi Hari ini</h6>
                             </div>
                             <div class="ml-auto mt-md-3 mt-lg-0">
                                 <span class="opacity-7 text-muted"><i data-feather="file-plus"></i></span>
@@ -85,15 +106,49 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+            </div>
+            <div class="card-group">
+                <div class="card border-right">
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
-                                <h2 class="text-dark mb-1 font-weight-medium">{{ $produk }}</h2>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Menu </h6>
+                                <div class="d-inline-flex align-items-center">
+                                    <h2 class="text-dark mb-1 font-weight-medium"><sup class="set-doller">Rp.</sup>{{ $revenue_today }}</h2>
+                                </div>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Pendapatan Hari ini</h6>
                             </div>
                             <div class="ml-auto mt-md-3 mt-lg-0">
-                                <span class="opacity-7 text-muted"><i data-feather="globe"></i></span>
+                                <span class="opacity-7 text-muted"><i data-feather="dollar-sign"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-right ml-3">
+                    <div class="card-body">
+                        <div class="d-flex d-lg-flex d-md-block align-items-center">
+                            <div>
+                                <h2 class="text-dark mb-1 w-100 text-truncate font-weight-medium"><sup
+                                        class="set-doller">Rp.</sup>{{ $revenue_week }}</h2>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Pendapatan Minggu ini
+                                </h6>
+                            </div>
+                            <div class="ml-auto mt-md-3 mt-lg-0">
+                                <span class="opacity-7 text-muted"><i data-feather="dollar-sign"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-right ml-3">
+                    <div class="card-body">
+                        <div class="d-flex d-lg-flex d-md-block align-items-center">
+                            <div>
+                                <div class="d-inline-flex align-items-center">
+                                    <h2 class="text-dark mb-1 font-weight-medium">{{ $revenue_month }}</h2>
+                                </div>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Pendapatan Bulan ini</h6>
+                            </div>
+                            <div class="ml-auto mt-md-3 mt-lg-0">
+                                <span class="opacity-7 text-muted"><i data-feather="dollar-sign"></i></span>
                             </div>
                         </div>
                     </div>
