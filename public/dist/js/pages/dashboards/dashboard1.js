@@ -117,7 +117,7 @@ $(function () {
     // Earning Stastics Chart
     // ==============================================================
     var chart = new Chartist.Line('.stats', {
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
         series: [
             [11, 10, 15, 21, 14, 23, 12]
         ]

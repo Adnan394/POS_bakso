@@ -36,7 +36,29 @@ Route::get('/403', function() {
 Route::get('/', [LoginController::class, 'index'])->name('login'); // Mengarahkan ke halaman login
 Route::prefix('/superadmin')->group(function() {
     Route::get('/', function () {
-        return view('superadmin.dashboard');
+           $revenue_today = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('payment_id', '!=', null)
+            ->whereDate('transactions.created_at', today())
+            ->sum('pay_amount');
+            $revenue_week = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('payment_id', '!=', null)
+            ->whereBetween('transactions.created_at', [now()->startOfWeek(), now()->endOfWeek()])
+            ->sum('pay_amount');
+            $revenue_month = Transaction::join('users', 'users.id', 'transactions.user_id')
+                ->join('user_details', 'users.id', 'user_details.user_id')
+                ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+                ->where('payment_id', '!=', null)
+                ->whereMonth('transactions.created_at', now()->month)
+                ->sum('pay_amount');
+        return view('superadmin.dashboard', [
+            'revenue_today' => number_format($revenue_today, 0, ",", ","),
+            'revenue_week' => number_format($revenue_week, 0, ",", ","),
+            'revenue_month' => number_format($revenue_month, 0, ",", ","),
+    ]);
     })->middleware('auth');
     Route::resource('/products', ProductController::class)->middleware('auth', 'admin_access', 'superadmin_access');
     Route::resource('/accounts', AccountController::class)->middleware('auth', 'superadmin_access');
