@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('status');
             $table->string('order_status');
             $table->integer('order_sequence');
+            $table->string('order_type');
             $table->timestamps();
         });
     }

@@ -29,15 +29,29 @@ class TransaksiController extends Controller
     public function konfirmasi(Request $request)
     {    
         $time = $time = now()->format('Y-m-d');
+        $keyword = $request->input('keyword');
         // $data = Transaction::whereIn('user_id', User::where('role_id', 5)->pluck('id'))->get();
         $data = Transaction::join('users', 'users.id', 'transactions.user_id')
         ->join('user_details', 'users.id', 'user_details.user_id')
         ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
         ->whereDate('transactions.created_at', $time)
         ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
-        ->whereIn('transactions.user_id', User::where('role_id', 5)->pluck('id'))->select('transactions.*')->get();
+        ->whereIn('transactions.user_id', User::where('role_id', 5)->pluck('id'))->select('transactions.*')->orderBy('created_at', 'desc');
+        // Jika ada keyword, tambahkan kondisi pencarian
+        if ($keyword) {
+            $data->where(function ($subQuery) use ($keyword) {
+                $subQuery->where('name_customer', 'like', "%$keyword%")
+                    ->orWhereHas('table', function ($tableQuery) use ($keyword) {
+                        $tableQuery->where('number', 'like', "%$keyword%");
+                    });
+            });
+        }
         
-        return view('kasir.transaksi.konfirmasi', ['transaksi' => $data]);
+    
+        // Ambil hasil query dan kirimkan ke view
+        $transaksi = $data->get();
+        
+        return view('kasir.transaksi.konfirmasi', ['transaksi' => $transaksi]);
     }
     
     public function konfirmasi_store($id) {
@@ -98,7 +112,7 @@ class TransaksiController extends Controller
         
             // Ambil hasil query dan kirimkan ke view
             $transaksi = $query->get();
-            return view('kasir.transaksi.selesai', ['transaksi' => $transaksi]);
+            return view('kasir.transaksi.berjalan', ['transaksi' => $transaksi]);
         }
     }
 
@@ -132,7 +146,6 @@ class TransaksiController extends Controller
                 'payment_image' => ($request->payment_image) ? $request->payment_image : null,
                 'discount' => ($request->discount) ? $request->discount : null,
                 'pay_amount' => $request->price_amount,
-                'order_type' => $request->order_type,
                 'user_id' => Auth::user()->id,
                 'name_customer' => $request->name_customer
             ]);
@@ -149,6 +162,7 @@ class TransaksiController extends Controller
                         'qty' => $qty,
                         'note' => $pesan,
                         'status' => "Berjalan",
+                        'order_type' => $request->order_type,
                         'order_status' => 'Diproses',
                         'order_sequence' => 1
                     ]);
@@ -237,7 +251,9 @@ class TransaksiController extends Controller
             $keyword = $request->input('keyword');
         
             // Query dasar untuk mendapatkan transaksi yang belum memiliki payment_id
-            $query = Transaction::join('users', 'users.id', 'transactions.user_id')
+            $query = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=', 'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)->where('transactions.payment_id', '!=', null)
@@ -256,7 +272,7 @@ class TransaksiController extends Controller
             
         
             // Ambil hasil query dan kirimkan ke view
-            $transaksi = $query->get();
+            $transaksi = $query->distinct()->get();
             return view('kasir.transaksi.selesai', ['transaksi' => $transaksi]);
         }
 
@@ -302,7 +318,6 @@ class TransaksiController extends Controller
         $transaction = Transaction::where('id', $request->transaksi_id)->update([
             'price_amount' => $request->price_amount, 
             'pay_amount' => $request->price_amount,
-            'order_type' => $request->order_type
         ]);
 
         foreach ($request->prev_transaction_detail_id as $index => $transaction_id) {
@@ -330,6 +345,7 @@ class TransaksiController extends Controller
                     'price' => Produk::where('id', $product)->first()->price,
                     'qty' => $qty,
                     'status' => "Berjalan",
+                    'order_type' => $request->order_type,
                     'order_status' => "Diproses",
                     'order_sequence' => $order_sequence->order_sequence + 1,
                     'note' => $pesan
@@ -457,19 +473,21 @@ class TransaksiController extends Controller
             ]);
         }else {
             $time = now()->format('Y-m-d');
-            $data = Transaction::join('users', 'users.id', 'transactions.user_id')
+            $data = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=', 'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->whereDate('transactions.created_at', $time)
-            ->select('transactions.*')->get();
+            ->select('transactions.*')->distinct()->get();
             $carbonDate = Carbon::parse($time);
             $humanTime = $carbonDate->format('d F Y');
             $revenue = Transaction::join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
-            ->whereDate('transactions.created_at', $time)->where('payment_id', '!=', null)->sum('pay_amount');
+            ->whereDate('transactions.created_at', $time)->where('payment_id', '!=', null)->sum('transactions.pay_amount');
             $earningCash = Transaction::join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
@@ -506,6 +524,8 @@ class TransaksiController extends Controller
         if($request->date) {
             $time = now()->format('Y-m-d');
                 $data = Transaction::join('transaction_details', 'transaction_details.transaction_id', 'transactions.id')
+                ->where('transaction_details.status', '!=', 'Salah')
+                ->join('transaction_details', 'transaction_details.transaction_id', 'transactions.id')
                 ->join('produks', 'transaction_details.product_id', 'produks.id')
                 ->join('users', 'users.id', 'transactions.user_id')
                 ->join('user_details', 'users.id', 'user_details.user_id')
@@ -529,6 +549,7 @@ class TransaksiController extends Controller
                 }
 
                 $jml_bakso = Transaction::join('transaction_details', 'transaction_details.transaction_id', 'transactions.id')
+                ->where('transaction_details.status', '!=', 'Salah')
                 ->join('produks', 'transaction_details.product_id', 'produks.id')
                 ->join('users', 'users.id', 'transactions.user_id')
                 ->join('user_details', 'users.id', 'user_details.user_id')
@@ -553,6 +574,7 @@ class TransaksiController extends Controller
         }else {
             $time = now()->format('Y-m-d');
                 $data = Transaction::join('transaction_details', 'transaction_details.transaction_id', 'transactions.id')
+                ->where('transaction_details.status', '!=', 'Salah')
                 ->join('produks', 'transaction_details.product_id', 'produks.id')
                 ->join('users', 'users.id', 'transactions.user_id')
                 ->join('user_details', 'users.id', 'user_details.user_id')
@@ -576,6 +598,7 @@ class TransaksiController extends Controller
                 }
     
                 $jml_bakso = Transaction::join('transaction_details', 'transaction_details.transaction_id', 'transactions.id')
+                ->where('transaction_details.status', '!=', 'Salah')
                 ->join('produks', 'transaction_details.product_id', 'produks.id')
                 ->join('users', 'users.id', 'transactions.user_id')
                 ->join('user_details', 'users.id', 'user_details.user_id')
@@ -606,7 +629,9 @@ class TransaksiController extends Controller
             $time = $request->date;
             $carbonDate = Carbon::parse($time);
             $humanTime = $carbonDate->format('d F Y');
-            $transaction = Transaction::join('user_details', 'user_details.user_id', 'transactions.user_id')
+            $transaction = Transaction::join('transaction_details', 'transaction_details.transaction_id', 'transactions.id')
+            ->where('transaction_details.status', '!=', 'Salah')
+                ->join('user_details', 'user_details.user_id', 'transactions.user_id')
                 ->whereDate('transactions.created_at', $time)
                 ->select(['transactions.*'])
                 ->get();
@@ -648,9 +673,11 @@ class TransaksiController extends Controller
             ]);
         } else {
             $time = now()->format('Y-m-d');
-            $data = Transaction::join('user_details', 'user_details.user_id', 'transactions.user_id')
+            $data = Transaction::join('transaction_details', 'transaction_details.transaction_id', 'transactions.id')
+            ->where('transaction_details.status', '!=', 'Salah')
+                ->join('user_details', 'user_details.user_id', 'transactions.user_id')
                 ->whereDate('transactions.created_at', $time)
-                ->select('transactions.*')
+                ->select('transactions.*')->distinct()
                 ->get();
             $carbonDate = Carbon::parse($time);
             $humanTime = $carbonDate->format('d F Y');
@@ -694,8 +721,38 @@ class TransaksiController extends Controller
     {
     }
 
-    public function transaction_salah($id) {
+    public function transaction_salah_store($id) {
         Transaction_detail::where('transaction_id', $id)->update(['status' => 'Salah']);
         return redirect()->back();
+    }
+
+    public function transaction_salah(Request $request) {
+            $time = now()->format('Y-m-d');
+            $keyword = $request->input('keyword');
+        
+            // Query dasar untuk mendapatkan transaksi yang belum memiliki payment_id
+            $query = Transaction::join('transaction_details', 'transaction_details.transaction_id', 'transactions.id')
+            ->where('transaction_details.status', 'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
+            ->whereDate('transactions.created_at', $time)
+            ->select('transactions.*');
+        
+            // Jika ada keyword, tambahkan kondisi pencarian
+            if ($keyword) {
+                $query->where(function ($subQuery) use ($keyword) {
+                    $subQuery->where('name_customer', 'like', "%$keyword%")
+                        ->orWhereHas('table', function ($tableQuery) use ($keyword) {
+                            $tableQuery->where('number', 'like', "%$keyword%");
+                        });
+                });
+            }
+            
+        
+            // Ambil hasil query dan kirimkan ke view
+            $transaksi = $query->distinct()->get();
+            return view('kasir.transaksi.transaction_salah', ['transaksi' => $transaksi]);
     }
 }

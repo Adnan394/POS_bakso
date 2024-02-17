@@ -304,7 +304,7 @@
             new Chartist.Bar(".net-income", {
                 labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
                 series: [
-                    // [{{ $revenue_senin_minggu_ini }}, {{ $revenue_selasa_minggu_ini }}, {{ $revenue_rabu_minggu_ini }}, {{ $revenue_kamis_minggu_ini }}, {{ $revenue_jumat_minggu_ini }}, {{ $revenue_sabtu_minggu_ini }}, {{ $revenue_minggu_minggu_ini }}]
+                    [{{ $revenue_senin_minggu_ini }}, {{ $revenue_selasa_minggu_ini }}, {{ $revenue_rabu_minggu_ini }}, {{ $revenue_kamis_minggu_ini }}, {{ $revenue_jumat_minggu_ini }}, {{ $revenue_sabtu_minggu_ini }}, {{ $revenue_minggu_minggu_ini }}]
                 ]
             }, e, [
                 ["screen and (max-width: 640px)", {

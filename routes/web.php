@@ -20,6 +20,7 @@ use App\Http\Controllers\TransaksiDetailController;
 use App\Http\Controllers\bahanSetengahJadiController;
 use App\Http\Controllers\JurnalHarianController;
 use App\Http\Controllers\StokHarianController;
+use App\Models\Stok_harian;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,22 +56,10 @@ Route::prefix('/superadmin')->group(function() {
                 ->where('payment_id', '!=', null)
                 ->whereMonth('transactions.created_at', now()->month)
                 ->sum('pay_amount');
-            $revenue_outlet_depan_today = Transaction::join('users', 'users.id', 'transactions.user_id')
-                ->join('user_details', 'users.id', 'user_details.user_id')
-                ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
-                ->where('outlet_details.id', 1)
-                ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->sum('pay_amount');
-            $revenue_outlet_belakang_today = Transaction::join('users', 'users.id', 'transactions.user_id')
-                ->join('user_details', 'users.id', 'user_details.user_id')
-                ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
-                ->where('outlet_details.id', 2)
-                ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->sum('pay_amount');
         return view('superadmin.dashboard', [
             'revenue_today' => number_format($revenue_today, 0, ",", ","),
             'revenue_week' => number_format($revenue_week, 0, ",", ","),
             'revenue_month' => number_format($revenue_month, 0, ",", ","),
-            'revenue_outlet_depan_today' => number_format($revenue_outlet_depan_today, 0, ",", ","),
-            'revenue_outlet_belakang_today' => number_format($revenue_outlet_belakang_today, 0, ",", ",")
     ]);
     })->middleware('auth');
     Route::resource('/products', ProductController::class)->middleware('auth', 'admin_access', 'superadmin_access');
@@ -244,6 +233,8 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
     Route::get('/rekap_produk', [TransaksiController::class, 'rekap_produk'])->name('rekap_produk');
     Route::resource('/pengeluaran_harian', PengeluranController::class);
     Route::resource('/jurnal_harian', JurnalHarianController::class);
+    Route::post('transaction_salah/{id}', [TransaksiController::class, 'transaction_salah_store'])->name('transaction_salah_store');
+    Route::get('transaction_salah', [TransaksiController::class, 'transaction_salah'])->name('transaction_salah');
 });
 Route::prefix('/waiters')->middleware('auth')->group(function() {
     Route::get('/', function () {
@@ -387,6 +378,7 @@ Route::prefix('/waiters')->middleware('auth')->group(function() {
     Route::get('/pesanan_selesai', [TransaksiController::class, 'pesanan_selesai'])->name('pesanan_selesai');
     Route::get('/pesanan_diproses', [TransaksiController::class, 'pesanan_diproses'])->name('pesanan_diproses');
     Route::get('/konfirmasi', [TransaksiController::class, 'konfirmasi'])->name('konfirmasi');
+    Route::get('stok_harian', [StokHarianController::class, 'index'])->name('stok_harian');
 });
 
 Route::prefix('/outlet')->middleware('auth', 'outlet_access')->group(function() {
