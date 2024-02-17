@@ -181,6 +181,24 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
             ->where('payment_id', '!=', null)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(6)) // Hari Minggu
             ->sum('pay_amount');
+            $revenue_total_today = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('payment_id', '!=', null)
+            ->whereDate('transactions.created_at', today())
+            ->sum('pay_amount');
+            $revenue_total_week = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('payment_id', '!=', null)
+            ->whereBetween('transactions.created_at', [now()->startOfWeek(), now()->endOfWeek()])
+            ->sum('pay_amount');
+            $revenue_total_month = Transaction::join('users', 'users.id', 'transactions.user_id')
+                ->join('user_details', 'users.id', 'user_details.user_id')
+                ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+                ->where('payment_id', '!=', null)
+                ->whereMonth('transactions.created_at', now()->month)
+                ->sum('pay_amount');
         return view('kasir.dashboard', [
             'revenue_senin_minggu_ini' => $revenue_senin_minggu_ini,
             'revenue_selasa_minggu_ini' => $revenue_selasa_minggu_ini,
@@ -194,6 +212,9 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
             'revenue_today' => number_format($revenue_today, 0, ",", ","),
             'revenue_week' => number_format($revenue_week, 0, ",", ","),
             'revenue_month' => number_format($revenue_month, 0, ",", ","),
+            'revenue_total_today' => number_format($revenue_total_today, 0, ",", ","),
+            'revenue_total_week' => number_format($revenue_total_week, 0, ",", ","),
+            'revenue_total_month' => number_format($revenue_total_month, 0, ",", ","),
             'transaksi_active' => $transaksi_active, 'transaksi_done' => $transaksi_done, 'transaksi_total' => $transaksi_total,  'persentase_active' => $persentase_active, 'produks' => $produks, 'produk' => $produk]);
 });
     Route::resource('/transaksi', TransaksiController::class);
@@ -211,7 +232,6 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
     Route::get('/rekap_produk', [TransaksiController::class, 'rekap_produk'])->name('rekap_produk');
     Route::resource('/pengeluaran_harian', PengeluranController::class);
     Route::resource('/jurnal_harian', JurnalHarianController::class);
-    Route::post('transaction_salah/{id}', [TransaksiController::class, 'transaction_salah'])->name('transaction_salah');
 });
 Route::prefix('/waiters')->middleware('auth')->group(function() {
     Route::get('/', function () {
@@ -310,6 +330,24 @@ Route::prefix('/waiters')->middleware('auth')->group(function() {
             ->where('payment_id', '!=', null)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(6)) // Hari Minggu
             ->sum('pay_amount');
+            $revenue_total_today = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('payment_id', '!=', null)
+            ->whereDate('transactions.created_at', today())
+            ->sum('pay_amount');
+            $revenue_total_week = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('payment_id', '!=', null)
+            ->whereBetween('transactions.created_at', [now()->startOfWeek(), now()->endOfWeek()])
+            ->sum('pay_amount');
+            $revenue_total_month = Transaction::join('users', 'users.id', 'transactions.user_id')
+                ->join('user_details', 'users.id', 'user_details.user_id')
+                ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+                ->where('payment_id', '!=', null)
+                ->whereMonth('transactions.created_at', now()->month)
+                ->sum('pay_amount');
         return view('waiters.dashboard', [
             'revenue_senin_minggu_ini' => $revenue_senin_minggu_ini,
             'revenue_selasa_minggu_ini' => $revenue_selasa_minggu_ini,
@@ -323,6 +361,9 @@ Route::prefix('/waiters')->middleware('auth')->group(function() {
             'revenue_today' => number_format($revenue_today, 0, ",", ","),
             'revenue_week' => number_format($revenue_week, 0, ",", ","),
             'revenue_month' => number_format($revenue_month, 0, ",", ","),
+            'revenue_total_today' => number_format($revenue_total_today, 0, ",", ","),
+            'revenue_total_week' => number_format($revenue_total_week, 0, ",", ","),
+            'revenue_total_month' => number_format($revenue_total_month, 0, ",", ","),
             'transaksi_active' => $transaksi_active, 'transaksi_done' => $transaksi_done, 'transaksi_total' => $transaksi_total,  'persentase_active' => $persentase_active, 'produks' => $produks, 'produk' => $produk]);
 });
     Route::resource('/transaksi', TransaksiController::class);
