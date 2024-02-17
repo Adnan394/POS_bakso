@@ -42,10 +42,14 @@
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
                                 <h2 class="text-dark mb-1 font-weight-medium">
-                                    {{ \App\Models\Transaction::whereExists(function ($query) {
-                                        $query->select(\DB::raw(1))->from('transaction_details')->whereRaw('transaction_details.transaction_id = transactions.id')->where('transaction_details.status', 'Diproses');
-                                    })->count() }}
-                                </h2>
+                                {{ \App\Models\Transaction::whereExists(function ($query) {
+                                    $query->select(\DB::raw(1))
+                                        ->from('transaction_details')
+                                        ->whereRaw('transaction_details.transaction_id = transactions.id')
+                                        ->where('transaction_details.status', 'Diproses');
+                                })
+                                ->count();
+                                }}</h2>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Antrian</h6>
                             </div>
                             <div class="ml-auto mt-md-3 mt-lg-0">
@@ -63,8 +67,7 @@
                                     <span
                                         class="badge bg-primary font-12 text-white font-weight-medium badge-pill ml-2 d-lg-block d-md-none">+{{ number_format($persentase_active, 2) }}</span>
                                 </div>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Transaksi Berjalan Hari
-                                    Ini</h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Transaksi Berjalan Hari Ini</h6>
                             </div>
                             <div class="ml-auto mt-md-3 mt-lg-0">
                                 <span class="opacity-7 text-muted"><i data-feather="user-plus"></i></span>
@@ -77,9 +80,8 @@
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
                                 <h2 class="text-dark mb-1 w-100 text-truncate font-weight-medium"><sup
-                                        class="set-doller"></sup>{{ $transaksi_done->count() }}</h2>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Transaksi Selesai Hari
-                                    ini
+                                        class="set-doller"></sup>{{ $transaksi_done->count()  }}</h2>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Transaksi Selesai Hari ini
                                 </h6>
                             </div>
                             <div class="ml-auto mt-md-3 mt-lg-0">
@@ -96,8 +98,7 @@
                                     <h2 class="text-dark mb-1 font-weight-medium">
                                         {{ $transaksi_total }}</h2>
                                 </div>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Semua Transaksi Hari ini
-                                </h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Semua Transaksi Hari ini</h6>
                             </div>
                             <div class="ml-auto mt-md-3 mt-lg-0">
                                 <span class="opacity-7 text-muted"><i data-feather="file-plus"></i></span>
@@ -112,8 +113,7 @@
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
                                 <div class="d-inline-flex align-items-center">
-                                    <h2 class="text-dark mb-1 font-weight-medium"><sup
-                                            class="set-doller">Rp.</sup>{{ $revenue_today }}</h2>
+                                    <h2 class="text-dark mb-1 font-weight-medium"><sup class="set-doller">Rp.</sup>{{ $revenue_today }}</h2>
                                 </div>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Pendapatan Hari ini</h6>
                             </div>
@@ -158,23 +158,18 @@
                 <div class="col-lg-6 col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Total Sales</h4>
+                            <h4 class="card-title">Pendapatan Outlet Hari ini</h4>
                             <div id="campaign-v2" class="mt-2" style="height:283px; width:100%;"></div>
                             <ul class="list-style-none mb-0">
                                 <li>
                                     <i class="fas fa-circle text-primary font-10 mr-2"></i>
-                                    <span class="text-muted">Direct Sales</span>
-                                    <span class="text-dark float-right font-weight-medium">$2346</span>
+                                    <span class="text-muted">Outlet Depan</span>
+                                    <span class="text-dark float-right font-weight-medium">Rp.{{ $revenue_outlet_depan_today }}</span>
                                 </li>
                                 <li class="mt-3">
                                     <i class="fas fa-circle text-danger font-10 mr-2"></i>
-                                    <span class="text-muted">Referral Sales</span>
-                                    <span class="text-dark float-right font-weight-medium">$2108</span>
-                                </li>
-                                <li class="mt-3">
-                                    <i class="fas fa-circle text-cyan font-10 mr-2"></i>
-                                    <span class="text-muted">Affiliate Sales</span>
-                                    <span class="text-dark float-right font-weight-medium">$1204</span>
+                                    <span class="text-muted">Outlet Belakang</span>
+                                    <span class="text-dark float-right font-weight-medium">Rp.{{ $revenue_outlet_belakang_today }}</span>
                                 </li>
                             </ul>
                         </div>
@@ -186,24 +181,7 @@
                             <h4 class="card-title">Pendapatan Minggu ini</h4>
                             <div class="net-income mt-4 position-relative" style="height:294px;"></div>
                             <ul class="list-inline text-center mt-5 mb-2">
-                                <li class="list-inline-item text-muted font-italic">Sales for this month</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex align-items-start">
-                                <h4 class="card-title mb-0">Earning Statistics</h4>
-                            </div>
-                            <div class="pl-4 mb-5">
-                                <div class="stats ct-charts position-relative" style="height: 315px;"></div>
-                            </div>
-                            <ul class="list-inline text-center mt-4 mb-0">
-                                <li class="list-inline-item text-muted font-italic">Earnings for this month</li>
+                                <li class="list-inline-item text-muted font-italic">Sales for this week</li>
                             </ul>
                         </div>
                     </div>
@@ -211,7 +189,8 @@
             </div>
         </div>
     </div>
-      <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
+
+    <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/libs/popper.js/dist/umd/popper.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <!-- apps -->
@@ -238,10 +217,8 @@
                 bindto: "#campaign-v2",
                 data: {
                     columns: [
-                        ["Direct Sales", 25],
-                        ["Referral Sales", 15],
-                        ["Afilliate Sales", 10],
-                        ["Indirect Sales", 15]
+                        ["Outlet Depan", {{ $revenue_outlet_depan_today }}],
+                        ["Outlet Belakang", {{  $revenue_outlet_belakang_today }}],
                     ],
                     type: "donut",
                     tooltip: {
@@ -252,14 +229,14 @@
                     label: {
                         show: !1
                     },
-                    title: "Sales",
+                    title: "Pendapatan",
                     width: 18
                 },
                 legend: {
                     hide: !0
                 },
                 color: {
-                    pattern: ["#edf2f6", "#5f76e8", "#ff4f70", "#01caf1"]
+                    pattern: [ "#ff4f70", "#01caf1"]
                 }
             });
             d3.select("#campaign-v2 .c3-chart-arcs-title").style("font-family", "Rubik");
@@ -362,5 +339,4 @@
             })
         });
     </script> 
-    
 @endsection
