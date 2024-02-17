@@ -19,6 +19,7 @@ use App\Http\Controllers\PesananOutletController;
 use App\Http\Controllers\TransaksiDetailController;
 use App\Http\Controllers\bahanSetengahJadiController;
 use App\Http\Controllers\JurnalHarianController;
+use App\Http\Controllers\StokHarianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,7 +81,7 @@ Route::prefix('/admin')->group(function() {
     Route::resource('/payments', PaymentController::class)->middleware('auth', 'admin_access', 'superadmin_access');
     Route::resource('/outlets', OutletController::class)->middleware('auth', 'admin_access', 'superadmin_access');
     Route::resource('/tables', TabelController::class)->middleware('auth', 'admin_access', 'superadmin_access');
-
+    Route::resource('stok_harian', StokHarianController::class)->middleware('admin_access');
 });
 
 Route::prefix('/kasir')->middleware('auth')->group(function() {
@@ -210,6 +211,7 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
     Route::get('/rekap_produk', [TransaksiController::class, 'rekap_produk'])->name('rekap_produk');
     Route::resource('/pengeluaran_harian', PengeluranController::class);
     Route::resource('/jurnal_harian', JurnalHarianController::class);
+    Route::post('transaction_salah/{id}', [TransaksiController::class, 'transaction_salah'])->name('transaction_salah');
 });
 Route::prefix('/waiters')->middleware('auth')->group(function() {
     Route::get('/', function () {

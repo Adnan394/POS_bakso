@@ -20,7 +20,7 @@
                         <div class="d-flex d-lg-flex d-md-block align-items-center justify-content-between">
                             <div>
                                 <div class="d-inline-flex align-items-center">
-                                    <h2 class="text-dark mb-1 font-weight-medium" id="pendapatan"></h2>
+                                    <h2 class="text-dark mb-1 font-weight-medium" id="polos">{{ $jml_polos[0]->bakso_polos }}</h2>
                                 </div>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Bakso Polos</h6>
                             </div>
@@ -35,7 +35,7 @@
                         <div class="d-flex d-lg-flex d-md-block align-items-center justify-content-between">
                             <div>
                                 <div class="d-inline-flex align-items-center">
-                                    <h2 class="text-dark mb-1 font-weight-medium" id="cash"></h2>
+                                    <h2 class="text-dark mb-1 font-weight-medium" id="urat">{{ $jml_polos[0]->bakso_urat }}</h2>
                                 </div>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Bakso Urat</h6>
                             </div>
@@ -50,7 +50,7 @@
                         <div class="d-flex d-lg-flex d-md-block align-items-center justify-content-between">
                             <div>
                                 <div class="d-inline-flex align-items-center">
-                                    <h2 class="text-dark mb-1 font-weight-medium" id="qris"></h2>
+                                    <h2 class="text-dark mb-1 font-weight-medium" id="daging">{{ $jml_polos[0]->bakso_daging }}</h2>
                                 </div>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Bakso Daging</h6>
                             </div>
@@ -100,7 +100,7 @@
             },
             success: function(data) {
                 html = "";
-                $.each(data, function(i, item) {
+                $.each(data.data, function(i, item) {
                     html += `
                         <tr>
                             <th scope="row">${i+1}</th>
@@ -109,7 +109,10 @@
                         </tr>
                     `
                 }); 
-                $("#report").html(html);   
+                $("#report").html(html);
+                $("#polos").html(data.jml_bakso[0].bakso_polos);   
+                $("#urat").html(data.jml_bakso[0].bakso_urat);   
+                $("#daging").html(data.jml_bakso[0].bakso_daging);  
             }
         });
         });
