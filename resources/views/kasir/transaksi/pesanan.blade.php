@@ -51,8 +51,8 @@
                                             <th>No</th>
                                             <th>Atas Nama</th>
                                             <th>Pesanan</th>
-                                            <th>Nomor Meja</th>
                                             <th>Pilihan</th>
+                                            <th>Nomor Meja</th>
                                             <th>Waktu Transaksi</th>
                                         </tr>
                                     </thead>
@@ -78,8 +78,18 @@
                                                     <hr style="border: 1px solid grey">
                                                     @endforeach
                                                 </td>
+                                                <td>
+                                                    @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->where('order_status', 'Diproses')->get() as $transaction_detail)
+                                                    <div class="d-flex justify-content-between mb-3">
+                                                        @if (\App\Models\Produk::where('id', $transaction_detail->product_id)->where('location_id', '!=', null)->first())
+                                                            <span>{{ $transaction_detail->order_type }}</span>
+                                                        @endif
+                                                    </div>
+                                                    <p class="text-muted">.</p>
+                                                    <hr style="border: 1px solid grey">
+                                                    @endforeach
+                                                </td>
                                                 <td>{{ $item->table->number }}</td>
-                                                <td>{{ $item->order_type }}</td>
                                                 <td>{{ $item->created_at }}</td>
                                             </tr>
                                         @endif
