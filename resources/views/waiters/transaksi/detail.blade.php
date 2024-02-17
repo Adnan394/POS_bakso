@@ -32,7 +32,7 @@
                                             <input type="hidden" name="prev_order_sequence[]"
                                                 value="{{ $product->order_sequence }}">
                                             <input type="number" name="prev_qty[]" value="{{ $product->qty }}"
-                                                onchange="updateSubtotal(this)" data-price="{{ $product->price }}">
+                                                onchange="updateSubtotalTop(this)" data-price="{{ $product->price }}">
                                         </td>
                                         <td class="subtotal">Rp. 0</td>
                                         <td>{{ $product->note }}</td>
@@ -65,7 +65,7 @@
                                         <td>{{ $product->price }}</td>
                                         <td>
                                             <input type="hidden" name="produk[]" value="{{ $product->id }}">
-                                            <input type="number" name="qty[]" onchange="updateSubtotal(this)"
+                                            <input type="number" name="qty[]" onchange="updateSubtotalBottom(this)"
                                                 data-price="{{ $product->price }}">
                                         </td>
                                         <td class="subtotal">Rp. 0</td>
@@ -123,24 +123,50 @@
     </div>
 
     <script>
-        var subtotalValues = [];
+        var subtotalValuesTop = [];
+        var subtotalValuesBottom = [];
 
-        function updateSubtotal(input) {
+        function updateSubtotalTop(input) {
             var price = parseFloat(input.getAttribute('data-price'));
             var quantity = parseInt(input.value);
 
             if (!isNaN(quantity) && quantity >= 0) {
                 var subtotal = price * quantity;
                 var index = parseInt(input.parentNode.parentNode.rowIndex) - 1;
-                subtotalValues[index] = subtotal;
+                subtotalValuesTop[index] = subtotal;
 
                 var subtotalElement = input.parentNode.nextElementSibling;
                 subtotalElement.innerHTML = 'Rp. ' + subtotal.toLocaleString();
 
                 updateTotalPrice();
+                console.log(subtotalValuesTop);
             } else {
                 var index = parseInt(input.parentNode.parentNode.rowIndex) - 1;
-                subtotalValues[index] = 0;
+                subtotalValuesTop[index] = 0;
+
+                var subtotalElement = input.parentNode.nextElementSibling;
+                subtotalElement.innerHTML = 'Rp. 0';
+                updateTotalPrice();
+            }
+        }
+
+        function updateSubtotalBottom(input) {
+            var price = parseFloat(input.getAttribute('data-price'));
+            var quantity = parseInt(input.value);
+
+            if (!isNaN(quantity) && quantity >= 0) {
+                var subtotal = price * quantity;
+                var index = parseInt(input.parentNode.parentNode.rowIndex) - 1;
+                subtotalValuesBottom[index] = subtotal;
+
+                var subtotalElement = input.parentNode.nextElementSibling;
+                subtotalElement.innerHTML = 'Rp. ' + subtotal.toLocaleString();
+
+                updateTotalPrice();
+                console.log(subtotalValuesBottom);
+            } else {
+                var index = parseInt(input.parentNode.parentNode.rowIndex) - 1;
+                subtotalValuesBottom[index] = 0;
 
                 var subtotalElement = input.parentNode.nextElementSibling;
                 subtotalElement.innerHTML = 'Rp. 0';
@@ -149,9 +175,15 @@
         }
 
         function updateTotalPrice() {
-            var totalPrice = subtotalValues.reduce(function(accumulator, currentValue) {
+            var totalPriceTop = subtotalValuesTop.reduce(function(accumulator, currentValue) {
                 return accumulator + currentValue;
             }, 0);
+
+            var totalPriceBottom = subtotalValuesBottom.reduce(function(accumulator, currentValue) {
+                return accumulator + currentValue;
+            }, 0);
+
+            var totalPrice = totalPriceTop + totalPriceBottom;
 
             var totalPriceInput = document.getElementsByName('price_amount')[0];
             totalPriceInput.value = totalPrice;
@@ -166,15 +198,21 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            var inputProduk = document.querySelectorAll('input[name="prev_qty[]"]');
-            inputProduk.forEach(function(input) {
-                updateSubtotal(input);
+            var inputProdukTop = document.querySelectorAll('input[name="prev_qty[]"]');
+            inputProdukTop.forEach(function(input) {
+                updateSubtotalTop(input);
+            });
+
+            var inputProdukBottom = document.querySelectorAll('input[name="qty[]"]');
+            inputProdukBottom.forEach(function(input) {
+                updateSubtotalBottom(input);
             });
 
             updateTotalPrice(); // Memanggil fungsi updateTotalPrice setelah kedua tabel selesai dimuat
 
         });
     </script>
+
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -212,7 +250,8 @@
             }
 
             // Memanggil ulang fungsi updateTotalPrice setelah melakukan pencarian
-            updateTotalPrice();
+            updateTotalPriceTop();
+            updateTotalPriceBottom();
         }
     </script>
     <script>
