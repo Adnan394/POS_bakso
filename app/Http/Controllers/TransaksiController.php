@@ -28,10 +28,12 @@ class TransaksiController extends Controller
 
     public function konfirmasi(Request $request)
     {    
+        $time = $time = now()->format('Y-m-d');
         // $data = Transaction::whereIn('user_id', User::where('role_id', 5)->pluck('id'))->get();
         $data = Transaction::join('users', 'users.id', 'transactions.user_id')
         ->join('user_details', 'users.id', 'user_details.user_id')
         ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+        ->whereDate('transactions.created_at', $time)
         ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
         ->whereIn('transactions.user_id', User::where('role_id', 5)->pluck('id'))->select('transactions.*')->get();
         
@@ -44,29 +46,60 @@ class TransaksiController extends Controller
     }
     public function berjalan(Request $request)
     {
-        $keyword = $request->input('keyword');
-    
-        // Query dasar untuk mendapatkan transaksi yang belum memiliki payment_id
-        $query = Transaction::join('users', 'users.id', 'transactions.user_id')
-        ->join('user_details', 'users.id', 'user_details.user_id')
-        ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
-        ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)->where('transactions.payment_id', null)
-        ->select('transactions.*');
-    
-        // Jika ada keyword, tambahkan kondisi pencarian
-        if ($keyword) {
-            $query->where(function ($subQuery) use ($keyword) {
-                $subQuery->where('name_customer', 'like', "%$keyword%")
-                    ->orWhereHas('table', function ($tableQuery) use ($keyword) {
-                        $tableQuery->where('number', 'like', "%$keyword%");
-                    });
-            });
-        }
-    
-        // Ambil hasil query dan kirimkan ke view
-        $transaksi = $query->get();
+        if($request->date) {
+            $keyword = $request->input('keyword');
         
-        return view('kasir.transaksi.berjalan', ['transaksi' => $transaksi]);
+            // Query dasar untuk mendapatkan transaksi yang belum memiliki payment_id
+            $query = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->join('tables', 'tables.id', 'transactions.table_id')
+            ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)->where('transactions.payment_id', '!=', null)
+            ->whereDate('transactions.created_at', $request->date)
+            ->select(['transactions.*', 'tables.number as table', 'transaction_details.*']);
+        
+            // Jika ada keyword, tambahkan kondisi pencarian
+            if ($keyword) {
+                $query->where(function ($subQuery) use ($keyword) {
+                    $subQuery->where('name_customer', 'like', "%$keyword%")
+                        ->orWhereHas('table', function ($tableQuery) use ($keyword) {
+                            $tableQuery->where('number', 'like', "%$keyword%");
+                        });
+                });
+            }
+            
+        
+            // Ambil hasil query dan kirimkan ke view
+            $transaksi = $query->get();
+            echo json_encode($transaksi);
+        }else {
+            $time = now()->format('Y-m-d');
+            $keyword = $request->input('keyword');
+        
+            // Query dasar untuk mendapatkan transaksi yang belum memiliki payment_id
+            $query = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)->where('transactions.payment_id', null)
+            ->whereDate('transactions.created_at', $time)
+            ->select('transactions.*');
+        
+            // Jika ada keyword, tambahkan kondisi pencarian
+            if ($keyword) {
+                $query->where(function ($subQuery) use ($keyword) {
+                    $subQuery->where('name_customer', 'like', "%$keyword%")
+                        ->orWhereHas('table', function ($tableQuery) use ($keyword) {
+                            $tableQuery->where('number', 'like', "%$keyword%");
+                        });
+                });
+            }
+            
+        
+            // Ambil hasil query dan kirimkan ke view
+            $transaksi = $query->get();
+            return view('kasir.transaksi.selesai', ['transaksi' => $transaksi]);
+        }
     }
 
 
@@ -172,31 +205,61 @@ class TransaksiController extends Controller
     }
 
     public function selesai(Request $request) {
-
-        $keyword = $request->input('keyword');
-    
-        // Query dasar untuk mendapatkan transaksi yang belum memiliki payment_id
-        $query = Transaction::join('users', 'users.id', 'transactions.user_id')
-        ->join('user_details', 'users.id', 'user_details.user_id')
-        ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
-        ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)->where('transactions.payment_id', '!=', null)
-        ->select('transactions.*');
-    
-        // Jika ada keyword, tambahkan kondisi pencarian
-        if ($keyword) {
-            $query->where(function ($subQuery) use ($keyword) {
-                $subQuery->where('name_customer', 'like', "%$keyword%")
-                    ->orWhereHas('table', function ($tableQuery) use ($keyword) {
-                        $tableQuery->where('number', 'like', "%$keyword%");
-                    });
-            });
-        }
+        if($request->date) {
+            $keyword = $request->input('keyword');
         
-    
-        // Ambil hasil query dan kirimkan ke view
-        $transaksi = $query->get();
+            // Query dasar untuk mendapatkan transaksi yang belum memiliki payment_id
+            $query = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->join('tables', 'tables.id', 'transactions.table_id')
+            ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)->where('transactions.payment_id', '!=', null)
+            ->whereDate('transactions.created_at', $request->date)
+            ->select(['transactions.*', 'tables.number as table', 'transaction_details.*']);
+        
+            // Jika ada keyword, tambahkan kondisi pencarian
+            if ($keyword) {
+                $query->where(function ($subQuery) use ($keyword) {
+                    $subQuery->where('name_customer', 'like', "%$keyword%")
+                        ->orWhereHas('table', function ($tableQuery) use ($keyword) {
+                            $tableQuery->where('number', 'like', "%$keyword%");
+                        });
+                });
+            }
+            
+        
+            // Ambil hasil query dan kirimkan ke view
+            $transaksi = $query->get();
+            echo json_encode($transaksi);
+        }else {
+            $time = now()->format('Y-m-d');
+            $keyword = $request->input('keyword');
+        
+            // Query dasar untuk mendapatkan transaksi yang belum memiliki payment_id
+            $query = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)->where('transactions.payment_id', '!=', null)
+            ->whereDate('transactions.created_at', $time)
+            ->select('transactions.*');
+        
+            // Jika ada keyword, tambahkan kondisi pencarian
+            if ($keyword) {
+                $query->where(function ($subQuery) use ($keyword) {
+                    $subQuery->where('name_customer', 'like', "%$keyword%")
+                        ->orWhereHas('table', function ($tableQuery) use ($keyword) {
+                            $tableQuery->where('number', 'like', "%$keyword%");
+                        });
+                });
+            }
+            
+        
+            // Ambil hasil query dan kirimkan ke view
+            $transaksi = $query->get();
+            return view('kasir.transaksi.selesai', ['transaksi' => $transaksi]);
+        }
 
-        return view('kasir.transaksi.selesai', ['transaksi' => $transaksi]);
     }
 
     public function selesaikan_pesanan(Request $request) {
