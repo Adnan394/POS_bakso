@@ -120,6 +120,21 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card border-danger border-right ml-3" style="width: 20rem">
+                        <div class="card-body">
+                            <div class="d-flex d-lg-flex d-md-block align-items-center justify-content-between">
+                                <div>
+                                    <div class="d-inline-flex align-items-center">
+                                        <h2 class="text-danger mb-1 font-weight-medium" id="salah">- Rp. {{ $salah }}</h2>
+                                    </div>
+                                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-danger">Transaksi Salah</h6>
+                                </div>
+                                <div class="ml-auto mt-md-3 mt-lg-0">
+                                    <span class="opacity-7 text-muted text-danger"><i data-feather="dollar-sign"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row pb-5" style="position: relative; overflow-x:scroll;">
