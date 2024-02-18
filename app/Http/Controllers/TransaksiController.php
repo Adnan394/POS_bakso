@@ -477,12 +477,14 @@ class TransaksiController extends Controller
             $time = $request->date;
             $carbonDate = Carbon::parse($time);
             $humanTime = $carbonDate->format('d F Y');
-            $transaction = Transaction::join('users', 'users.id', 'transactions.user_id')
+            $transaction = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=', 'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->whereDate('transactions.created_at', $time)
-            ->select(['transactions.*', 'users.name as user_name'])
+            ->select(['transactions.*', 'users.name as user_name'])->distinct()
             ->get();
             $transaction_detail = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
                                 ->join('produks', 'transaction_details.product_id', 'produks.id')
@@ -493,31 +495,56 @@ class TransaksiController extends Controller
                                 ->whereDate('transactions.created_at', $time)
                                 ->select(['transaction_details.*', 'users.name as user_name', 'produks.name as produk_name'])
                                 ->get();
-            $revenue = Transaction::join('users', 'users.id', 'transactions.user_id')
+            $revenue = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
-            ->whereDate('transactions.created_at', $time)->where('payment_id', '!=', null)->sum('pay_amount');
-            $earningCash = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->whereDate('transactions.created_at', $time)->where('payment_id', '!=', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+            $earningCash = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
-            ->whereDate('transactions.created_at', $time)->where('payment_id', 1)->sum('pay_amount');
-            $earningQris = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->whereDate('transactions.created_at', $time)->where('payment_id', 1)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+            $earningQris = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
-            ->whereDate('transactions.created_at', $time)->where('payment_id', 2)->sum('pay_amount');
-            $earningBank = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->whereDate('transactions.created_at', $time)->where('payment_id', 2)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+            $earningBank = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
-            ->whereDate('transactions.created_at', $time)->where('payment_id', 3)->sum('pay_amount');
-            $minus = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->whereDate('transactions.created_at', $time)->where('payment_id', 3)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+            $minus = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
-            ->whereDate('transactions.created_at', $time)->where('payment_id', null)->sum('pay_amount');
+            ->whereDate('transactions.created_at', $time)->where('payment_id', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
             echo json_encode([
                 'transactions' => $transaction, 
                 'transaction_details' => $transaction_detail,

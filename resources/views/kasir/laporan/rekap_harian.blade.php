@@ -206,6 +206,7 @@
                 $("#qris").html(`Rp. ${data.earningQris}`);
                 $("#bank").html(`Rp. ${data.earningBank}`);
                 $("#minus").html(`- Rp. ${data.minus}`);
+                $("#salah").html(`- Rp. ${data.salah}`);
                 $("#report").html(html);   
             }
         });
