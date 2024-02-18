@@ -56,6 +56,46 @@ class JurnalHarianController extends Controller
             ]);
         }
     }
+    public function jurnal_harian_print(Request $request)
+    {
+        if ($request->date) {
+            $time = $request->date;
+            $carbonDate = Carbon::parse($time);
+            $humanTime = $carbonDate->format('d F Y');
+            $data = jurnal_harian::whereDate('created_at', $time)->get();
+            $bp_dandang = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 1)->where('lokasi', 'dandang')->first()->qty;
+            $bp_freezer_belakang = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 1)->where('lokasi', 'freezer belakang')->first()->qty;
+            $bp_freezer_depan = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 1)->where('lokasi', 'freezer depan')->first()->qty;
+            $bu_dandang = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 2)->where('lokasi', 'dandang')->first()->qty;
+            $bu_freezer_belakang = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 2)->where('lokasi', 'freezer belakang')->first()->qty;
+            $bu_freezer_depan = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 2)->where('lokasi', 'freezer depan')->first()->qty;
+            $bd_dandang = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 3)->where('lokasi', 'dandang')->first()->qty;
+            $bd_freezer_belakang = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 3)->where('lokasi', 'freezer belakang')->first()->qty;
+            $bd_freezer_depan = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 3)->where('lokasi', 'freezer depan')->first()->qty;
+            echo json_encode([
+                'data' => $data,
+                'human_time' => $humanTime,
+                'bp_dandang' => $bp_dandang,
+                'bp_freezer_belakang' => $bp_freezer_belakang,
+                'bp_freezer_depan' => $bp_freezer_depan,
+                'bu_dandang' => $bu_dandang,
+                'bu_freezer_belakang' => $bu_freezer_belakang,
+                'bu_freezer_depan' => $bu_freezer_depan,
+                'bd_dandang' => $bd_dandang,
+                'bd_freezer_belakang' => $bd_freezer_belakang,
+                'bd_freezer_depan' => $bd_freezer_depan
+            ]);
+        }else {
+            $time = now()->format('Y-m-d');
+            $carbonDate = Carbon::parse($time);
+            $humanTime = $carbonDate->format('d F Y');
+            return view('kasir.laporan.jurnal_print', [
+                'active' => 'jurnal_harian',
+                'human_time' => $humanTime,
+                'data' => jurnal_harian::whereDate('created_at', $time)->get()
+            ]);
+        }
+    }
 
     /**
      * Show the form for creating a new resource.

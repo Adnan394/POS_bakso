@@ -570,6 +570,8 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
     Route::get('/berjalan', [TransaksiController::class, 'berjalan'])->name('transaksi.kasir_berjalan');
     Route::get('/selesai', [TransaksiController::class, 'selesai'])->name('transaksi.kasir_selesai');
     Route::get('/nota/{id}', [TransaksiController::class, 'nota'])->name('transaksi.nota');
+    Route::get('/print_rekap_produk', [TransaksiController::class, 'print_rekap_produk'])->name('print_rekap_produk');
+    Route::get('/print_rekap_harian', [TransaksiController::class, 'print_rekap_harian'])->name('print_rekap_harian');
     Route::post('/selesaikan_pesanan', [TransaksiController::class, 'selesaikan_pesanan'])->name('kasir_selesaikan_pesanan');
     Route::get('/pesanan_selesai', [TransaksiController::class, 'pesanan_selesai'])->name('kasir_pesanan_selesai');
     Route::get('/pesanan_diproses', [TransaksiController::class, 'pesanan_diproses'])->name('kasir_pesanan_diproses');
@@ -578,7 +580,9 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
     Route::get('/rekap_harian', [TransaksiController::class, 'rekap_harian'])->name('rekap_harian');
     Route::get('/rekap_produk', [TransaksiController::class, 'rekap_produk'])->name('rekap_produk');
     Route::resource('/pengeluaran_harian', PengeluranController::class);
+    Route::get('/pengeluaran_harian_print', [PengeluranController::class, 'pengeluaran_harian_print'])->name('pengeluaran_harian_print');
     Route::resource('/jurnal_harian', JurnalHarianController::class);
+    Route::get('/jurnal_harian_print', [JurnalHarianController::class, 'jurnal_harian_print'])->name('jurnal_harian_print');
     Route::post('transaction_salah/{id}', [TransaksiController::class, 'transaction_salah_store'])->name('transaction_salah_store');
     Route::get('transaction_salah', [TransaksiController::class, 'transaction_salah'])->name('transaction_salah');
 });

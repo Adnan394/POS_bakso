@@ -36,6 +36,30 @@ class PengeluranController extends Controller
             ]);
         }
     }
+    public function pengeluaran_harian_print(Request $request)
+    {
+        if ($request->date) {
+            $time = $request->date;
+            $carbonDate = Carbon::parse($time);
+            $humanTime = $carbonDate->format('d F Y');
+            $data = Pengeluaran::whereDate('created_at', $request->date)->get();
+            $pengeluaran = Pengeluaran::whereDate('created_at', $request->date)->sum('amount');
+            echo json_encode([
+                'data' => $data,
+                'human_time' => $humanTime,
+                'pengeluaran' => number_format($pengeluaran, 0, ",", ",")
+            ]);
+        }else {
+            $time = now()->format('Y-m-d');
+            $carbonDate = Carbon::parse($time);
+            $humanTime = $carbonDate->format('d F Y');
+            return view('kasir.laporan.pengeluaran_harian_print', [
+                'active' => 'pengeluaran',
+                'human_time' => $humanTime,
+                'data' => Pengeluaran::whereDate('created_at', $time)->get()
+            ]);
+        }
+    }
 
     /**
      * Show the form for creating a new resource.
