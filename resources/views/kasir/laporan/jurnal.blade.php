@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="page-wrapper">
+    <div class="page-wrapper" >
         <div class="mt-5 mx-5">
             <div class="row d-flex justify-content-between">
                 <div class="mb-5">
@@ -35,7 +35,9 @@
                     </div>
                 </div>
             </div> --}}
-
+            <div class="">
+                <a href="{{ route('jurnal_harian_print') }}" target="_blank" ><button class="btn btn-primary mb-3" id="print">Print Jurnal Harian</button></a>
+              </div>
             <div class="row" style="position: relative; overflow-x: auto;">
                 <table id="zero_confi" class="table table-striped table-bordered no-wrap">
                     <thead class="text-center"> 

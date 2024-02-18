@@ -6,6 +6,7 @@
         <div class="row d-flex justify-content-between">
             <div class="mb-5">
                 <h1>Laporan Rekapitulasi Produk</h1>
+
                 {{-- <h3 id="humanTime">{{ $human_time }}</h3> --}}
             </div>
             <div class="">
@@ -62,6 +63,9 @@
                 </div>
             </div>
         </div>
+        <div class="">
+            <a href="{{ route('print_rekap_produk') }}" target="_blank" ><button class="btn btn-primary mb-3" id="print">Print Rekap Produk</button></a>
+          </div>
         <div class="row pb-5" style="position: relative; overflow-x:scroll;">
             <table id="zero_config" class="table table-striped table-bordered no-wrap">
                 <thead class="text-center"> 
@@ -90,6 +94,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     $(document).ready(function() {
+        // var date = "{{ date('Y-m-d') }}";
         $("#date").on("change", function() {
             $.ajax({
             type: 'GET',
@@ -116,5 +121,21 @@
             }
         });
         });
+
+
+        // $("#print").on("click", function() {
+        //     var newDate = date; // Tentukan nilai baru yang ingin Anda set
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: "{{ route('print_rekap_produk') }}", // Tentukan URL di mana Anda ingin menangani pembaruan nilai variabel $date di sisi server
+        //         data: {
+        //             date: newDate // Kirim data nilai baru ke server
+        //         },
+        //         success: function(response) {
+        //             console.log(response); 
+        //         }
+        //     });
+        // });
+
     });
 </script>

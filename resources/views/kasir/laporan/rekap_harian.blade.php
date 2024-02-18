@@ -12,6 +12,7 @@
                     <label for="" class="form-label">Ganti Tanggal</label>
                     <input type="date" name="" id="date" class="form-control">
                 </div>
+
             </div>
             <div class="row">
                 <div class="d-flex flex-wrap">
@@ -92,6 +93,9 @@
                     </div>
                 </div>
             </div>
+            <div class="">
+                <a href="{{ route('print_rekap_harian') }}" target="_blank" ><button class="btn btn-primary mb-3" id="print">Print Rekap Harian</button></a>
+              </div>
             <div class="row pb-5" style="position: relative; overflow-x:scroll;">
                 <table id="zero_config" class="table table-striped table-bordered no-wrap">
                     <thead class="text-center"> 

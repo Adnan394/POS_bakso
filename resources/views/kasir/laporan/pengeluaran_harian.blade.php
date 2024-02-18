@@ -35,7 +35,9 @@
                     </div>
                 </div>
             </div>
-
+            <div class="">
+                <a href="{{ route('pengeluaran_harian_print') }}" target="_blank" ><button class="btn btn-primary mb-3" id="print">Print Pengeluaran Harian</button></a>
+              </div>
             <div class="row" style="position: relative; overflow-x:scroll;">
                 <table id="zero_config" class="table table-striped table-bordered no-wrap">
                     <thead class="text-center"> 
