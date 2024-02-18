@@ -483,31 +483,68 @@ class TransaksiController extends Controller
             ->select('transactions.*')->distinct()->get();
             $carbonDate = Carbon::parse($time);
             $humanTime = $carbonDate->format('d F Y');
-            $revenue = Transaction::join('users', 'users.id', 'transactions.user_id')
+            $revenue = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
-            ->whereDate('transactions.created_at', $time)->where('payment_id', '!=', null)->sum('transactions.pay_amount');
-            $earningCash = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->whereDate('transactions.created_at', $time)->where('payment_id', '!=', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+            $earningCash = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=', 'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
-            ->whereDate('transactions.created_at', $time)->where('payment_id', 1)->sum('pay_amount');
-            $earningQris = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->whereDate('transactions.created_at', $time)->where('payment_id', 1)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();;
+            $earningQris = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=', 'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
-            ->whereDate('transactions.created_at', $time)->where('payment_id', 2)->sum('pay_amount');
-            $earningBank = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->whereDate('transactions.created_at', $time)->where('payment_id', 2)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();;
+            $earningBank = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=', 'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
-            ->whereDate('transactions.created_at', $time)->where('payment_id', 3)->sum('pay_amount');
-            $minus = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->whereDate('transactions.created_at', $time)->where('payment_id', 3)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();;
+            $minus = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=', 'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
-            ->whereDate('transactions.created_at', $time)->where('payment_id', null)->sum('pay_amount');
+            ->whereDate('transactions.created_at', $time)->where('payment_id', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();;
+            $salah = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status','Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
+            ->whereDate('transactions.created_at', $time)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+        
+            // return $salah;
             return view('kasir.laporan.rekap_harian', [
                 'data' => $data, 
                 'human_time' => $humanTime,
@@ -515,7 +552,8 @@ class TransaksiController extends Controller
                 'earningCash' => number_format($earningCash, 0, ",", ","),
                 'earningQris' => number_format($earningQris, 0, ",", ","),
                 'earningBank' => number_format($earningBank, 0, ",", ","),
-                'minus' => number_format($minus, 0, ",", ",")
+                'minus' => number_format($minus, 0, ",", ","),
+                'salah' => number_format($salah, 0, ",", ",")
             ]);
         }
     }
