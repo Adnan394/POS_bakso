@@ -156,7 +156,7 @@
 <script>
     $(function() {
         c3.generate({
-            bindto: "#campaign-v2",
+            bindto: "#pendapatan_outlet",
             data: {
                 columns: [
                     ["Outlet Depan", {{ $revenue_outlet_depan_today }}],
