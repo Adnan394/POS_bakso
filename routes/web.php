@@ -38,76 +38,136 @@ Route::get('/403', function() {
 Route::get('/', [LoginController::class, 'index'])->name('login'); // Mengarahkan ke halaman login
 Route::prefix('/superadmin')->group(function() {
     Route::get('/', function () {
-           $revenue_today = Transaction::join('users', 'users.id', 'transactions.user_id')
+           $revenue_today = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+           ->where('transaction_details.status', '!=' ,'Salah')
+           ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('payment_id', '!=', null)
             ->whereDate('transactions.created_at', today())
-            ->sum('pay_amount');
-            $revenue_week = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+            $revenue_week = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('payment_id', '!=', null)
             ->whereBetween('transactions.created_at', [now()->startOfWeek(), now()->endOfWeek()])
-            ->sum('pay_amount');
-            $revenue_month = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+            $revenue_month = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
                 ->join('user_details', 'users.id', 'user_details.user_id')
                 ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
                 ->where('payment_id', '!=', null)
                 ->whereMonth('transactions.created_at', now()->month)
-                ->sum('pay_amount');
-            $revenue_outlet_depan_today = Transaction::join('users', 'users.id', 'transactions.user_id')
+                ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+            $revenue_outlet_depan_today = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
                 ->join('user_details', 'users.id', 'user_details.user_id')
                 ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
                 ->where('outlet_details.id', 1)
-                ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->sum('pay_amount');
-            $revenue_outlet_belakang_today = Transaction::join('users', 'users.id', 'transactions.user_id')
+                ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+                ->get()
+                ->pluck('total')
+                ->first();
+            $revenue_outlet_belakang_today = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
                 ->join('user_details', 'users.id', 'user_details.user_id')
                 ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
                 ->where('outlet_details.id', 2)
-                ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->sum('pay_amount');
-            $revenue_senin_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+                ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+                ->get()
+                ->pluck('total')
+                ->first();
+            $revenue_senin_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
                 ->join('user_details', 'users.id', 'user_details.user_id')
                 ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
                 ->where('payment_id', '!=', null)
                 ->whereDate('transactions.created_at', now()->startOfWeek()) // Hari Senin
-                ->sum('pay_amount');
-            $revenue_selasa_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+                ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+            $revenue_selasa_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
                 ->join('user_details', 'users.id', 'user_details.user_id')
                 ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
                 ->where('payment_id', '!=', null)
                 ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(1)) // Hari Selasa
-                ->sum('pay_amount');
-            $revenue_rabu_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+                ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+            $revenue_rabu_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
                 ->join('user_details', 'users.id', 'user_details.user_id')
                 ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
                 ->where('payment_id', '!=', null)
                 ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(2)) // Hari Rabu
-                ->sum('pay_amount');
-            $revenue_kamis_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+                ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+            $revenue_kamis_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
                 ->join('user_details', 'users.id', 'user_details.user_id')
                 ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
                 ->where('payment_id', '!=', null)
                 ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(3)) // Hari Kamis
-                ->sum('pay_amount');
-            $revenue_jumat_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+                ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+                ->get()
+                ->pluck('total')
+                ->first();
+            $revenue_jumat_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
                 ->join('user_details', 'users.id', 'user_details.user_id')
                 ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
                 ->where('payment_id', '!=', null)
                 ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(4)) // Hari Jumat
-                ->sum('pay_amount');
-            $revenue_sabtu_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+                ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+            $revenue_sabtu_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
                 ->join('user_details', 'users.id', 'user_details.user_id')
                 ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
                 ->where('payment_id', '!=', null)
                 ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(5)) // Hari Sabtu
-                ->sum('pay_amount');
-            $revenue_minggu_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+                ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+            $revenue_minggu_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
                 ->join('user_details', 'users.id', 'user_details.user_id')
                 ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
                 ->where('payment_id', '!=', null)
                 ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(6)) // Hari Minggu
-                ->sum('pay_amount');
+                ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
         return view('superadmin.dashboard', [
             'revenue_today' => number_format($revenue_today, 0, ",", ","),
             'revenue_week' => number_format($revenue_week, 0, ",", ","),
@@ -137,83 +197,143 @@ Route::prefix('/superadmin')->group(function() {
 
 Route::prefix('/admin')->group(function() {
     Route::get('/', function () {
-        $revenue_today = Transaction::join('users', 'users.id', 'transactions.user_id')
+        $revenue_today = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
         ->join('user_details', 'users.id', 'user_details.user_id')
         ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
         ->where('payment_id', '!=', null)
         ->whereDate('transactions.created_at', today())
-        ->sum('pay_amount');
-        $revenue_week = Transaction::join('users', 'users.id', 'transactions.user_id')
+        ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+        $revenue_week = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
         ->join('user_details', 'users.id', 'user_details.user_id')
         ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
         ->where('payment_id', '!=', null)
         ->whereBetween('transactions.created_at', [now()->startOfWeek(), now()->endOfWeek()])
-        ->sum('pay_amount');
-        $revenue_month = Transaction::join('users', 'users.id', 'transactions.user_id')
+        ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+        $revenue_month = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('payment_id', '!=', null)
             ->whereMonth('transactions.created_at', now()->month)
-            ->sum('pay_amount');
-        $revenue_outlet_depan_today = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+        $revenue_outlet_depan_today = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', 1)
-            ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->sum('pay_amount');
-        $revenue_outlet_belakang_today = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+        $revenue_outlet_belakang_today = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', 2)
-            ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->sum('pay_amount');
-        $revenue_senin_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+        $revenue_senin_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('payment_id', '!=', null)
             // ->where('transaction.user_id.location_id', 1)
             ->whereDate('transactions.created_at', now()->startOfWeek()) // Hari Senin
-            ->sum('pay_amount');
-        $revenue_selasa_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+        $revenue_selasa_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('payment_id', '!=', null)
             // ->where('transaction.user_id.location_id', 1)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(1)) // Hari Selasa
-            ->sum('pay_amount');
-        $revenue_rabu_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+        $revenue_rabu_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('payment_id', '!=', null)
             // ->where('transaction.user_id.location_id', 1)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(2)) // Hari Rabu
-            ->sum('pay_amount');
-        $revenue_kamis_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+        $revenue_kamis_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('payment_id', '!=', null)
             // ->where('transaction.user_id.location_id', 1)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(3)) // Hari Kamis
-            ->sum('pay_amount');
-        $revenue_jumat_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+        $revenue_jumat_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('payment_id', '!=', null)
             // ->where('transaction.user_id.location_id', 1)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(4)) // Hari Jumat
-            ->sum('pay_amount');
-        $revenue_sabtu_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+        $revenue_sabtu_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('payment_id', '!=', null)
             // ->where('transaction.user_id.location_id', 1)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(5)) // Hari Sabtu
-            ->sum('pay_amount');
-        $revenue_minggu_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+        $revenue_minggu_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('payment_id', '!=', null)
             // ->where('transaction.user_id.location_id', 1)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(6)) // Hari Minggu
-            ->sum('pay_amount');
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
     return view('admin.dashboard', [
         'revenue_today' => number_format($revenue_today, 0, ",", ","),
         'revenue_week' => number_format($revenue_week, 0, ",", ","),
@@ -255,102 +375,177 @@ Route::prefix('/kasir')->middleware('auth')->group(function() {
         $persentase_active = $transaksi_active == null || $transaksi_active->count() == 0 ? 0 : ($transaksi_active->count() / $transaksi_total) * 100;
         $produks = Produk::all();
         $produk = $produks->count();
-        $revenue_outlet_depan_today = Transaction::join('users', 'users.id', 'transactions.user_id')
+        $revenue_outlet_depan_today = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
         ->join('user_details', 'users.id', 'user_details.user_id')
         ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
         ->where('outlet_details.id', 1)
-        ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->sum('pay_amount');
-        $revenue_outlet_belakang_today = Transaction::join('users', 'users.id', 'transactions.user_id')
+        ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+        $revenue_outlet_belakang_today = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
         ->join('user_details', 'users.id', 'user_details.user_id')
         ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
         ->where('outlet_details.id', 2)
-        ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->sum('pay_amount');
-        $revenue_today = Transaction::join('users', 'users.id', 'transactions.user_id')
+        ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+        $revenue_today = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
         ->join('user_details', 'users.id', 'user_details.user_id')
         ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
         ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
-        ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->sum('pay_amount');
-        $revenue_week = Transaction::join('users', 'users.id', 'transactions.user_id')
+        ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+        $revenue_week = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
         ->join('user_details', 'users.id', 'user_details.user_id')
         ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
         ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
         ->where('payment_id', '!=', null)
         ->whereBetween('transactions.created_at', [now()->startOfWeek(), now()->endOfWeek()])
-        ->sum('pay_amount');
-        $revenue_month = Transaction::join('users', 'users.id', 'transactions.user_id')
+        ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+        $revenue_month = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->where('payment_id', '!=', null)
             ->whereMonth('transactions.created_at', now()->month)
-            ->sum('pay_amount');
-        $revenue_senin_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+        $revenue_senin_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->where('payment_id', '!=', null)
             ->whereDate('transactions.created_at', now()->startOfWeek()) // Hari Senin
-            ->sum('pay_amount');
-        $revenue_selasa_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+        $revenue_selasa_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->where('payment_id', '!=', null)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(1)) // Hari Selasa
-            ->sum('pay_amount');
-        $revenue_rabu_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+        $revenue_rabu_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->where('payment_id', '!=', null)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(2)) // Hari Rabu
-            ->sum('pay_amount');
-        $revenue_kamis_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+        $revenue_kamis_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->where('payment_id', '!=', null)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(3)) // Hari Kamis
-            ->sum('pay_amount');
-        $revenue_jumat_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+        $revenue_jumat_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->where('payment_id', '!=', null)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(4)) // Hari Jumat
-            ->sum('pay_amount');
-        $revenue_sabtu_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+        $revenue_sabtu_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->where('payment_id', '!=', null)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(5)) // Hari Sabtu
-            ->sum('pay_amount');
-        $revenue_minggu_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+        $revenue_minggu_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->where('payment_id', '!=', null)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(6)) // Hari Minggu
-            ->sum('pay_amount');
-            $revenue_total_today = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+            $revenue_total_today = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('payment_id', '!=', null)
             ->whereDate('transactions.created_at', today())
-            ->sum('pay_amount');
-            $revenue_total_week = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+            $revenue_total_week = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('payment_id', '!=', null)
             ->whereBetween('transactions.created_at', [now()->startOfWeek(), now()->endOfWeek()])
-            ->sum('pay_amount');
-            $revenue_total_month = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+            $revenue_total_month = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
                 ->join('user_details', 'users.id', 'user_details.user_id')
                 ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
                 ->where('payment_id', '!=', null)
                 ->whereMonth('transactions.created_at', now()->month)
-                ->sum('pay_amount');
+                ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
         return view('kasir.dashboard', [
             'revenue_senin_minggu_ini' => $revenue_senin_minggu_ini,
             'revenue_selasa_minggu_ini' => $revenue_selasa_minggu_ini,
@@ -410,102 +605,177 @@ Route::prefix('/waiters')->middleware('auth')->group(function() {
         $persentase_active = $transaksi_active == null || $transaksi_active->count() == 0 ? 0 : ($transaksi_active->count() / $transaksi_total) * 100;
         $produks = Produk::all();
         $produk = $produks->count();
-        $revenue_outlet_depan_today = Transaction::join('users', 'users.id', 'transactions.user_id')
+        $revenue_outlet_depan_today = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
         ->join('user_details', 'users.id', 'user_details.user_id')
         ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
         ->where('outlet_details.id', 1)
-        ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->sum('pay_amount');
-        $revenue_outlet_belakang_today = Transaction::join('users', 'users.id', 'transactions.user_id')
+        ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+        $revenue_outlet_belakang_today = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
         ->join('user_details', 'users.id', 'user_details.user_id')
         ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
         ->where('outlet_details.id', 2)
-        ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->sum('pay_amount');
-        $revenue_today = Transaction::join('users', 'users.id', 'transactions.user_id')
+        ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+        $revenue_today = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
         ->join('user_details', 'users.id', 'user_details.user_id')
         ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
         ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
-        ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->sum('pay_amount');
-        $revenue_week = Transaction::join('users', 'users.id', 'transactions.user_id')
+        ->whereDate('transactions.created_at', today())->where('payment_id', '!=', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+        $revenue_week = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
         ->join('user_details', 'users.id', 'user_details.user_id')
         ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
         ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
         ->where('payment_id', '!=', null)
         ->whereBetween('transactions.created_at', [now()->startOfWeek(), now()->endOfWeek()])
-        ->sum('pay_amount');
-        $revenue_month = Transaction::join('users', 'users.id', 'transactions.user_id')
+        ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+        ->get()
+        ->pluck('total')
+        ->first();
+        $revenue_month = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->where('payment_id', '!=', null)
             ->whereMonth('transactions.created_at', now()->month)
-            ->sum('pay_amount');
-        $revenue_senin_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+        $revenue_senin_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->where('payment_id', '!=', null)
             ->whereDate('transactions.created_at', now()->startOfWeek()) // Hari Senin
-            ->sum('pay_amount');
-        $revenue_selasa_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+        $revenue_selasa_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->where('payment_id', '!=', null)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(1)) // Hari Selasa
-            ->sum('pay_amount');
-        $revenue_rabu_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+        $revenue_rabu_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->where('payment_id', '!=', null)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(2)) // Hari Rabu
-            ->sum('pay_amount');
-        $revenue_kamis_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+        $revenue_kamis_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->where('payment_id', '!=', null)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(3)) // Hari Kamis
-            ->sum('pay_amount');
-        $revenue_jumat_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+        $revenue_jumat_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->where('payment_id', '!=', null)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(4)) // Hari Jumat
-            ->sum('pay_amount');
-        $revenue_sabtu_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+        $revenue_sabtu_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->where('payment_id', '!=', null)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(5)) // Hari Sabtu
-            ->sum('pay_amount');
-        $revenue_minggu_minggu_ini = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+        $revenue_minggu_minggu_ini = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+        ->where('transaction_details.status', '!=' ,'Salah')
+        ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->where('payment_id', '!=', null)
             ->whereDate('transactions.created_at', now()->startOfWeek()->addDays(6)) // Hari Minggu
-            ->sum('pay_amount');
-            $revenue_total_today = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+            $revenue_total_today = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('payment_id', '!=', null)
             ->whereDate('transactions.created_at', today())
-            ->sum('pay_amount');
-            $revenue_total_week = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+            $revenue_total_week = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('payment_id', '!=', null)
             ->whereBetween('transactions.created_at', [now()->startOfWeek(), now()->endOfWeek()])
-            ->sum('pay_amount');
-            $revenue_total_month = Transaction::join('users', 'users.id', 'transactions.user_id')
+            ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+            $revenue_total_month = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
                 ->join('user_details', 'users.id', 'user_details.user_id')
                 ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
                 ->where('payment_id', '!=', null)
                 ->whereMonth('transactions.created_at', now()->month)
-                ->sum('pay_amount');
+                ->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
         return view('waiters.dashboard', [
             'revenue_senin_minggu_ini' => $revenue_senin_minggu_ini,
             'revenue_selasa_minggu_ini' => $revenue_selasa_minggu_ini,

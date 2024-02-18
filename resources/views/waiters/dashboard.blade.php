@@ -154,6 +154,53 @@
                     </div>
                 </div>
             </div>
+            <div class="card-group">
+                <div class="card border-right">
+                    <div class="card-body">
+                        <div class="d-flex d-lg-flex d-md-block align-items-center">
+                            <div>
+                                <div class="d-inline-flex align-items-center">
+                                    <h2 class="text-dark mb-1 font-weight-medium"><sup class="set-doller">Rp.</sup>{{ $revenue_total_today }}</h2>
+                                </div>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Pendapatan Gabungan Hari ini</h6>
+                            </div>
+                            <div class="ml-auto mt-md-3 mt-lg-0">
+                                <span class="opacity-7 text-muted"><i data-feather="dollar-sign"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-right ml-3">
+                    <div class="card-body">
+                        <div class="d-flex d-lg-flex d-md-block align-items-center">
+                            <div>
+                                <h2 class="text-dark mb-1 w-100 text-truncate font-weight-medium"><sup
+                                        class="set-doller">Rp.</sup>{{ $revenue_total_week }}</h2>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Pendapatan Gabungan Minggu ini
+                                </h6>
+                            </div>
+                            <div class="ml-auto mt-md-3 mt-lg-0">
+                                <span class="opacity-7 text-muted"><i data-feather="dollar-sign"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-right ml-3">
+                    <div class="card-body">
+                        <div class="d-flex d-lg-flex d-md-block align-items-center">
+                            <div>
+                                <div class="d-inline-flex align-items-center">
+                                    <h2 class="text-dark mb-1 font-weight-medium">{{ $revenue_total_month }}</h2>
+                                </div>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Pendapatan Gabungan Bulan ini</h6>
+                            </div>
+                            <div class="ml-auto mt-md-3 mt-lg-0">
+                                <span class="opacity-7 text-muted"><i data-feather="dollar-sign"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <div class="card">
