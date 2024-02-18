@@ -86,23 +86,18 @@
             <div class="col-lg-6 col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Total Sales</h4>
-                        <div id="campaign-v2" class="mt-2" style="height:283px; width:100%;"></div>
+                        <h4 class="card-title">Pendapatan Outlet Hari ini</h4>
+                        <div id="pendapatan_outlet" class="mt-2" style="height:283px; width:100%;"></div>
                         <ul class="list-style-none mb-0">
                             <li>
                                 <i class="fas fa-circle text-primary font-10 mr-2"></i>
-                                <span class="text-muted">Direct Sales</span>
-                                <span class="text-dark float-right font-weight-medium">$2346</span>
+                                <span class="text-muted">Outlet Depan</span>
+                                <span class="text-dark float-right font-weight-medium">Rp.{{number_format($revenue_outlet_depan_today, 0, ",", ","), }}</span>
                             </li>
                             <li class="mt-3">
                                 <i class="fas fa-circle text-danger font-10 mr-2"></i>
-                                <span class="text-muted">Referral Sales</span>
-                                <span class="text-dark float-right font-weight-medium">$2108</span>
-                            </li>
-                            <li class="mt-3">
-                                <i class="fas fa-circle text-cyan font-10 mr-2"></i>
-                                <span class="text-muted">Affiliate Sales</span>
-                                <span class="text-dark float-right font-weight-medium">$1204</span>
+                                <span class="text-muted">Outlet Belakang</span>
+                                <span class="text-dark float-right font-weight-medium">Rp.{{ number_format($revenue_outlet_belakang_today, 0, ",", ","), }}</span>
                             </li>
                         </ul>
                     </div>
@@ -111,27 +106,10 @@
             <div class="col-lg-6 col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Net Income</h4>
+                        <h4 class="card-title">Pendapatan Minggu ini</h4>
                         <div class="net-income mt-4 position-relative" style="height:294px;"></div>
                         <ul class="list-inline text-center mt-5 mb-2">
-                            <li class="list-inline-item text-muted font-italic">Sales for this month</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-start">
-                            <h4 class="card-title mb-0">Earning Statistics</h4>
-                        </div>
-                        <div class="pl-4 mb-5">
-                            <div class="stats ct-charts position-relative" style="height: 315px;"></div>
-                        </div>
-                        <ul class="list-inline text-center mt-4 mb-0">
-                            <li class="list-inline-item text-muted font-italic">Earnings for this month</li>
+                            <li class="list-inline-item text-muted font-italic">Sales for this week</li>
                         </ul>
                     </div>
                 </div>
@@ -153,4 +131,154 @@
     <!-- ============================================================== -->
 </div>
 
+
+<script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/libs/popper.js/dist/umd/popper.min.js') }}"></script>
+<script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<!-- apps -->
+<!-- apps -->
+<script src="{{ asset('dist/js/app-style-switcher.js') }}"></script>
+<script src="{{ asset('dist/js/feather.min.js') }}"></script>
+<script src="{{ asset('assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js') }}"></script>
+<script src="{{ asset('dist/js/sidebarmenu.js') }}"></script>
+<!--Custom JavaScript -->
+<script src="{{ asset('dist/js/custom.min.js') }}"></script>
+<!--This page JavaScript -->
+<script src="{{ asset('assets/extra-libs/c3/d3.min.js') }}"></script>
+<script src="{{ asset('assets/extra-libs/c3/c3.min.js') }}"></script>
+<script src="{{ asset('assets/libs/chartist/dist/chartist.min.js') }}"></script>
+<script src="{{ asset('assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js') }}"></script>
+<script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js') }}"></script>
+<script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js') }}"></script>
+<script src="{{ asset('dist/js/pages/dashboards/dashboard1.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+<script>
+    $(function() {
+        c3.generate({
+            bindto: "#campaign-v2",
+            data: {
+                columns: [
+                    ["Outlet Depan", {{ $revenue_outlet_depan_today }}],
+                    ["Outlet Belakang", {{  $revenue_outlet_belakang_today }}],
+                ],
+                type: "donut",
+                tooltip: {
+                    show: !0
+                }
+            },
+            donut: {
+                label: {
+                    show: !1
+                },
+                title: "Pendapatan",
+                width: 18
+            },
+            legend: {
+                hide: !0
+            },
+            color: {
+                pattern: [ "#ff4f70", "#01caf1"]
+            }
+        });
+        d3.select("#campaign-v2 .c3-chart-arcs-title").style("font-family", "Rubik");
+        var e = {
+            axisX: {
+                showGrid: !1
+            },
+            seriesBarDistance: 1,
+            chartPadding: {
+                top: 15,
+                right: 15,
+                bottom: 5,
+                left: 0
+            },
+            plugins: [Chartist.plugins.tooltip()],
+            width: "100%"
+        };
+        new Chartist.Bar(".net-income", {
+            labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
+            series: [
+                [{{ $revenue_senin_minggu_ini }}, {{ $revenue_selasa_minggu_ini }}, {{ $revenue_rabu_minggu_ini }}, {{ $revenue_kamis_minggu_ini }}, {{ $revenue_jumat_minggu_ini }}, {{ $revenue_sabtu_minggu_ini }}, {{ $revenue_minggu_minggu_ini }}]
+            ]
+        }, e, [
+            ["screen and (max-width: 640px)", {
+                seriesBarDistance: 5,
+                axisX: {
+                    labelInterpolationFnc: function(e) {
+                        return e[0]
+                    }
+                }
+            }]
+        ]), jQuery("#visitbylocate").vectorMap({
+            map: "world_mill_en",
+            backgroundColor: "transparent",
+            borderColor: "#000",
+            borderOpacity: 0,
+            borderWidth: 0,
+            zoomOnScroll: !1,
+            color: "#d5dce5",
+            regionStyle: {
+                initial: {
+                    fill: "#d5dce5",
+                    "stroke-width": 1,
+                    stroke: "rgba(255, 255, 255, 0.5)"
+                }
+            },
+            enableZoom: !0,
+            hoverColor: "#bdc9d7",
+            hoverOpacity: null,
+            normalizeFunction: "linear",
+            scaleColors: ["#d5dce5", "#d5dce5"],
+            selectedColor: "#bdc9d7",
+            selectedRegions: [],
+            showTooltip: !0,
+            onRegionClick: function(e, t, o) {
+                var a = 'You clicked "' + o + '" which has the code: ' + t.toUpperCase();
+                alert(a)
+            }
+        });
+        var t = new Chartist.Line(".stats", {
+            labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
+            series: [
+                [11, 10, 15, 21, 14, 23, 12]
+            ]
+        }, {
+            low: 0,
+            high: 28,
+            showArea: !0,
+            fullWidth: !0,
+            plugins: [Chartist.plugins.tooltip()],
+            axisY: {
+                onlyInteger: !0,
+                scaleMinSpace: 40,
+                offset: 20,
+                labelInterpolationFnc: function(e) {
+                    return e / 1 + "k"
+                }
+            }
+        });
+        t.on("draw", function(e) {
+            "area" === e.type && e.element.attr({
+                x1: e.x1 + .001
+            })
+        }), t.on("created", function(e) {
+            e.svg.elem("defs").elem("linearGradient", {
+                id: "gradient",
+                x1: 0,
+                y1: 1,
+                x2: 0,
+                y2: 0
+            }).elem("stop", {
+                offset: 0,
+                "stop-color": "rgba(255, 255, 255, 1)"
+            }).parent().elem("stop", {
+                offset: 1,
+                "stop-color": "rgba(80, 153, 255, 1)"
+            })
+        }), $(window).on("resize", function() {
+            t.update()
+        })
+    });
+</script> 
 @endsection
