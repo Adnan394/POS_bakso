@@ -52,6 +52,7 @@
                                             <th>Nomor Meja</th>
                                             <th>Pilihan</th>
                                             <th>Waktu Transaksi</th>
+                                            <th>Waktu Jadi</th>
                                         </tr>
                                     </thead>
                                     <tbody id="content-table">
@@ -78,6 +79,17 @@
                                             <td>{{ $item->table->number }}</td>
                                             <td>{{ $item->order_type }}</td>
                                             <td>{{ $item->created_at }}</td>
+                                            <td>
+                                                @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->where('order_status', 'Jadi')->get() as $transaction_detail)
+                                                <div class="d-flex justify-content-between mb-3">
+                                                    @if (\App\Models\Produk::where('id', $transaction_detail->product_id)->where('location_id', '!=', null)->first())
+                                                        <span>{{ $transaction_detail->updated_at }}</span>
+                                                    @endif
+                                                </div>
+                                                <p class="text-muted">.</p>
+                                                <hr style="border: 1px solid grey">
+                                                @endforeach
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>

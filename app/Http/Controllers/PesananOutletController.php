@@ -29,6 +29,8 @@ class PesananOutletController extends Controller
                 ->orderByDesc('transaction_details.created_at')
                 ->limit(1);
             })
+            ->join('produks', 'transaction_details.product_id', 'produks.id')
+            ->where('produks.location_id', '!=', null)
             ->join('users', 'transactions.user_id', 'users.id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')

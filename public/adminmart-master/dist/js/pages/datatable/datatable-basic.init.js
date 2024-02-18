@@ -11,6 +11,7 @@
 $('#zero_config').DataTable({
     "pageLength": 50,
     "responsive": true,
+    "buttons": ["excel", "print", "pdf"],
 });
 
 /****************************************

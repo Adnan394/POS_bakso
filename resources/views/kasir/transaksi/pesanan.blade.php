@@ -109,7 +109,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header modal-colored-header bg-primary">
-                        <h4 class="modal-title" id="modal-tambahLabel">Form Tambah Produl
+                        <h4 class="modal-title" id="modal-tambahLabel">Form Tambah Produk
                         </h4>
                         <button type="button" class="close" transaction-dismiss="modal" aria-hidden="true">×</button>
                     </div>

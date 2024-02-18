@@ -206,17 +206,17 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Pendapatan Outlet Hari ini</h4>
-                            <div id="campaign-v2" class="mt-2" style="height:283px; width:100%;"></div>
+                            <div id="pendapatan_outlet" class="mt-2" style="height:283px; width:100%;"></div>
                             <ul class="list-style-none mb-0">
                                 <li>
                                     <i class="fas fa-circle text-primary font-10 mr-2"></i>
                                     <span class="text-muted">Outlet Depan</span>
-                                    <span class="text-dark float-right font-weight-medium">Rp.{{ $revenue_outlet_depan_today }}</span>
+                                    <span class="text-dark float-right font-weight-medium">Rp.{{number_format($revenue_outlet_depan_today, 0, ",", ","), }}</span>
                                 </li>
                                 <li class="mt-3">
                                     <i class="fas fa-circle text-danger font-10 mr-2"></i>
                                     <span class="text-muted">Outlet Belakang</span>
-                                    <span class="text-dark float-right font-weight-medium">Rp.{{ $revenue_outlet_belakang_today }}</span>
+                                    <span class="text-dark float-right font-weight-medium">Rp.{{ number_format($revenue_outlet_belakang_today, 0, ",", ","), }}</span>
                                 </li>
                             </ul>
                         </div>
@@ -226,7 +226,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Pendapatan Minggu ini</h4>
-                            <div class="net-income mt-4 position-relative" style="height:294px;"></div>
+                            <div class="net-income_week mt-4 position-relative" style="height:294px;"></div>
                             <ul class="list-inline text-center mt-5 mb-2">
                                 <li class="list-inline-item text-muted font-italic">Sales for this week</li>
                             </ul>
@@ -260,8 +260,9 @@
 
     <script>
         $(function() {
+    console.log({{ $revenue_outlet_belakang_today }})
             c3.generate({
-                bindto: "#campaign-v2",
+                bindto: "#pendapatan_outlet",
                 data: {
                     columns: [
                         ["Outlet Depan", {{ $revenue_outlet_depan_today }}],
@@ -301,7 +302,7 @@
                 plugins: [Chartist.plugins.tooltip()],
                 width: "100%"
             };
-            new Chartist.Bar(".net-income", {
+            new Chartist.Bar(".net-income_week", {
                 labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
                 series: [
                     [{{ $revenue_senin_minggu_ini }}, {{ $revenue_selasa_minggu_ini }}, {{ $revenue_rabu_minggu_ini }}, {{ $revenue_kamis_minggu_ini }}, {{ $revenue_jumat_minggu_ini }}, {{ $revenue_sabtu_minggu_ini }}, {{ $revenue_minggu_minggu_ini }}]

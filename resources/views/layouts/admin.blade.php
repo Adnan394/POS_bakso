@@ -100,15 +100,15 @@
                     <ul class="navbar-nav float-right">
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle show" href="javascript:void(0)" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="true">
                                 <img src="{{ asset('assets/images/users/profile-pic.jpg') }}" alt="user"
                                     class="rounded-circle" width="40">
                                 <span class="ml-2 d-none d-lg-inline-block"><span>Hello,</span> <span
                                         class="text-dark">{{ Auth::user()->name }}</span> <i
                                         data-feather="chevron-down" class="svg-icon"></i></span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY show">
                                 <a class="dropdown-item" href="{{ route('logout') }}"><i data-feather="power"
                                         class="svg-icon mr-2 ml-1"></i>
                                     Keluar</a>
@@ -432,7 +432,6 @@
     </div>
 
 
-    <script></script>
     <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/libs/popper.js/dist/umd/popper.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
