@@ -46,6 +46,7 @@
                             <th scope="col">Nama</th>
                             <th scope="col">Jumlah</th>
                             <th scope="col">Total Bayar</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody id="report">
@@ -55,6 +56,16 @@
                                 <td>{{ $transaksi->name }}</td>
                                 <td>{{ $transaksi->qty }}</td>
                                 <td>{{ number_format($transaksi->amount, 0, ",", ",") }}</td>
+                                <td>
+                                    <form action="{{ route('pengeluaran_harian.destroy', $transaksi->id) }}"
+                                        method="POST">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" style="width: 50px" class="btn btn-danger"><i
+                                                class="bi bi-trash3">
+                                                <span class="fas fa-trash-alt"></span></i></button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
