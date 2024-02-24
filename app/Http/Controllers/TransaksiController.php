@@ -306,6 +306,13 @@ class TransaksiController extends Controller
             ->get();
         return view('kasir.transaksi.nota', ['product' => $data,  'data' => Transaction::where('id', $id)->first(), 'location' => Location::where('id', Auth::user()->location->id)->first()]);
     }
+    public function nota_dapur($id) {
+        $data = Transaction::where('transactions.id', $id)
+            ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
+            ->select(['transactions.*', 'transaction_details.*'])
+            ->get();
+        return view('kasir.transaksi.nota-dapur', ['product' => $data,  'data' => Transaction::where('id', $id)->first(), 'location' => Location::where('id', Auth::user()->location->id)->first()]);
+    }
 
     public function print_rekap_produk(Request $request) {
         // return $date;

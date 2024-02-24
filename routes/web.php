@@ -815,7 +815,7 @@ Route::prefix('/outlet')->middleware('auth')->group(function() {
     Route::get('/pesanan-selesai', [PesananOutletController::class, 'selesai'])->name('pesanan-selesai');
 });
 
-
+Route::get('nota_dapur/{id}', [TransaksiController::class, 'nota_dapur'])->name('nota_dapur');
 Route::get('testnotif', [PesananOutletController::class, 'testnotif']);
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');

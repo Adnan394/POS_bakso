@@ -94,7 +94,7 @@ class PesananOutletController extends Controller
         //     Transaction_detail::where('transaction_id', $id)->where('product_id', $produk)->update(['status' => 'Jadi']);
         // }
 
-        return redirect()->back();
+        return redirect()->route('nota_dapur', $id);
     }
 
     public function selesai() {
