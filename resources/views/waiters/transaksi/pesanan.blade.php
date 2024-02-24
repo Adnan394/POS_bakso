@@ -78,7 +78,7 @@
                                                     <hr style="border: 1px solid grey">
                                                     @endforeach
                                                 </td>
-                                                <td>{{ $item->table->number }}</td>
+                                                <td>{{ ($item->table->number) ?? "" }}</td>
                                                 <td>{{ $item->order_type }}</td>
                                                 <td>{{ $item->created_at }}</td>
                                             </tr>

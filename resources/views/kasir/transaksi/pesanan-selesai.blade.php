@@ -87,7 +87,7 @@
                                                 <hr style="border: 1px solid grey">
                                                 @endforeach
                                             </td>
-                                            <td>{{ $item->table->number }}</td>
+                                            <td>{{ ($item->table->number) ?? "" }}</td>
                                             <td>{{ $item->created_at }}</td>
                                             <td>
                                                 @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->where('order_status', 'Jadi')->get() as $transaction_detail)
