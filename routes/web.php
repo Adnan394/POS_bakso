@@ -806,7 +806,7 @@ Route::prefix('/waiters')->middleware('auth')->group(function() {
     Route::get('stok_harian', [StokHarianController::class, 'index'])->name('stok_harian');
 });
 
-Route::prefix('/outlet')->middleware('auth', 'outlet_access')->group(function() {
+Route::prefix('/outlet')->middleware('auth')->group(function() {
     Route::get('/', function () {
         return view('outlet.dashboard');
 

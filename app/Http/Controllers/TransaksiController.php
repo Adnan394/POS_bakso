@@ -425,7 +425,6 @@ class TransaksiController extends Controller
 
     public function pesanan_diproses()
     {
-        // $transaksi = Transaction::where('payment_id', null)->get();
         $user = User::join('user_details', 'users.id', '=', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', '=', 'outlet_details.id')
             ->where('users.id', Auth::user()->id)
@@ -437,20 +436,22 @@ class TransaksiController extends Controller
                 ->orderByDesc('transaction_details.created_at')
                 ->limit(1);
             })
+            ->join('produks', 'transaction_details.product_id', 'produks.id')
+            ->where('produks.location_id', '!=', null)
             ->join('users', 'transactions.user_id', 'users.id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
-            ->where('transactions.created_at', now()->format('Y-m-d'))
+            // ->where('transactions.created_at', now()->format('Y-m-d'))
             ->where('outlet_details.id', $user->id)
             ->orderBy('transaction_details.updated_at')
             ->select(['transactions.*'])
             ->distinct()
             ->get();
+            // return $transaksi;
         return view('kasir.transaksi.pesanan', ['transaksi' => $transaksi]);
     }
 
     public function pesanan_selesai() {
-        // $transaksi = Transaction::where('payment_id', null)->get();
         $user = User::join('user_details', 'users.id', '=', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', '=', 'outlet_details.id')
             ->where('users.id', Auth::user()->id)
@@ -465,7 +466,7 @@ class TransaksiController extends Controller
             ->join('users', 'transactions.user_id', 'users.id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
-            ->where('transactions.created_at', now()->format('Y-m-d'))
+            // ->where('transactions.created_at', now()->format('Y-m-d'))
             ->where('outlet_details.id', $user->id)
             ->orderByDesc('transaction_details.updated_at')
             ->select(['transactions.*'])

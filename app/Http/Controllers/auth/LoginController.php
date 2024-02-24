@@ -33,7 +33,7 @@ class LoginController extends Controller
                 return redirect('/kasir');
             }
             if (Auth::user()->role_id == '4') {
-                return redirect('/outlet');
+                return redirect()->back()->with('login', 'Fitur Outlet hanya tersedia di website versi 1.0++');
             }
             if (Auth::user()->role_id == '5') {
                 return redirect('/waiters');
