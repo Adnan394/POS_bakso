@@ -257,6 +257,7 @@ class TransaksiController extends Controller
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)->where('transactions.payment_id', '!=', null)
+            ->orderBy('created_at', 'desc')
             ->whereDate('transactions.created_at', $time)
             ->select('transactions.*');
         
@@ -439,6 +440,7 @@ class TransaksiController extends Controller
             ->join('users', 'transactions.user_id', 'users.id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('transactions.created_at', now()->format('Y-m-d'))
             ->where('outlet_details.id', $user->id)
             ->orderBy('transaction_details.updated_at')
             ->select(['transactions.*'])
@@ -463,6 +465,7 @@ class TransaksiController extends Controller
             ->join('users', 'transactions.user_id', 'users.id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('transactions.created_at', now()->format('Y-m-d'))
             ->where('outlet_details.id', $user->id)
             ->orderByDesc('transaction_details.updated_at')
             ->select(['transactions.*'])
@@ -553,7 +556,8 @@ class TransaksiController extends Controller
                 'earningCash' => number_format($earningCash, 0, ",", ","),
                 'earningQris' => number_format($earningQris, 0, ",", ","),
                 'earningBank' => number_format($earningBank, 0, ",", ","),
-                'minus' => number_format($minus, 0, ",", ",")
+                'minus' => number_format($minus, 0, ",", ","),
+                'salah' => number_format($salah, 0, ",", ",")
             ]);
         }else {
             $time = now()->format('Y-m-d');

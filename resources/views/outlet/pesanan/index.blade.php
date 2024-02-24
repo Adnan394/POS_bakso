@@ -45,7 +45,7 @@
                             @if ($index == 0)
                             <h4 class="card-title">Pesanan Dikerjakan</h4>
                             <h4>Nama Pelanggan : {{ $item->name_customer }}</h4>
-                            <h4>No. Meja : {{ $item->table->number }}</h4>
+                            <h4>No. Meja : {{ ($item->table->number) ?? "" }}</h4>
                             <div class="table-responsive">
                                 <table id="" class="table table-striped table-bordered no-wrap">
                                     <thead>
@@ -53,6 +53,7 @@
                                             <th>No</th>
                                             <th>Pesanan</th>
                                             <th>Pilihan</th>
+                                            <th>Tanggal transaksi</th>
                                             <th>Selesaikan</th>
                                         </tr>
                                     </thead>
@@ -86,6 +87,7 @@
                                                     <hr style="border: 1px solid grey">
                                                     @endforeach
                                                 </td>
+                                                <td>{{ $item->created_at }}</td>
                                                 <td>
                                                     <a href="" data-toggle="modal"
                                                         data-target="#modal-edit{{ $item->id }}" style="width: 50px"
@@ -137,6 +139,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Pelanggan</th>
+                                            <th>Tanggal transaksi</th>
                                             <th>No Meja</th>
                                         </tr>
                                     </thead>
@@ -146,7 +149,8 @@
                                                 <tr>
                                                     <td>{{ $index }}</td>
                                                     <td>{{ $item->name_customer }}</td>
-                                                    <td>{{ $item->table->number }}</td>
+                                                    <td>{{ $item->created_at }}</td>
+                                                    <td>{{ ($item->table->number) ?? "" }}</td>
                                                 </tr>
                                             @else
                                             @endif

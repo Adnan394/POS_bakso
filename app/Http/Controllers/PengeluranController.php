@@ -112,6 +112,7 @@ class PengeluranController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Pengeluaran::where('id', $id)->delete();
+        return redirect()->back();
     }
 }

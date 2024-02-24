@@ -87,7 +87,7 @@
                         <label for="name">Nomor Meja</label>
                         <select name="table_id" id="table_id" class="js-select2 form-control border-primary"
                             style="width: 100%;   height: calc(1.5em + 0.75rem + 2px);" required>
-                            <option value="{{ $data->table_id }}" selected>{{ $data->table->number }}</option>
+                            <option value="{{ $data->table_id }}" selected>{{ ($data->table->number) ?? "" }}</option>
                             @foreach ($tables as $table)
                                 <option value="{{ $table->id }}">
                                     {{ $table->number }}

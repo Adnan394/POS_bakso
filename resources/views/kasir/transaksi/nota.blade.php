@@ -72,7 +72,7 @@
             Nama : {{ $product[0]->name_customer }}
         </p>
         <p>
-            Meja : {{ $product[0]->table->number }}
+            Meja : {{ ($product[0]->table->number) ?? "" }}
         </p>
     </div>
     <p class="text-center">===================================</p>
@@ -83,7 +83,7 @@
                 <td colspan="3">{{ \App\Models\Produk::where('id', $item->product_id)->first()->name }}</td>
             </tr>
             {{-- <tr>
-                <td colspan="3">{{ $item->table->number }}</td>
+                <td colspan="3">{{ ($item->table->number) ?? "" }}</td>
             </tr> --}}
             <tr>
                 <td>{{ $item->qty }} x {{ number_format($item->price, '0', ',', '.') }}</td>

@@ -32,7 +32,7 @@
                                 </div>
 
                                 <small>{{ $item->created_at }}</small>
-                                <p class="card-text mt-2">Meja {{ $item->table->number }}</p>
+                                <p class="card-text mt-2">Meja {{ ($item->table->number) ?? "" }}</p>
                                 <p class="card-text">Untuk {{ $item->transaction_detail->sum('qty') }} items</p>
                                 <p class="card-text">Total Harga
                                     <strong>Rp.{{ number_format($item->price_amount, 0, ',', '.') }}</strong>
