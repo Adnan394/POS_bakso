@@ -477,9 +477,8 @@ class TransaksiController extends Controller
     public function rekap_harian(Request $request) {
         // ada req date 
         if($request->date) {
-            $time = $request->date;
+            $$time = $request->date;
             $carbonDate = Carbon::parse($time);
-            $humanTime = $carbonDate->format('d F Y');
             $transaction = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
             ->where('transaction_details.status', '!=', 'Salah')
             ->join('users', 'users.id', 'transactions.user_id')
@@ -545,6 +544,16 @@ class TransaksiController extends Controller
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
             ->whereDate('transactions.created_at', $time)->where('payment_id', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->get()
+            ->pluck('total')
+            ->first();
+            $salah = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status','Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->where('outlet_details.id', Auth::user()->user_detail->outlet_detail_id)
+            ->whereDate('transactions.created_at', $time)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
             ->get()
             ->pluck('total')
             ->first();
