@@ -41,30 +41,28 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-
+                            @foreach ($transaksi as $index => $item)
+                            @if ($index == 0)
                             <h4 class="card-title">Pesanan Dikerjakan</h4>
+                            <h4>Nama Pelanggan : {{ $item->name_customer }}</h4>
+                            <h4>No. Meja : {{ ($item->table->number) ?? "" }}</h4>
                             <div class="table-responsive">
-
-                                <table id="zero_config" class="table table-striped table-bordered no-wrap">
+                                <table id="" class="table table-striped table-bordered no-wrap">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Atas Nama</th>
                                             <th>Pesanan</th>
                                             <th>Pilihan</th>
-                                            <th>Nomor Meja</th>
-                                            <th>Waktu Transaksi</th>
+                                            <th>Tanggal transaksi</th>
+                                            <th>Selesaikan</th>
                                         </tr>
                                     </thead>
                                     <tbody id="content-table">
-                                        @foreach ($transaksi as $index => $item)
-                                        @if ($index >= 0)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $item->name_customer }}</td>
                                                 <td>
                                                     @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->where('order_status', 'Diproses')->get() as $transaction_detail)
-                                                    <div class="d-flex justify-content-between mb-3">
+                                                    <div class="d-flex justify-content-between mb-3 font-20">
                                                         @if (\App\Models\Produk::where('id', $transaction_detail->product_id)->where('location_id', '!=', null)->first())
                                                             <span>
                                                                 {{ \App\Models\Produk::where('id', $transaction_detail->product_id)->where('location_id', '!=', null)->first()->name }}
@@ -80,19 +78,82 @@
                                                 </td>
                                                 <td>
                                                     @foreach (\App\Models\Transaction_detail::where('transaction_id', $item->id)->where('order_status', 'Diproses')->get() as $transaction_detail)
-                                                    <div class="d-flex justify-content-between mb-3">
+                                                    <div class="d-flex justify-content-between mb-3 font-20">
                                                         @if (\App\Models\Produk::where('id', $transaction_detail->product_id)->where('location_id', '!=', null)->first())
                                                             <span>{{ $transaction_detail->order_type }}</span>
                                                         @endif
                                                     </div>
-                                                    <p class="text-muted">.</p>
+                                                    <p class="text-transparant">.</p>
                                                     <hr style="border: 1px solid grey">
                                                     @endforeach
                                                 </td>
-                                                <td>{{ ($item->table->number) ?? "" }}</td>
                                                 <td>{{ $item->created_at }}</td>
+                                                <td>
+                                                    <a href="" data-toggle="modal"
+                                                        data-target="#modal-edit{{ $item->id }}" style="width: 50px"
+                                                        class="btn btn-success"><i class="bi bi-pencil"><span
+                                                                class="fas fa-check"></span></i></a>
+                                                </td>
                                             </tr>
+                                            <div id="modal-edit{{ $item->id }}" class="modal fade" tabindex="-1"
+                                                role="dialog" aria-labelledby="modal-editLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header modal-colored-header bg-primary">
+                                                            <h4 class="modal-title" id="modal-editLabel">Selesaikan Pesanan
+                                                            </h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <h4 class="px-5 text-center mb-5"><strong>Apakah Akan Menyelesaikan Pesanan?</strong></h4>
+                                                            <h1 class="px-5 text-center text-primary "><span class="fas fa-check-circle"></span></strong></h4>
+                                                            
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="modal">Batal</button>
+                                                        <form action="{{ route('pesanan.update', $item->id) }}" method="POST">
+                                                            @method('PUT')
+                                                            @csrf
+                                                            <button class="btn btn-primary" type="submit">Lanjutkan</button>
+                                                        </form>
+                                                        </div>
+
+                                                    </div><!-- /.modal-content -->
+                                                </div><!-- /.modal-dialog -->
+                                            </div><!-- /.modal -->
                                         @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Antrian Pesanan</h4>
+                            <div class="table-responsive">
+                                <table id="zero_config" class="table table-striped table-bordered no-wrap">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama Pelanggan</th>
+                                            <th>Tanggal transaksi</th>
+                                            <th>No Meja</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="content-table">
+                                        @foreach ($transaksi as $index => $item)
+                                            @if ($index > 0)
+                                                <tr>
+                                                    <td>{{ $index }}</td>
+                                                    <td>{{ $item->name_customer }}</td>
+                                                    <td>{{ $item->created_at }}</td>
+                                                    <td>{{ ($item->table->number) ?? "" }}</td>
+                                                </tr>
+                                            @else
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -109,7 +170,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header modal-colored-header bg-primary">
-                        <h4 class="modal-title" id="modal-tambahLabel">Form Tambah Produk
+                        <h4 class="modal-title" id="modal-tambahLabel">Form Tambah Produl
                         </h4>
                         <button type="button" class="close" transaction-dismiss="modal" aria-hidden="true">×</button>
                     </div>
