@@ -15,6 +15,57 @@
             </div>
         </div>
         <div class="row">
+            <h3 class="text-dark mb-1 font-weight-medium">Jumlah Stok Awal</h3>
+            <div class="d-flex flex-wrap">
+                <div class="card border-right" style="width: 20rem">
+                    <div class="card-body">
+                        <div class="d-flex d-lg-flex d-md-block align-items-center justify-content-between">
+                            <div>
+                                <div class="d-inline-flex align-items-center">
+                                    <h2 class="text-dark mb-1 font-weight-medium" id="polos">{{ $stok_awal->bakso_polos }}</h2>
+                                </div>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Bakso Polos</h6>
+                            </div>
+                            <div class="ml-auto mt-md-3 mt-lg-0">
+                                <span class="opacity-7 text-muted"><i data-feather="dollar-sign"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-right" style="width: 20rem">
+                    <div class="card-body">
+                        <div class="d-flex d-lg-flex d-md-block align-items-center justify-content-between">
+                            <div>
+                                <div class="d-inline-flex align-items-center">
+                                    <h2 class="text-dark mb-1 font-weight-medium" id="urat">{{ $stok_awal->bakso_urat }}</h2>
+                                </div>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Bakso Urat</h6>
+                            </div>
+                            <div class="ml-auto mt-md-3 mt-lg-0">
+                                <span class="opacity-7 text-muted"><i data-feather="dollar-sign"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-right" style="width: 20rem">
+                    <div class="card-body">
+                        <div class="d-flex d-lg-flex d-md-block align-items-center justify-content-between">
+                            <div>
+                                <div class="d-inline-flex align-items-center">
+                                    <h2 class="text-dark mb-1 font-weight-medium" id="daging">{{ $stok_awal->bakso_daging }}</h2>
+                                </div>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Bakso Daging</h6>
+                            </div>
+                            <div class="ml-auto mt-md-3 mt-lg-0">
+                                <span class="opacity-7 text-muted"><i data-feather="dollar-sign"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h3 class="text-dark mb-1 font-weight-medium">Jumlah Penjualan</h3>
             <div class="d-flex flex-wrap">
                 <div class="card border-right" style="width: 20rem">
                     <div class="card-body">
@@ -52,6 +103,56 @@
                             <div>
                                 <div class="d-inline-flex align-items-center">
                                     <h2 class="text-dark mb-1 font-weight-medium" id="daging">{{ $jml_polos[0]->bakso_daging }}</h2>
+                                </div>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Bakso Daging</h6>
+                            </div>
+                            <div class="ml-auto mt-md-3 mt-lg-0">
+                                <span class="opacity-7 text-muted"><i data-feather="dollar-sign"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h3 class="text-dark mb-1 font-weight-medium">Sisa Stok</h3>
+            <div class="d-flex flex-wrap">
+                <div class="card border-right" style="width: 20rem">
+                    <div class="card-body">
+                        <div class="d-flex d-lg-flex d-md-block align-items-center justify-content-between">
+                            <div>
+                                <div class="d-inline-flex align-items-center">
+                                    <h2 class="text-dark mb-1 font-weight-medium" id="polos">{{ ($stok_awal->bakso_polos - $jml_polos[0]->bakso_polos) }}</h2>
+                                </div>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Bakso Polos</h6>
+                            </div>
+                            <div class="ml-auto mt-md-3 mt-lg-0">
+                                <span class="opacity-7 text-muted"><i data-feather="dollar-sign"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-right" style="width: 20rem">
+                    <div class="card-body">
+                        <div class="d-flex d-lg-flex d-md-block align-items-center justify-content-between">
+                            <div>
+                                <div class="d-inline-flex align-items-center">
+                                    <h2 class="text-dark mb-1 font-weight-medium" id="urat">{{ ($stok_awal->bakso_urat - $jml_polos[0]->bakso_urat) }}</h2>
+                                </div>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Bakso Urat</h6>
+                            </div>
+                            <div class="ml-auto mt-md-3 mt-lg-0">
+                                <span class="opacity-7 text-muted"><i data-feather="dollar-sign"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-right" style="width: 20rem">
+                    <div class="card-body">
+                        <div class="d-flex d-lg-flex d-md-block align-items-center justify-content-between">
+                            <div>
+                                <div class="d-inline-flex align-items-center">
+                                    <h2 class="text-dark mb-1 font-weight-medium" id="daging">{{ ($stok_awal->bakso_daging - $jml_polos[0]->bakso_daging) }}</h2>
                                 </div>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Bakso Daging</h6>
                             </div>

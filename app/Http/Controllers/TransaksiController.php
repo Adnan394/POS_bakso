@@ -12,6 +12,7 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use GuzzleHttp\Handler\Proxy;
 use App\Events\OutletNotification;
+use App\Models\Stok_harian;
 use App\Models\Transaction_detail;
 use Illuminate\Support\Facades\Auth;
 
@@ -906,7 +907,8 @@ class TransaksiController extends Controller
                 
                 return view('kasir.laporan.rekap_produk', [
                     'data' => $hasil,
-                    'jml_polos' => $jml_bakso
+                    'jml_polos' => $jml_bakso,
+                    'stok_awal' =>  Stok_harian::whereDate('created_at', $time)->first()
                 ]);
         }
     }
