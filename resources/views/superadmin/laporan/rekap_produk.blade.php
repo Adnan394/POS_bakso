@@ -22,7 +22,7 @@
                         <div class="d-flex d-lg-flex d-md-block align-items-center justify-content-between">
                             <div>
                                 <div class="d-inline-flex align-items-center">
-                                    <h2 class="text-dark mb-1 font-weight-medium" id="polos">{{ ($stok_awal->bakso_polos) ?? 0 }}</h2>
+                                    <h2 class="text-dark mb-1 font-weight-medium" id="stok_awal_polos">{{ ($stok_awal->bakso_polos) ?? 0 }}</h2>
                                 </div>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Bakso Polos</h6>
                             </div>
@@ -37,7 +37,7 @@
                         <div class="d-flex d-lg-flex d-md-block align-items-center justify-content-between">
                             <div>
                                 <div class="d-inline-flex align-items-center">
-                                    <h2 class="text-dark mb-1 font-weight-medium" id="urat">{{ ($stok_awal->bakso_urat) ?? 0 }}</h2>
+                                    <h2 class="text-dark mb-1 font-weight-medium" id="stok_awal_urat">{{ ($stok_awal->bakso_urat) ?? 0 }}</h2>
                                 </div>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Bakso Urat</h6>
                             </div>
@@ -52,7 +52,7 @@
                         <div class="d-flex d-lg-flex d-md-block align-items-center justify-content-between">
                             <div>
                                 <div class="d-inline-flex align-items-center">
-                                    <h2 class="text-dark mb-1 font-weight-medium" id="daging">{{ ($stok_awal->bakso_daging) ?? 0 }}</h2>
+                                    <h2 class="text-dark mb-1 font-weight-medium" id="stok_awal_daging">{{ ($stok_awal->bakso_daging) ?? 0 }}</h2>
                                 </div>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Bakso Daging</h6>
                             </div>
@@ -122,7 +122,7 @@
                         <div class="d-flex d-lg-flex d-md-block align-items-center justify-content-between">
                             <div>
                                 <div class="d-inline-flex align-items-center">
-                                    <h2 class="text-dark mb-1 font-weight-medium" id="polos">{{ (($stok_awal->bakso_polos) ?? 0 - $jml_polos[0]->bakso_polos) }}</h2>
+                                    <h2 class="text-dark mb-1 font-weight-medium" id="sisa_polos">{{ (($stok_awal->bakso_polos ?? 0) - $jml_polos[0]->bakso_polos) }}</h2>
                                 </div>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Bakso Polos</h6>
                             </div>
@@ -137,7 +137,7 @@
                         <div class="d-flex d-lg-flex d-md-block align-items-center justify-content-between">
                             <div>
                                 <div class="d-inline-flex align-items-center">
-                                    <h2 class="text-dark mb-1 font-weight-medium" id="urat">{{ (($stok_awal->bakso_urat) ?? 0 - $jml_polos[0]->bakso_urat) }}</h2>
+                                    <h2 class="text-dark mb-1 font-weight-medium" id="sisa_urat">{{ (($stok_awal->bakso_urat ?? 0)  - $jml_polos[0]->bakso_urat) }}</h2>
                                 </div>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Bakso Urat</h6>
                             </div>
@@ -152,7 +152,7 @@
                         <div class="d-flex d-lg-flex d-md-block align-items-center justify-content-between">
                             <div>
                                 <div class="d-inline-flex align-items-center">
-                                    <h2 class="text-dark mb-1 font-weight-medium" id="daging">{{ (($stok_awal->bakso_daging) ?? 0 - $jml_polos[0]->bakso_daging) }}</h2>
+                                    <h2 class="text-dark mb-1 font-weight-medium" id="sisa_daging">{{ (($stok_awal->bakso_daging ?? 0) - $jml_polos[0]->bakso_daging) }}</h2>
                                 </div>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Bakso Daging</h6>
                             </div>
@@ -199,12 +199,13 @@
         $("#date").on("change", function() {
             $.ajax({
             type: 'GET',
-            url: "{{ route('rekap_produk') }}",
+            url: "{{ route('rekap_produk_admin') }}",
             dataType: "JSON",
             data: {
                 date : $("#date").val(),
             },
             success: function(data) {
+                // console.log(data);
                 html = "";
                 $.each(data.data, function(i, item) {
                     html += `
@@ -216,9 +217,18 @@
                     `
                 }); 
                 $("#report").html(html);
+
                 $("#polos").html(data.jml_bakso[0].bakso_polos);   
                 $("#urat").html(data.jml_bakso[0].bakso_urat);   
                 $("#daging").html(data.jml_bakso[0].bakso_daging);  
+
+                $("#stok_awal_polos").html((data.stok_awal != null) ? data.stok_awal.bakso_polos : "");
+                $("#stok_awal_urat").html((data.stok_awal != null) ? data.stok_awal.bakso_urat : "");
+                $("#stok_awal_daging").html((data.stok_awal != null) ? data.stok_awal.bakso_daging : "");
+
+                $("#sisa_polos").html((((data.stok_awal != null) ? data.stok_awal.bakso_polos : 0) - data.jml_bakso[0].bakso_polos));
+                $("#sisa_urat").html((((data.stok_awal != null) ? data.stok_awal.bakso_urat : 0) - data.jml_bakso[0].bakso_urat));
+                $("#sisa_daging").html((((data.stok_awal != null) ? data.stok_awal.bakso_daging : 0) - data.jml_bakso[0].bakso_daging));
             }
         });
         });
