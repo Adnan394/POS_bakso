@@ -25,14 +25,14 @@ style="background:url(assets/images/big/auth-bg.jpg) no-repeat center center;">
                         <div class="form-group">
                             <label class="text-dark" for="email">Email</label>
                             <input class="form-control" id="email" type="email" name="email"
-                                placeholder="enter your username">
+                                placeholder="masukan email">
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label class="text-dark" for="password">Password</label>
                             <input class="form-control" id="password" name="password" type="password"
-                                placeholder="enter your password">
+                                placeholder="masukan password">
                         </div>
                     </div>
                     <div class="col-lg-12 text-center">
