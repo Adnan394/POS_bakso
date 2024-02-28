@@ -801,7 +801,7 @@ Route::prefix('/waiters')->middleware('auth')->group(function() {
     Route::get('/nota/{id}', [TransaksiController::class, 'nota'])->name('transaksi.nota');
     Route::post('/selesaikan_pesanan', [TransaksiController::class, 'selesaikan_pesanan'])->name('selesaikan_pesanan');
     Route::get('/pesanan_selesai', [TransaksiController::class, 'pesanan_selesai'])->name('pesanan_selesai');
-    Route::get('/pesanan_diproses', [TransaksiController::class, 'pesanan_diproses'])->name('pesanan_diproses');
+    Route::get('/pesanan_diproses', [TransaksiController::class, 'pesanan_diproses_waiters'])->name('pesanan_diproses');
     Route::get('/konfirmasi', [TransaksiController::class, 'konfirmasi'])->name('konfirmasi');
     Route::get('stok_harian', [StokHarianController::class, 'index'])->name('stok_harian');
 });
