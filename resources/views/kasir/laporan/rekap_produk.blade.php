@@ -14,8 +14,8 @@
                 <input type="date" name="" id="date" class="form-control">
             </div>
         </div>
+        <h3 class="text-dark mb-1 font-weight-medium">Jumlah Stok Awal</h3>
         <div class="row">
-            <h3 class="text-dark mb-1 font-weight-medium">Jumlah Stok Awal</h3>
             <div class="d-flex flex-wrap">
                 <div class="card border-right" style="width: 20rem">
                     <div class="card-body">
@@ -64,8 +64,8 @@
                 </div>
             </div>
         </div>
+        <h3 class="text-dark mb-1 font-weight-medium">Jumlah Penjualan</h3>
         <div class="row">
-            <h3 class="text-dark mb-1 font-weight-medium">Jumlah Penjualan</h3>
             <div class="d-flex flex-wrap">
                 <div class="card border-right" style="width: 20rem">
                     <div class="card-body">
@@ -114,8 +114,8 @@
                 </div>
             </div>
         </div>
+        <h3 class="text-dark mb-1 font-weight-medium">Sisa Stok</h3>
         <div class="row">
-            <h3 class="text-dark mb-1 font-weight-medium">Sisa Stok</h3>
             <div class="d-flex flex-wrap">
                 <div class="card border-right" style="width: 20rem">
                     <div class="card-body">
