@@ -110,7 +110,6 @@ class JurnalHarianController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request;
         $jurnal_harian = jurnal_harian::create([
             'user_id' => Auth::user()->id,
             'jml_cash_laporan' => $request->cash_laporan, 
@@ -123,7 +122,8 @@ class JurnalHarianController extends Controller
                 'jurnal_harian_id' => $jurnal_harian->id,
                 'bahan_setengah_jadi_id' => 1,
                 'lokasi' => $request->bp_lokasi[$i],
-                'qty' => $request->bp_qty[$i]
+                'qty' => $request->bp_qty[$i],
+                'minus' => $request->bp_minus
             ]);
         }
         // bakso urat 
@@ -132,7 +132,8 @@ class JurnalHarianController extends Controller
                 'jurnal_harian_id' => $jurnal_harian->id,
                 'bahan_setengah_jadi_id' => 2,
                 'lokasi' => $request->bu_lokasi[$i],
-                'qty' => $request->bu_qty[$i]
+                'qty' => $request->bu_qty[$i],
+                'minus' => $request->bu_minus
             ]);
         }
         // bakso daging 
@@ -141,7 +142,8 @@ class JurnalHarianController extends Controller
                 'jurnal_harian_id' => $jurnal_harian->id,
                 'bahan_setengah_jadi_id' => 3,
                 'lokasi' => $request->bd_lokasi[$i],
-                'qty' => $request->bd_qty[$i]
+                'qty' => $request->bd_qty[$i],
+                'minus' => $request->bd_minus
             ]);
         }
 

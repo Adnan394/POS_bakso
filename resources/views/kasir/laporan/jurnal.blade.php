@@ -45,9 +45,9 @@
                             <th scope="col"></th>
                             <th scope="col"></th>
                             <th scope="col"></th>
-                            <th scope="col" colspan="3">Bakso Polos</th>
-                            <th scope="col" colspan="3">Bakso Urat</th>
-                            <th scope="col" colspan="3">Bakso Daging</th>
+                            <th scope="col" colspan="4">Bakso Polos</th>
+                            <th scope="col" colspan="4">Bakso Urat</th>
+                            <th scope="col" colspan="4">Bakso Daging</th>
                         </tr>
                         <tr>
                             <th scope="col">#</th>
@@ -56,12 +56,15 @@
                             <th scope="col">Dandang</th>
                             <th scope="col">Freezer Depan</th>
                             <th scope="col">Freezer Belakang</th>
+                            <th scope="col">Minus</th>
                             <th scope="col">Dandang</th>
                             <th scope="col">Freezer Depan</th>
                             <th scope="col">Freezer Belakang</th>
+                            <th scope="col">Minus</th>
                             <th scope="col">Dandang</th>
                             <th scope="col">Freezer Depan</th>
                             <th scope="col">Freezer Belakang</th>
+                            <th scope="col">Minus</th>
                         </tr>
                     </thead>
                     <tbody id="report">
@@ -73,12 +76,15 @@
                                 <td>{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 1)->where('lokasi', 'dandang')->first()->qty }}</td>
                                 <td>{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 1)->where('lokasi', 'freezer depan')->first()->qty }}</td>
                                 <td>{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 1)->where('lokasi', 'freezer belakang')->first()->qty }}</td>
+                                <td>-{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 1)->first()->minus }}</td>
                                 <td>{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 2)->where('lokasi', 'dandang')->first()->qty }}</td>
                                 <td>{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 2)->where('lokasi', 'freezer depan')->first()->qty }}</td>
                                 <td>{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 2)->where('lokasi', 'freezer belakang')->first()->qty }}</td>
+                                <td>-{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 2)->first()->minus }}</td>
                                 <td>{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 3)->where('lokasi', 'dandang')->first()->qty }}</td>
                                 <td>{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 3)->where('lokasi', 'freezer depan')->first()->qty }}</td>
                                 <td>{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 3)->where('lokasi', 'freezer belakang')->first()->qty }}</td>
+                                <td>-{{ \App\Models\stok_barang_jurnal_harian::where('jurnal_harian_id', $transaksi->id)->where('bahan_setengah_jadi_id', 3)->first()->minus }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -135,6 +141,11 @@
                                             <input type="text" name="bu_qty[]" class="form-control border-primary"
                                                 required>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="name">Minus Stok</label>
+                                            <input type="number" name="bu_minus" class="form-control border-primary"
+                                                required>
+                                        </div>
                                         <label for="">Bakso Polos</label>
                                         <hr>
                                         <div class="form-group">
@@ -155,6 +166,11 @@
                                             <input type="text" name="bp_qty[]" class="form-control border-primary"
                                                 required>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="name">Minus Stok</label>
+                                            <input type="number" name="bp_minus" class="form-control border-primary"
+                                                required>
+                                        </div>
                                         <label for="">Bakso Daging</label>
                                         <hr>
                                         <div class="form-group">
@@ -173,6 +189,11 @@
                                             <label for="name">Di Freezer Depan</label>
                                             <input type="hidden" name="bd_lokasi[]" value="freezer depan">
                                             <input type="text" name="bd_qty[]" class="form-control border-primary"
+                                                required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name">Minus Stok</label>
+                                            <input type="number" name="bd_minus" class="form-control border-primary"
                                                 required>
                                         </div>
                                         <div class="modal-footer">

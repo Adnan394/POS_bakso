@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('bahan_setengah_jadi_id')->constrained('bahan_setengah_jadis');
             $table->string('lokasi');
             $table->string('qty');
+            $table->string('minus')->default(0);
             $table->timestamps();
         });
     }
