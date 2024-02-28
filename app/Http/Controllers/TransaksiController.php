@@ -884,7 +884,8 @@ class TransaksiController extends Controller
 
                 echo json_encode([
                     'data' => $hasil,
-                    'jml_bakso' => $jml_bakso
+                    'jml_bakso' => $jml_bakso,
+                    'stok_awal' =>  Stok_harian::whereDate('created_at', $request->date)->first()
                 ]);
         }else {
             $time = now()->format('Y-m-d');

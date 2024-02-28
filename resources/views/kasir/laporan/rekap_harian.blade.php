@@ -168,6 +168,7 @@
                 date : $("#date").val(),
             },
             success: function(data) {
+                console.log(data);
                 html = "";
                 $.each(data.transactions, function(i, item) {
                     filterData = "";
