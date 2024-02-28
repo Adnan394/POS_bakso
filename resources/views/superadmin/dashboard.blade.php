@@ -724,5 +724,27 @@
         }), $(window).on("resize", function() {
             t.update()
         })
+
+
+        var line = new Morris.Line({
+          element: 'morris-line-chart',
+          resize: true,
+          data: [
+            {y: '2024 Q1', item1: 2666},
+            {y: '2024 Q2', item1: 2778},
+            {y: '2011 Q3', item1: {{ $revenue_rabu_minggu_ini }}},
+            {y: '2011 Q4', item1: 3767},
+            {y: '2012 Q1', item1: 6810},
+            {y: '2012 Q2', item1: 5670},
+            {y: '2012 Q3', item1: 4820},
+          ],
+          xkey: 'y',
+          ykeys: ['item1'],
+          labels: ['Item 1'],
+          gridLineColor: '#eef0f2',
+          lineColors: ['#5f76e8'],
+          lineWidth: 1,
+          hideHover: 'auto'
+        });
     });
 </script> 
