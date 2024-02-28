@@ -48,7 +48,7 @@ $(function () {
     var data = {
         labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
         series: [
-            [5, 4, 3, 7, 5, 10]
+            [5, 4, 3, 7, 5, 90]
         ]
     };
 
@@ -119,7 +119,7 @@ $(function () {
     var chart = new Chartist.Line('.stats', {
         labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
         series: [
-            [11, 10, 15, 21, 14, 23, 12]
+            [11, 10, 15, 21, 14, 30, 90]
         ]
     }, {
         low: 0,
