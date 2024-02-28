@@ -222,25 +222,27 @@
                     date : $("#date").val(),
                 },
                 success: function(data) {
+                    console.log(data);
                     html = "";
-                    $.each(data.data, function(i, item) {
                         html = `
                             <tr>
-                                <td>${i + 1}</td>
-                                <td>${item.jml_cash_laporan}</td>
-                                <td>${item.jml_cash_lapangan}</td>
+                                <td>${1}</td>
+                                <td>${(data.data != null) ? data.data.jml_cash_laporan : ""}</td>
+                                <td>${(data.data != null) ? data.data.jml_cash_lapangan :""}</td>
                                 <td>${data.bp_dandang}</td>
                                 <td>${data.bp_freezer_depan}</td>
                                 <td>${data.bp_freezer_belakang}</td>
+                                <td>${data.bp_minus}</td>
                                 <td>${data.bu_dandang}</td>
                                 <td>${data.bu_freezer_depan}</td>
                                 <td>${data.bu_freezer_belakang}</td>
+                                <td>${data.bu_minus}</td>
                                 <td>${data.bd_dandang}</td>
                                 <td>${data.bd_freezer_depan}</td>
                                 <td>${data.bd_freezer_belakang}</td>
+                                <td>${data.bd_minus}</td>
                             </tr>
                         `
-                    });
 
                     $("#report").html(html);
                     $("#humanTime").html(data.human_time);

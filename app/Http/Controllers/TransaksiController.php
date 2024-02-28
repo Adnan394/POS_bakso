@@ -513,8 +513,8 @@ class TransaksiController extends Controller
     public function rekap_harian(Request $request) {
         // ada req date 
         if($request->date) {
-            $$time = $request->date;
-            $carbonDate = Carbon::parse($time);
+            $time = $request->date;
+            $humanTime = Carbon::parse($time);
             $transaction = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
             ->where('transaction_details.status', '!=', 'Salah')
             ->join('users', 'users.id', 'transactions.user_id')
@@ -884,7 +884,8 @@ class TransaksiController extends Controller
 
                 echo json_encode([
                     'data' => $hasil,
-                    'jml_bakso' => $jml_bakso
+                    'jml_bakso' => $jml_bakso,
+                    'stok_awal' =>  Stok_harian::whereDate('created_at', $request->date)->first()
                 ]);
         }else {
             $time = now()->format('Y-m-d');
