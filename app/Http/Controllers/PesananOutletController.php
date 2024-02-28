@@ -93,6 +93,12 @@ class PesananOutletController extends Controller
         // foreach ($request->produk as $produk) {
         //     Transaction_detail::where('transaction_id', $id)->where('product_id', $produk)->update(['status' => 'Jadi']);
         // }
+        $datasend = [
+            'transaction_id' => $id,
+            'message' => 'Transaksi Tambahan Baru',
+        ];
+
+        event(new OutletNotification($datasend));
 
         return redirect()->route('nota_dapur', $id);
     }
@@ -119,6 +125,10 @@ class PesananOutletController extends Controller
             ->select(['transactions.*'])
             ->distinct()
             ->get();
+
+            
+    
+
         return view('outlet.pesanan.pesanan-selesai', ['transaksi' => $transaksi]);
     }
 

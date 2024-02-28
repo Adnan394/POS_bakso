@@ -23,6 +23,24 @@
     <link href="{{ asset('dist/css/styletambahan.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <audio id="notificationSound" src="{{ asset('audio/notification.mp3') }}"></audio>
+
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('6e5959a700ebba645ca2', {
+            cluster: 'ap1'
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            notif(data);
+        });
+    </script>
+
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -243,9 +261,10 @@
                             </li>
                             <li class="list-divider"></li>
                             <li class="nav-small-cap"><span class="hide-menu">Data Transaksi</span></li>
-                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('stok_harian.index') }}"
-                                    aria-expanded="false"><i data-feather="shopping-cart"
-                                        class="feather-icon"></i><span class="hide-menu">Stok Harian
+                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
+                                    href="{{ route('stok_harian.index') }}" aria-expanded="false"><i
+                                        data-feather="shopping-cart" class="feather-icon"></i><span
+                                        class="hide-menu">Stok Harian
                                     </span></a>
                             </li>
                             <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="ui-cards.html"
@@ -456,6 +475,32 @@
 
     <script src="{{ asset('assets/extra-libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('dist/js/pages/datatable/datatable-basic.init.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+        function notif(data) {
+            // Mendapatkan elemen audio
+            var audio = document.getElementById('notificationSound');
+
+            // Memicu pemutaran suara
+            audio.play();
+            Toastify({
+                text: data.message.message,
+                className: "info",
+                style: {
+                    background: "#3ed33edc",
+                },
+                gravity: "top",
+                position: "right",
+                duration: 5000,
+            }).showToast();
+
+            setTimeout(function() {
+                location.reload();
+            }, 1000); // Waktu (dalam milidetik) sebelum halaman diperbarui
+        }
+    </script>
+
+
 </body>
 
 </html>
