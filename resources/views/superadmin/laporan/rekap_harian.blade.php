@@ -12,6 +12,7 @@
                     <label for="" class="form-label">Ganti Tanggal</label>
                     <input type="date" name="" id="date" class="form-control">
                 </div>
+
             </div>
             <div class="row">
                 <div class="d-flex flex-wrap">
@@ -90,8 +91,26 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card border-danger border-right" style="width: 20rem">
+                        <div class="card-body">
+                            <div class="d-flex d-lg-flex d-md-block align-items-center justify-content-between">
+                                <div>
+                                    <div class="d-inline-flex align-items-center">
+                                        <h2 class="text-danger mb-1 font-weight-medium" id="salah">- Rp. {{ $salah }}</h2>
+                                    </div>
+                                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-danger">Transaksi Salah</h6>
+                                </div>
+                                <div class="ml-auto mt-md-3 mt-lg-0">
+                                    <span class="opacity-7 text-muted text-danger"><i data-feather="dollar-sign"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="">
+                <a href="{{ route('print_rekap_harian') }}" target="_blank" ><button class="btn btn-primary mb-3" id="print">Print Rekap Harian</button></a>
+              </div>
             <div class="row pb-5" style="position: relative; overflow-x:scroll;">
                 <table id="zero_config" class="table table-striped table-bordered no-wrap">
                     <thead class="text-center"> 
@@ -143,7 +162,7 @@
         $("#date").on("change", function() {
             $.ajax({
             type: 'GET',
-            url: "{{ route('rekap_admin') }}",
+            url: "{{ route('rekap_harian') }}",
             dataType: "JSON",
             data: {
                 date : $("#date").val(),
@@ -187,6 +206,7 @@
                 $("#qris").html(`Rp. ${data.earningQris}`);
                 $("#bank").html(`Rp. ${data.earningBank}`);
                 $("#minus").html(`- Rp. ${data.minus}`);
+                $("#salah").html(`- Rp. ${data.salah}`);
                 $("#report").html(html);   
             }
         });

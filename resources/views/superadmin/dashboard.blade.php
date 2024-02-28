@@ -179,32 +179,32 @@
                                         class="hide-menu">Location Setting</span></a></li>
 
                             <li class="list-divider"></li>
-                            <li class="nav-small-cap"><span class="hide-menu">Data Transaksi</span></li>
+                            <li class="nav-small-cap"><span class="hide-menu">Laporan</span></li>
                             <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
-                                    href="{{ route('pengeluaran_admin.index') }}" aria-expanded="false"><i
+                                    href="{{ route('pengeluaran_superadmin') }}" aria-expanded="false"><i
                                         data-feather="shopping-cart" class="feather-icon"></i><span
-                                        class="hide-menu">Pengeluaran
+                                        class="hide-menu">Rekap Pengeluaran
                                     </span></a>
                             </li>
                             <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
-                                    href="{{ route('rekap_admin') }}" aria-expanded="false"><i
-                                        data-feather="dollar-sign" class="feather-icon"></i><span
-                                        class="hide-menu">Rekap
+                                    href="{{ route('rekap_produk_superadmin') }}" aria-expanded="false"><i
+                                        data-feather="package" class="feather-icon"></i><span
+                                        class="hide-menu">Rekap Produk
                                     </span></a>
                             </li>
                             <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
-                                    href="{{ route('jurnal_admin.index') }}" aria-expanded="false"><i
+                                    href="{{ route('rekap_harian_superadmin') }}" aria-expanded="false"><i
+                                        data-feather="shopping-bag" class="feather-icon"></i><span
+                                        class="hide-menu">Rekap Pendapatan
+                                    </span></a>
+                            </li>
+                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
+                                    href="{{ route('jurnal_superadmin') }}" aria-expanded="false"><i
                                         data-feather="dollar-sign" class="feather-icon"></i><span
                                         class="hide-menu">Jurnal
                                     </span></a>
                             </li>
                             <li class="list-divider"></li>
-                            <li class="nav-small-cap"><span class="hide-menu">Report</span></li>
-                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="ui-cards.html"
-                                    aria-expanded="false"><i data-feather="printer" class="feather-icon"></i><span
-                                        class="hide-menu">Laporan Pemasukan
-                                    </span></a>
-                            </li>
                             <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
                                     href="{{ route('logout') }}" aria-expanded="false"><i data-feather="log-out"
                                         class="feather-icon"></i><span class="hide-menu">Keluar</span></a></li>

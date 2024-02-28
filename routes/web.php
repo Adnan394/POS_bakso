@@ -4,6 +4,7 @@ use App\Models\Produk;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SuperadminController;
 use App\Http\Controllers\TabelController;
 use App\Http\Controllers\OutletController;
 use App\Http\Controllers\AccountController;
@@ -190,9 +191,10 @@ Route::prefix('/superadmin')->group(function() {
     Route::resource('/payments', PaymentController::class)->middleware('auth', 'admin_access', 'superadmin_access');
     Route::resource('/outlets', OutletController::class)->middleware('auth', 'admin_access', 'superadmin_access');
     Route::resource('bahan_setengah_jadi', bahanSetengahJadiController::class)->middleware('auth', 'superadmin_access');
-    Route::get('/rekap_admin', [TransaksiController::class, 'rekap_admin'])->name('rekap_admin');
-    Route::resource('/pengeluaran_admin', PengeluranController::class);
-    Route::resource('/jurnal_admin', JurnalHarianController::class);
+    Route::get('/rekap_harian_superadmin', [SuperadminController::class, 'rekap_harian_superadmin'])->name('rekap_harian_superadmin');
+    Route::get('/rekap_produk_superadmin', [SuperadminController::class, 'rekap_produk_superadmin'])->name('rekap_produk_superadmin');
+    Route::get('/pengeluaran_superadmin', [SuperadminController::class, 'pengeluaran_superadmin'])->name('pengeluaran_superadmin');
+    Route::get('/jurnal_superadmin', [SuperadminController::class, 'jurnal_superadmin'])->name('jurnal_superadmin');
 });
 
 Route::prefix('/admin')->group(function() {
