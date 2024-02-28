@@ -5,6 +5,7 @@ use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SuperadminController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TabelController;
 use App\Http\Controllers\OutletController;
 use App\Http\Controllers\AccountController;
@@ -356,6 +357,10 @@ Route::prefix('/admin')->group(function() {
     Route::resource('/outlets', OutletController::class)->middleware('auth', 'admin_access', 'superadmin_access');
     Route::resource('/tables', TabelController::class)->middleware('auth', 'admin_access', 'superadmin_access');
     Route::resource('stok_harian', StokHarianController::class)->middleware('admin_access');
+    Route::get('/rekap_harian_admin', [AdminController::class, 'rekap_harian_admin'])->name('rekap_harian_admin');
+    Route::get('/rekap_produk_admin', [AdminController::class, 'rekap_produk_admin'])->name('rekap_produk_admin');
+    Route::get('/pengeluaran_admin', [AdminController::class, 'pengeluaran_admin'])->name('pengeluaran_admin');
+    Route::get('/jurnal_admin', [AdminController::class, 'jurnal_admin'])->name('jurnal_admin');
 });
 
 Route::prefix('/kasir')->middleware('auth')->group(function() {

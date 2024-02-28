@@ -210,7 +210,7 @@
                                         class="feather-icon"></i><span class="hide-menu">Keluar</span></a></li>
                         </ul>
                     </nav>
-                @elseif (Auth::user()->role_id == 2)
+                    @elseif (Auth::user()->role_id == 2)
                     <nav class="sidebar-nav">
                         <ul id="sidebarnav">
                             <li class="sidebar-item"> <a class="sidebar-link sidebar-link active" href="/admin"
@@ -242,24 +242,31 @@
                                 </ul>
                             </li>
                             <li class="list-divider"></li>
-                            <li class="nav-small-cap"><span class="hide-menu">Data Transaksi</span></li>
-                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('stok_harian.index') }}"
-                                    aria-expanded="false"><i data-feather="shopping-cart"
-                                        class="feather-icon"></i><span class="hide-menu">Stok Harian
-                                    </span></a>
-                            </li>
-                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="ui-cards.html"
-                                    aria-expanded="false"><i data-feather="dollar-sign"
-                                        class="feather-icon"></i><span class="hide-menu">Penjualan
-                                    </span></a>
-                            </li>
-                            <li class="list-divider"></li>
-                            <li class="nav-small-cap"><span class="hide-menu">Report</span></li>
-                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="ui-cards.html"
-                                    aria-expanded="false"><i data-feather="printer" class="feather-icon"></i><span
-                                        class="hide-menu">Laporan Pemasukan
-                                    </span></a>
-                            </li>
+                            <li class="nav-small-cap"><span class="hide-menu">Laporan</span></li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
+                                href="{{ route('pengeluaran_admin') }}" aria-expanded="false"><i
+                                    data-feather="shopping-cart" class="feather-icon"></i><span
+                                    class="hide-menu">Rekap Pengeluaran
+                                </span></a>
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
+                                href="{{ route('rekap_produk_admin') }}" aria-expanded="false"><i
+                                    data-feather="package" class="feather-icon"></i><span
+                                    class="hide-menu">Rekap Produk
+                                </span></a>
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
+                                href="{{ route('rekap_harian_admin') }}" aria-expanded="false"><i
+                                    data-feather="shopping-bag" class="feather-icon"></i><span
+                                    class="hide-menu">Rekap Pendapatan
+                                </span></a>
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
+                                href="{{ route('jurnal_admin') }}" aria-expanded="false"><i
+                                    data-feather="dollar-sign" class="feather-icon"></i><span
+                                    class="hide-menu">Jurnal Harian
+                                </span></a>
+                        </li>
                             <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
                                     href="{{ route('logout') }}" aria-expanded="false"><i data-feather="log-out"
                                         class="feather-icon"></i><span class="hide-menu">Keluar</span></a></li>
