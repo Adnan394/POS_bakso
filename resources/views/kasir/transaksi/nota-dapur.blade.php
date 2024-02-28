@@ -131,7 +131,6 @@
                 }
             });
 
-            Menambahkan penundaan 3 detik sebelum mengalihkan
             setTimeout(function() {
                 window.location.href = "{{ route('pesanan_selesai') }}";
             }, 5000);
