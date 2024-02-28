@@ -114,7 +114,7 @@
         $("#date").on("change", function() {
             $.ajax({
                 type: 'GET',
-                url: "{{ route('pengeluaran_harian.index') }}",
+                url: "{{ route('pengeluaran_admin') }}",
                 dataType: "JSON",
                 data: {
                     date : $("#date").val(),

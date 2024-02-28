@@ -55,7 +55,8 @@ class AdminController extends Controller
         // @dd(Auth::user()->location->location_id);
         if($request->date) {
             $time = $request->date;
-            $humanTime = Carbon::parse($time);
+            $carbonDate = Carbon::parse($time);
+            $humanTime = $carbonDate->format('d F Y');
             $transaction = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
             ->where('transaction_details.status', '!=', 'Salah')
             ->join('users', 'users.id', 'transactions.user_id')
@@ -299,7 +300,8 @@ class AdminController extends Controller
 
                 echo json_encode([
                     'data' => $hasil,
-                    'jml_bakso' => $jml_bakso
+                    'jml_bakso' => $jml_bakso,
+                    'stok_awal' =>  Stok_harian::whereDate('created_at', $request->date)->first()
                 ]);
         }else {
             $time = now()->format('Y-m-d');
@@ -363,28 +365,23 @@ class AdminController extends Controller
             $time = $request->date;
             $carbonDate = Carbon::parse($time);
             $humanTime = $carbonDate->format('d F Y');
-            $data = jurnal_harian::whereDate('created_at', $time)->get();
-            $bp_dandang = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 1)->where('lokasi', 'dandang')->first()->qty;
-            $bp_freezer_belakang = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 1)->where('lokasi', 'freezer belakang')->first()->qty;
-            $bp_freezer_depan = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 1)->where('lokasi', 'freezer depan')->first()->qty;
-            $bu_dandang = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 2)->where('lokasi', 'dandang')->first()->qty;
-            $bu_freezer_belakang = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 2)->where('lokasi', 'freezer belakang')->first()->qty;
-            $bu_freezer_depan = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 2)->where('lokasi', 'freezer depan')->first()->qty;
-            $bd_dandang = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 3)->where('lokasi', 'dandang')->first()->qty;
-            $bd_freezer_belakang = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 3)->where('lokasi', 'freezer belakang')->first()->qty;
-            $bd_freezer_depan = stok_barang_jurnal_harian::where('jurnal_harian_id', $data[0]->id)->where('bahan_setengah_jadi_id', 3)->where('lokasi', 'freezer depan')->first()->qty;
+            $data = jurnal_harian::whereDate('created_at', $time)->first();
+            
             echo json_encode([
                 'data' => $data,
                 'human_time' => $humanTime,
-                'bp_dandang' => $bp_dandang,
-                'bp_freezer_belakang' => $bp_freezer_belakang,
-                'bp_freezer_depan' => $bp_freezer_depan,
-                'bu_dandang' => $bu_dandang,
-                'bu_freezer_belakang' => $bu_freezer_belakang,
-                'bu_freezer_depan' => $bu_freezer_depan,
-                'bd_dandang' => $bd_dandang,
-                'bd_freezer_belakang' => $bd_freezer_belakang,
-                'bd_freezer_depan' => $bd_freezer_depan
+                'bp_dandang' => ($data) ? stok_barang_jurnal_harian::where('jurnal_harian_id', $data->id)->where('bahan_setengah_jadi_id', 1)->where('lokasi', 'dandang')->first()->qty : "",
+                'bp_freezer_belakang' => ($data) ? stok_barang_jurnal_harian::where('jurnal_harian_id', $data->id)->where('bahan_setengah_jadi_id', 1)->where('lokasi', 'freezer belakang')->first()->qty : "",
+                'bp_freezer_depan' => ($data) ? stok_barang_jurnal_harian::where('jurnal_harian_id', $data->id)->where('bahan_setengah_jadi_id', 1)->where('lokasi', 'freezer depan')->first()->qty : "",
+                'bp_minus' => ($data) ? stok_barang_jurnal_harian::where('jurnal_harian_id', $data->id)->where('bahan_setengah_jadi_id', 1)->first()->minus : "",
+                'bu_dandang' => ($data) ? stok_barang_jurnal_harian::where('jurnal_harian_id', $data->id)->where('bahan_setengah_jadi_id', 2)->where('lokasi', 'dandang')->first()->qty : "",
+                'bu_freezer_belakang' => ($data) ? stok_barang_jurnal_harian::where('jurnal_harian_id', $data->id)->where('bahan_setengah_jadi_id', 2)->where('lokasi', 'freezer belakang')->first()->qty : "",
+                'bu_freezer_depan' => ($data) ? stok_barang_jurnal_harian::where('jurnal_harian_id', $data->id)->where('bahan_setengah_jadi_id', 2)->where('lokasi', 'freezer depan')->first()->qty : "",
+                'bu_minus' => ($data) ? stok_barang_jurnal_harian::where('jurnal_harian_id', $data->id)->where('bahan_setengah_jadi_id', 2)->first()->minus : "",
+                'bd_dandang' => ($data) ? stok_barang_jurnal_harian::where('jurnal_harian_id', $data->id)->where('bahan_setengah_jadi_id', 3)->where('lokasi', 'dandang')->first()->qty : "",
+                'bd_freezer_belakang' => ($data) ? stok_barang_jurnal_harian::where('jurnal_harian_id', $data->id)->where('bahan_setengah_jadi_id', 3)->where('lokasi', 'freezer belakang')->first()->qty : "",
+                'bd_freezer_depan' => ($data) ? stok_barang_jurnal_harian::where('jurnal_harian_id', $data->id)->where('bahan_setengah_jadi_id', 3)->where('lokasi', 'freezer depan')->first()->qty : "",
+                'bd_minus' => ($data) ? stok_barang_jurnal_harian::where('jurnal_harian_id', $data->id)->where('bahan_setengah_jadi_id', 3)->first()->minus : ""
             ]);
         }else {
             $time = now()->format('Y-m-d');

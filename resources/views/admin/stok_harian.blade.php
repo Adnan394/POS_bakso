@@ -57,6 +57,7 @@
                                         <th>Bakso Urat</th>
                                         <th>bakso Daging</th>
                                         <th>Lokasi</th>
+                                        <th>Waktu</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -67,6 +68,7 @@
                                             <td>{{ $item->bakso_urat }}</td>
                                             <td>{{ $item->bakso_daging }}</td>
                                             <td>{{ $item->location->locations }}</td>
+                                            <td>{{ $item->created_at }}</td>
                                             <td>
                                                 <a href="" data-toggle="modal"
                                                     data-target="#modal-edit{{ $item->id }}" style="width: 50px"

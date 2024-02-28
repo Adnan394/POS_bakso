@@ -52,6 +52,7 @@
                                             <th>Pilihan</th>
                                             <th>Nomor Meja</th>
                                             <th>Waktu Transaksi</th>
+                                            <th>Invoice</th>
                                         </tr>
                                     </thead>
                                     <tbody id="content-table">
@@ -88,6 +89,12 @@
                                             </td>
                                             <td>{{ ($item->table->number) ?? "" }}</td>
                                             <td>{{ $item->created_at }}</td>
+                                            <td>
+                                                <form action="{{ route('nota_dapur', $item->id) }}" method="GET" target="_blank">
+                                                    <input type="hidden" name="paid2" value="" id="paid2">
+                                                    <button type="submit" class="btn btn-lg btn-primary btn-block">Invoice</button>
+                                                </form>
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
