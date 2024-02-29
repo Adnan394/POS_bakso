@@ -838,7 +838,7 @@ class TransaksiController extends Controller
     public function rekap_produk(Request $request) {
         if($request->date) {
 
-            $time = now()->format('Y-m-d');
+            $time = $request->date;
                 $data = Transaction::join('transaction_details', 'transaction_details.transaction_id', 'transactions.id')
                 ->where('transaction_details.status', '!=', 'Salah')
                 ->join('produks', 'transaction_details.product_id', 'produks.id')
@@ -886,7 +886,11 @@ class TransaksiController extends Controller
                 echo json_encode([
                     'data' => $hasil,
                     'jml_bakso' => $jml_bakso,
-                    'stok_awal' =>  Stok_harian::whereDate('created_at', $request->date)->first()
+                    'stok_awal' =>  Stok_harian::join('barang_stoks', function($q) use($time) {
+                        $q->on('stok_harians.barang_stok_id', 'barang_stoks.id')
+                        ->where('barang_stoks.name', 'LIKE', '%bakso%')
+                        ->whereDate('stok_harians.created_at', $time);
+                    })->pluck('stok_harians.qty')
                 ]);
         }else {
             $time = now()->format('Y-m-d');
@@ -933,11 +937,14 @@ class TransaksiController extends Controller
                 // ->select(['produks.qty_bakso_polos as bakso_polos', 'transaction_details.qty as qty'])
                 ->get();
     
-                
                 return view('kasir.laporan.rekap_produk', [
                     'data' => $hasil,
                     'jml_polos' => $jml_bakso,
-                    'stok_awal' =>  Stok_harian::whereDate('created_at', $time)->first()
+                    'stok_awal' =>  Stok_harian::join('barang_stoks', function($q) use($time) {
+                        $q->on('stok_harians.barang_stok_id', 'barang_stoks.id')
+                        ->where('barang_stoks.name', 'LIKE', '%bakso%')
+                        ->whereDate('stok_harians.created_at', $time);
+                    })->pluck('stok_harians.qty')
                 ]);
         }
     }

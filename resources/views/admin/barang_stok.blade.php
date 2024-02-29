@@ -8,7 +8,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-7 align-self-center">
-                <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">Data Stok Harian</h4>
+                <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">Data Barang Stok</h4>
                 <div class="d-flex align-items-center">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb m-0 p-0">
@@ -22,7 +22,7 @@
             <div class="col-5 align-self-center">
                 <div class="customize-input float-right">
                     <button type="button" class="btn btn-primary" data-toggle="modal"
-                        data-target="#modal-tambah">Tambah Stok Harian</button>
+                        data-target="#modal-tambah">Tambah Barang Stok</button>
                 </div>
             </div>
         </div>
@@ -47,14 +47,13 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">List Of Stok</h4>
+                        <h4 class="card-title">List Of Barang Stok</h4>
                         <div class="table-responsive">
                             <table id="zero_config" class="table table-striped table-bordered no-wrap">
                                 <thead>
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
-                                        <th>Jumlah</th>
                                         <th>Lokasi</th>
                                     </tr>
                                 </thead>
@@ -62,15 +61,14 @@
                                     @foreach ($data as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->barang_stok->name }}</td>
-                                            <td>{{ $item->qty }}</td>
+                                            <td>{{ $item->name }}</td>
                                             <td>{{ $item->location->locations }}</td>
                                             <td>
                                                 <a href="" data-toggle="modal"
                                                     data-target="#modal-edit{{ $item->id }}" style="width: 50px"
                                                     class="btn btn-warning"><i class="bi bi-pencil"><span
                                                             class="fas fa-edit"></span></i></a>
-                                                <form action="{{ route('stok_harian.destroy', $item->id) }}" method="POST">
+                                                <form action="{{ route('barang_stok.destroy', $item->id) }}" method="POST">
                                                     @method('DELETE')
                                                     @csrf
                                                     <button type="submit" style="width: 50px" class="btn btn-danger"><i
@@ -95,21 +93,35 @@
                                                                 <div class="card-body">
                                                                     <h4 class="card-title">Edit Stok</h4>
                                                                     <form method="POST"
-                                                                        action="{{ route('stok_harian.update', $item->id) }}"
+                                                                        action="{{ route('barang_stok.update', $item->id) }}"
                                                                         enctype="multipart/form-data" class="mt-4">
                                                                         @method('PUT')
                                                                         @csrf
                                                                         <div class="form-group">
-                                                                            <label for="name">{{ $item->barang_stok->name }}</label>
-                                                                            <input type="hidden" name="name" value="{{ $item->barang_stok_id }}">
-                                                                            <input type="number" name="qty" value="{{ $item->qty }}" class="form-control border-primary"
+                                                                            <label for="name">Nama</label>
+                                                                            <input type="text" name="name" value="{{ $item->name }}" class="form-control border-primary"
                                                                                 required>
                                                                         </div>
                                                                         <div class="form-group">
+                                                                            <label for="location_id">Lokasi
+                                                                                Cabang</label>
+                                                                            <select name="location_id" id="location_id" required>
+                                                                                <option
+                                                                                    value="{{ $item->location_id }}"
+                                                                                    readonly selected>
+                                                                                    {{ $item->location->locations }}
+                                                                                </option>
+                                                                                @foreach ($locations as $location)
+                                                                                    <option
+                                                                                        value="{{ $location->id }}">
+                                                                                        {{ $location->locations }}
+                                                                                    </option>
+                                                                                @endforeach
+                                                                            </select>
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="submiy"
-                                                                                class="btn btn-primary">Update</button>
+                                                                                class="btn btn-primary">Tambahkan</button>
                                                                         </div>
                                                                     </form>
                                                                 </div>
@@ -146,17 +158,25 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Tambahkan Stok</h4>
-                                <form method="POST" action="{{ route('stok_harian.store') }}"
+                                <form method="POST" action="{{ route('barang_stok.store') }}"
                                     enctype="multipart/form-data" class="mt-4">
                                     @csrf
-                                    @foreach ($barang_stok as $item)
-                                        <div class="form-group">
-                                            <label for="name">{{ $item->name }}</label>
-                                            <input type="hidden" name="name[]" value="{{ $item->id }}">
-                                            <input type="number" name="qty[]" class="form-control border-primary"
-                                                required>
-                                        </div>
-                                    @endforeach
+                                    <div class="form-group">
+                                        <label for="name">Stok Nama</label>
+                                        <input type="text" name="name" class="form-control border-primary"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="location_id">Lokasi Cabang</label>
+                                        <select name="location_id" id="location_id" required>
+                                            <option disabled selected>Pilih Lokasi Cabang</option>
+                                            @foreach ($locations as $location)
+                                                <option value="{{ $location->id }}">
+                                                    {{ $location->locations }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="modal-footer">
                                         <button type="reset" class="btn btn-light">Kosongkan</button>
                                         <button type="submiy" class="btn btn-primary">Tambahkan</button>
