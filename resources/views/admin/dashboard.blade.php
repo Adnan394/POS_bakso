@@ -701,7 +701,7 @@
             ]
         }, {
             low: 0,
-            high: 10000000,
+            high: 25000000,
             showArea: !0,
             fullWidth: !0,
             plugins: [Chartist.plugins.tooltip()],
