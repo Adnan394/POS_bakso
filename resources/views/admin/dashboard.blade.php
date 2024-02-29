@@ -239,6 +239,10 @@
                                             class="sidebar-link"><span class="hide-menu"> Data Meja
                                             </span></a>
                                     </li>
+                                    <li class="sidebar-item"><a href="{{ route('stok_harian.index') }}"
+                                        class="sidebar-link"><span class="hide-menu"> Stok Harian
+                                        </span></a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="list-divider"></li>
