@@ -126,7 +126,7 @@
                 },
                 jsPDF: {
                     unit: 'mm',
-                    format: 'a5',
+                    format: 'a4',
                     orientation: 'portrait'
                 }
             });

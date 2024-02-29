@@ -20,6 +20,7 @@ use App\Http\Controllers\PengeluranController;
 use App\Http\Controllers\PesananOutletController;
 use App\Http\Controllers\TransaksiDetailController;
 use App\Http\Controllers\bahanSetengahJadiController;
+use App\Http\Controllers\BarangStokController;
 use App\Http\Controllers\JurnalHarianController;
 use App\Http\Controllers\StokHarianController;
 use App\Models\Stok_harian;
@@ -361,6 +362,7 @@ Route::prefix('/admin')->group(function() {
     Route::get('/rekap_produk_admin', [AdminController::class, 'rekap_produk_admin'])->name('rekap_produk_admin');
     Route::get('/pengeluaran_admin', [AdminController::class, 'pengeluaran_admin'])->name('pengeluaran_admin');
     Route::get('/jurnal_admin', [AdminController::class, 'jurnal_admin'])->name('jurnal_admin');
+    Route::resource('/barang_stok', BarangStokController::class)->middleware('auth', 'admin_access');
 });
 
 Route::prefix('/kasir')->middleware('auth')->group(function() {

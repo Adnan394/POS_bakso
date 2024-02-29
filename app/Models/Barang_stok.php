@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Stok_harian extends Model
+class Barang_stok extends Model
 {
     use HasFactory;
 
@@ -15,7 +15,7 @@ class Stok_harian extends Model
         return $this->belongsTo(Location::class);
     }
 
-    public function barang_stok() {
-        return $this->belongsTo(Barang_stok::class);
+    public function stok_harian() {
+        return $this->hasMany(Stok_harian::class);
     }
 }

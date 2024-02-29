@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stok_harians', function (Blueprint $table) {
+        Schema::create('barang_stoks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('barang_stok_id')->constrained('barang_stoks');
-            $table->integer('qty');
+            $table->string('name');
             $table->foreignId('location_id')->constrained('locations');
             $table->timestamps();
         });
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stok_harians');
+        Schema::dropIfExists('barang_stoks');
     }
 };

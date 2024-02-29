@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang_stok;
 use App\Models\Location;
 use App\Models\Outlet;
 use App\Models\Stok_harian;
@@ -15,9 +16,10 @@ class StokHarianController extends Controller
      */
     public function index()
     {
+        $time = now()->format('Y-m-d');
         return view('admin.stok_harian', [
-            'data' => Stok_harian::where('location_id', Auth::user()->location_id)->get(),
-            'locations' => Location::all()
+            'data' => Stok_harian::where('location_id', Auth::user()->location_id)->whereDate('created_at', $time)->get(),
+            'barang_stok' => Barang_stok::where('location_id', Auth::user()->location_id)->get()
         ]);
     }
 
@@ -34,12 +36,15 @@ class StokHarianController extends Controller
      */
     public function store(Request $request)
     {
-        Stok_harian::create([
-            'bakso_polos' => $request->bakso_polos,
-            'bakso_urat' => $request->bakso_urat,
-            'bakso_daging' => $request->bakso_daging,
-            'location_id' => $request->location_id
-        ]);
+        foreach ($request->name as $index => $val) {
+            $name = $request->name[$index];
+            $qty = $request->qty[$index];
+            Stok_harian::create([
+                'barang_stok_id' => $name,
+                'qty' => $qty,
+                'location_id' => Auth::user()->location_id
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Data Stok Berhasil Di Tambah');
     }
@@ -65,7 +70,12 @@ class StokHarianController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        Stok_harian::where('id', $id)->update([
+            'barang_stok_id' => $request->name,
+            'qty' => $request->qty 
+        ]);
+
+        return redirect()->back()->with('success', 'Data Stok Berhasil Di update');
     }
 
     /**

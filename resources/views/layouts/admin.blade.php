@@ -257,6 +257,10 @@
                                             class="sidebar-link"><span class="hide-menu"> Data Meja
                                             </span></a>
                                     </li>
+                                    <li class="sidebar-item"><a href="{{ route('barang_stok.index') }}"
+                                        class="sidebar-link"><span class="hide-menu"> Barang Stok
+                                        </span></a>
+                                    </li>
                                     <li class="sidebar-item"><a href="{{ route('stok_harian.index') }}"
                                             class="sidebar-link"><span class="hide-menu"> Stok Harian
                                             </span></a>
