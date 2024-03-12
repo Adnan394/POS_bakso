@@ -219,7 +219,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="location_id">Outlet</label>
-                                            <select name="user_outlet_id">
+                                            <select name="user_outlet_id" id="outlet_id">
                                                 <option disabled selected>Pilih Outlet</option>
                                                 @foreach ($data_outlet as $data_outlet)
                                                     <option value="{{ $data_outlet->id }}">

@@ -193,7 +193,7 @@ class TransaksiController extends Controller
      */
     public function show(string $id)
     {
-        $products = Produk::all();
+        $products = Produk::where('status_stock', 'Tersedia')->where('outlet_id', Auth::user()->outlet_id)->get();
         $tables = Table::all();        
         $data = Transaction::where('transactions.id', $id)
             ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
