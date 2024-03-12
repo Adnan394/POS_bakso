@@ -16,10 +16,10 @@
                                                             p {
                                                                 display: block;
                                                                 margin: 3px;
-                                                                font-size: 15pt;
+                                                                font-size: 18pt;
                                                             }
                                                             table td {
-                                                                font-size: 12pt;
+                                                                font-size: 18pt;
                                                             }
                                                             .text-center {
                                                                 text-align: center;
@@ -126,7 +126,7 @@
                 },
                 jsPDF: {
                     unit: 'mm',
-                    format: 'a4',
+                    format: 'a6',
                     orientation: 'portrait'
                 }
             });
