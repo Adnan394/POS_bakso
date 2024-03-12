@@ -162,7 +162,7 @@
         $("#date").on("change", function() {
             $.ajax({
             type: 'GET',
-            url: "{{ route('rekap_harian_admin') }}",
+            url: "{{ route('rekap_harian_superadmin_cafe') }}",
             dataType: "JSON",
             data: {
                 date : $("#date").val(),

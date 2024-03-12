@@ -49,7 +49,7 @@
         $("#date").on("change", function() {
             $.ajax({
             type: 'GET',
-            url: "{{ route('rekap_produk_admin') }}",
+            url: "{{ route('rekap_produk_superadmin_cafe') }}",
             dataType: "JSON",
             data: {
                 date : $("#date").val(),
