@@ -222,6 +222,18 @@
                                     class="hide-menu">Jurnal Harian
                                 </span></a>
                         </li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
+                                href="{{ route('rekap_harian_superadmin_cafe') }}" aria-expanded="false"><i
+                                    data-feather="dollar-sign" class="feather-icon"></i><span
+                                    class="hide-menu">Rekap Harian Cafe
+                                </span></a>
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
+                                href="{{ route('rekap_produk_superadmin_cafe') }}" aria-expanded="false"><i
+                                    data-feather="dollar-sign" class="feather-icon"></i><span
+                                    class="hide-menu">Rekap Produk Cafe
+                                </span></a>
+                        </li>
                         <li class="list-divider"></li>
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
                                 href="{{ route('logout') }}" aria-expanded="false"><i data-feather="log-out"

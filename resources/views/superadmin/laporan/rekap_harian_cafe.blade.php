@@ -5,7 +5,7 @@
         <div class="mt-5 mx-5">
             <div class="row d-flex justify-content-between">
                 <div class="mb-5">
-                    <h1>Laporan Rekapitulasi Harian</h1>
+                    <h1>Laporan Rekapitulasi Harian Cafe</h1>
                     <h3 id="humanTime">{{ $human_time }}</h3>
                 </div>
                 <div class="">
@@ -168,7 +168,6 @@
                 date : $("#date").val(),
             },
             success: function(data) {
-            console.log(data);
                 html = "";
                 $.each(data.transactions, function(i, item) {
                     filterData = "";

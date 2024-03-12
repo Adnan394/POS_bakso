@@ -197,6 +197,8 @@ Route::prefix('/superadmin')->group(function() {
     Route::get('/rekap_produk_superadmin', [SuperadminController::class, 'rekap_produk_superadmin'])->name('rekap_produk_superadmin');
     Route::get('/pengeluaran_superadmin', [SuperadminController::class, 'pengeluaran_superadmin'])->name('pengeluaran_superadmin');
     Route::get('/jurnal_superadmin', [SuperadminController::class, 'jurnal_superadmin'])->name('jurnal_superadmin');
+    Route::get('/rekap_harian_superadmin_cafe', [SuperadminController::class, 'rekap_harian_superadmin_cafe'])->name('rekap_harian_superadmin_cafe');
+    Route::get('/rekap_produk_superadmin_cafe', [SuperadminController::class, 'rekap_produk_superadmin_cafe'])->name('rekap_produk_superadmin_cafe');
 });
 
 Route::prefix('/admin')->group(function() {

@@ -53,14 +53,16 @@ class SuperadminController extends Controller
     public function rekap_harian_superadmin(Request $request) {
         // ada req date 
         if($request->date) {
-            $$time = $request->date;
+            $time = $request->date;
             $carbonDate = Carbon::parse($time);
+            $humanTime = $carbonDate->format('d F Y');
             $transaction = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
             ->where('transaction_details.status', '!=', 'Salah')
             ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
-            ->whereDate('transactions.created_at', $time)
+            ->whereDate('transactions.created_at', $request->date)
+            ->where('users.outlet_id', 1)
             ->select(['transactions.*', 'users.name as user_name'])->distinct()
             ->get();
             $transaction_detail = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
@@ -69,7 +71,8 @@ class SuperadminController extends Controller
                                 ->join('user_details', 'users.id', 'user_details.user_id')
                                 ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
                 
-                                ->whereDate('transactions.created_at', $time)
+                                ->whereDate('transactions.created_at', $request->date)
+                                ->where('users.outlet_id', 1)
                                 ->select(['transaction_details.*', 'users.name as user_name', 'produks.name as produk_name'])
                                 ->get();
             $revenue = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
@@ -77,7 +80,8 @@ class SuperadminController extends Controller
             ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
-            ->whereDate('transactions.created_at', $time)->where('payment_id', '!=', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->whereDate('transactions.created_at', $request->date)->where('payment_id', '!=', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 1)
             ->get()
             ->pluck('total')
             ->first();
@@ -86,7 +90,8 @@ class SuperadminController extends Controller
             ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
-            ->whereDate('transactions.created_at', $time)->where('payment_id', 1)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->whereDate('transactions.created_at', $request->date)->where('payment_id', 1)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 1)
             ->get()
             ->pluck('total')
             ->first();
@@ -95,7 +100,8 @@ class SuperadminController extends Controller
             ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
-            ->whereDate('transactions.created_at', $time)->where('payment_id', 2)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->whereDate('transactions.created_at', $request->date)->where('payment_id', 2)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 1)
             ->get()
             ->pluck('total')
             ->first();
@@ -104,7 +110,8 @@ class SuperadminController extends Controller
             ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
-            ->whereDate('transactions.created_at', $time)->where('payment_id', 3)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->whereDate('transactions.created_at', $request->date)->where('payment_id', 3)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 1)
             ->get()
             ->pluck('total')
             ->first();
@@ -113,7 +120,8 @@ class SuperadminController extends Controller
             ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
-            ->whereDate('transactions.created_at', $time)->where('payment_id', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->whereDate('transactions.created_at', $request->date)->where('payment_id', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 1)
             ->get()
             ->pluck('total')
             ->first();
@@ -122,7 +130,8 @@ class SuperadminController extends Controller
             ->join('users', 'users.id', 'transactions.user_id')
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
-            ->whereDate('transactions.created_at', $time)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->whereDate('transactions.created_at', $request->date)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 1)
             ->get()
             ->pluck('total')
             ->first();
@@ -145,6 +154,7 @@ class SuperadminController extends Controller
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->whereDate('transactions.created_at', $time)
+            ->where('users.outlet_id', 1)
             ->select('transactions.*')->distinct()->get();
             $carbonDate = Carbon::parse($time);
             $humanTime = $carbonDate->format('d F Y');
@@ -154,6 +164,7 @@ class SuperadminController extends Controller
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->whereDate('transactions.created_at', $time)->where('payment_id', '!=', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 1)
             ->get()
             ->pluck('total')
             ->first();
@@ -163,6 +174,7 @@ class SuperadminController extends Controller
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->whereDate('transactions.created_at', $time)->where('payment_id', 1)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 1)
             ->get()
             ->pluck('total')
             ->first();;
@@ -172,6 +184,7 @@ class SuperadminController extends Controller
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->whereDate('transactions.created_at', $time)->where('payment_id', 2)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 1)
             ->get()
             ->pluck('total')
             ->first();;
@@ -181,6 +194,7 @@ class SuperadminController extends Controller
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->whereDate('transactions.created_at', $time)->where('payment_id', 3)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 1)
             ->get()
             ->pluck('total')
             ->first();;
@@ -190,6 +204,7 @@ class SuperadminController extends Controller
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->whereDate('transactions.created_at', $time)->where('payment_id', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 1)
             ->get()
             ->pluck('total')
             ->first();;
@@ -199,12 +214,195 @@ class SuperadminController extends Controller
             ->join('user_details', 'users.id', 'user_details.user_id')
             ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
             ->whereDate('transactions.created_at', $time)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 1)
+            ->get()
+            ->pluck('total')
+            ->first();
+        
+            // return $data;
+            return view('superadmin.laporan.rekap_harian', [
+                'data' => $data, 
+                'human_time' => $humanTime,
+                'revenue' => number_format($revenue, 0, ",", ","),
+                'earningCash' => number_format($earningCash, 0, ",", ","),
+                'earningQris' => number_format($earningQris, 0, ",", ","),
+                'earningBank' => number_format($earningBank, 0, ",", ","),
+                'minus' => number_format($minus, 0, ",", ","),
+                'salah' => number_format($salah, 0, ",", ",")
+            ]);
+        }
+    }
+    public function rekap_harian_superadmin_cafe(Request $request) {
+        // ada req date 
+        if($request->date) {
+            $time = $request->date;
+            $carbonDate = Carbon::parse($time);
+            $humanTime = $carbonDate->format('d F Y');
+            $transaction = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=', 'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->whereDate('transactions.created_at', $request->date)
+            ->where('users.outlet_id', 2)
+            ->select(['transactions.*', 'users.name as user_name'])->distinct()
+            ->get();
+            $transaction_detail = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+                                ->join('produks', 'transaction_details.product_id', 'produks.id')
+                                ->join('users', 'users.id', 'transactions.user_id')
+                                ->join('user_details', 'users.id', 'user_details.user_id')
+                                ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+                
+                                ->whereDate('transactions.created_at', $request->date)
+                                ->where('users.outlet_id', 2)
+                                ->select(['transaction_details.*', 'users.name as user_name', 'produks.name as produk_name'])
+                                ->get();
+            $revenue = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->whereDate('transactions.created_at', $request->date)->where('payment_id', '!=', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 2)
+            ->get()
+            ->pluck('total')
+            ->first();
+            $earningCash = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->whereDate('transactions.created_at', $request->date)->where('payment_id', 1)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 2)
+            ->get()
+            ->pluck('total')
+            ->first();
+            $earningQris = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->whereDate('transactions.created_at', $request->date)->where('payment_id', 2)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 2)
+            ->get()
+            ->pluck('total')
+            ->first();
+            $earningBank = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->whereDate('transactions.created_at', $request->date)->where('payment_id', 3)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 2)
+            ->get()
+            ->pluck('total')
+            ->first();
+            $minus = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->whereDate('transactions.created_at', $request->date)->where('payment_id', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 2)
+            ->get()
+            ->pluck('total')
+            ->first();
+            $salah = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status','Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->whereDate('transactions.created_at', $request->date)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 2)
+            ->get()
+            ->pluck('total')
+            ->first();
+            echo json_encode([
+                'transactions' => $transaction, 
+                'transaction_details' => $transaction_detail,
+                'human_time' => $humanTime,
+                'revenue' => number_format($revenue, 0, ",", ","),
+                'earningCash' => number_format($earningCash, 0, ",", ","),
+                'earningQris' => number_format($earningQris, 0, ",", ","),
+                'earningBank' => number_format($earningBank, 0, ",", ","),
+                'minus' => number_format($minus, 0, ",", ","),
+                'salah' => number_format($salah, 0, ",", ",")
+            ]);
+        }else {
+            $time = now()->format('Y-m-d');
+            $data = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=', 'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->whereDate('transactions.created_at', $time)
+            ->where('users.outlet_id', 2)
+            ->select('transactions.*')->distinct()->get();
+            $carbonDate = Carbon::parse($time);
+            $humanTime = $carbonDate->format('d F Y');
+            $revenue = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=' ,'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->whereDate('transactions.created_at', $time)->where('payment_id', '!=', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 2)
+            ->get()
+            ->pluck('total')
+            ->first();
+            $earningCash = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=', 'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->whereDate('transactions.created_at', $time)->where('payment_id', 1)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 2)
+            ->get()
+            ->pluck('total')
+            ->first();;
+            $earningQris = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=', 'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->whereDate('transactions.created_at', $time)->where('payment_id', 2)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 2)
+            ->get()
+            ->pluck('total')
+            ->first();;
+            $earningBank = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=', 'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->whereDate('transactions.created_at', $time)->where('payment_id', 3)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 2)
+            ->get()
+            ->pluck('total')
+            ->first();;
+            $minus = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status', '!=', 'Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->whereDate('transactions.created_at', $time)->where('payment_id', null)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 2)
+            ->get()
+            ->pluck('total')
+            ->first();;
+            $salah = Transaction::join('transaction_details', 'transactions.id', 'transaction_details.transaction_id')
+            ->where('transaction_details.status','Salah')
+            ->join('users', 'users.id', 'transactions.user_id')
+            ->join('user_details', 'users.id', 'user_details.user_id')
+            ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+            ->whereDate('transactions.created_at', $time)->selectRaw('SUM(transaction_details.price * transaction_details.qty) as total')
+            ->where('users.outlet_id', 2)
             ->get()
             ->pluck('total')
             ->first();
         
             // return $salah;
-            return view('superadmin.laporan.rekap_harian', [
+            return view('superadmin.laporan.rekap_harian_cafe', [
                 'data' => $data, 
                 'human_time' => $humanTime,
                 'revenue' => number_format($revenue, 0, ",", ","),
@@ -228,6 +426,7 @@ class SuperadminController extends Controller
                 ->join('user_details', 'users.id', 'user_details.user_id')
                 ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
                 ->whereDate('transactions.created_at', $request->date)
+                ->where('users.outlet_id', 1)
                 ->select(['produks.name', 'transaction_details.qty as porsi'])
                 ->get();
     
@@ -252,6 +451,7 @@ class SuperadminController extends Controller
                 ->join('user_details', 'users.id', 'user_details.user_id')
                 ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
                 ->whereDate('transactions.created_at', $request->date)
+                ->where('users.outlet_id', 1)
                 ->where(function($q) {
                     $q->where('produks.qty_bakso_polos', '!=', 0)
                     ->orWhere('produks.qty_bakso_urat', '!=', 0)
@@ -281,6 +481,7 @@ class SuperadminController extends Controller
                 ->join('user_details', 'users.id', 'user_details.user_id')
                 ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
                 ->whereDate('transactions.created_at', $time)
+                ->where('users.outlet_id', 1)
                 ->select(['produks.name', 'transaction_details.qty as porsi'])
                 ->get();
     
@@ -304,6 +505,7 @@ class SuperadminController extends Controller
                 ->join('user_details', 'users.id', 'user_details.user_id')
                 ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
                 ->whereDate('transactions.created_at', $time)
+                ->where('users.outlet_id', 1)
                 ->where(function($q) {
                     $q->where('produks.qty_bakso_polos', '!=', 0)
                     ->orWhere('produks.qty_bakso_urat', '!=', 0)
@@ -324,6 +526,69 @@ class SuperadminController extends Controller
                         ->where('barang_stoks.name', 'LIKE', '%bakso%')
                         ->whereDate('stok_harians.created_at', $time);
                     })->pluck('stok_harians.qty')
+                ]);
+        }
+    }
+    public function rekap_produk_superadmin_cafe(Request $request) {
+        if($request->date) {
+
+            $time = $request->date;
+                $data = Transaction::join('transaction_details', 'transaction_details.transaction_id', 'transactions.id')
+                ->where('transaction_details.status', '!=', 'Salah')
+                ->join('produks', 'transaction_details.product_id', 'produks.id')
+                ->join('users', 'users.id', 'transactions.user_id')
+                ->join('user_details', 'users.id', 'user_details.user_id')
+                ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+                ->whereDate('transactions.created_at', $request->date)
+                ->where('users.outlet_id', 2)
+                ->select(['produks.name', 'transaction_details.qty as porsi'])
+                ->get();
+    
+                // echo json_encode($data);
+                $groupedData = $data->groupBy('name')->map(function ($item) {
+                    return $item->sum('porsi');
+                });
+    
+                // Menampilkan hasil
+                $hasil = [];
+                foreach ($groupedData as $name => $totalPorsi) {
+                    $hasil[] = [
+                        'menu' => $name,
+                        'porsi' => $totalPorsi
+                    ];
+                }
+
+                echo json_encode([
+                    'data' => $hasil
+                ]);
+        }else {
+            $time = now()->format('Y-m-d');
+                $data = Transaction::join('transaction_details', 'transaction_details.transaction_id', 'transactions.id')
+                ->where('transaction_details.status', '!=', 'Salah')
+                ->join('produks', 'transaction_details.product_id', 'produks.id')
+                ->join('users', 'users.id', 'transactions.user_id')
+                ->join('user_details', 'users.id', 'user_details.user_id')
+                ->join('outlet_details', 'user_details.outlet_detail_id', 'outlet_details.id')
+                ->whereDate('transactions.created_at', $time)
+                ->where('users.outlet_id', 2)
+                ->select(['produks.name', 'transaction_details.qty as porsi'])
+                ->get();
+    
+                $groupedData = $data->groupBy('name')->map(function ($item) {
+                    return $item->sum('porsi');
+                });
+    
+                // Menampilkan hasil
+                $hasil = [];
+                foreach ($groupedData as $name => $totalPorsi) {
+                    $hasil[] = [
+                        'menu' => $name,
+                        'porsi' => $totalPorsi
+                    ];
+                }
+                
+                return view('superadmin.laporan.rekap_produk_cafe', [
+                    'data' => $hasil
                 ]);
         }
     }
