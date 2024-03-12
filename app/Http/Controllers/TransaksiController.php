@@ -130,7 +130,7 @@ class TransaksiController extends Controller
     public function create_transaksi()
     {
         $tables = Table::where('outlet_detail_id', Auth::user()->user_detail->outlet_detail_id)->get();
-        $products = Produk::where('status_stock', 'Tersedia')->get();
+        $products = Produk::where('status_stock', 'Tersedia')->where('outlet_id', Auth::user()->outlet_id)->get();
         return view('kasir.transaksi.baru', ['products' => $products, 'tables' => $tables]);
     }
     
