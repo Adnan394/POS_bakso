@@ -177,7 +177,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header modal-colored-header bg-primary">
-                        <h4 class="modal-title" id="modal-tambahLabel">Form Tambah Produl
+                        <h4 class="modal-title" id="modal-tambahLabel">Form Tambah Akun
                         </h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
@@ -213,6 +213,17 @@
                                                 @foreach ($locations as $location)
                                                     <option value="{{ $location->id }}">
                                                         {{ $location->locations }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="location_id">Outlet</label>
+                                            <select name="user_outlet_id">
+                                                <option disabled selected>Pilih Outlet</option>
+                                                @foreach ($data_outlet as $data_outlet)
+                                                    <option value="{{ $data_outlet->id }}">
+                                                        {{ $data_outlet->name }}
                                                     </option>
                                                 @endforeach
                                             </select>

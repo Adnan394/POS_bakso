@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->foreignId('location_id')->constrained('locations');
             $table->unsignedBigInteger('outlet_id')->nullable();
-            $table->foreign('outlet_id')->references('id')->on('outlets')->onDelete('set null');
+            $table->foreign('outlet_id')->references('id')->on('outlets');
             $table->rememberToken();
             $table->timestamps();
         });
